@@ -42,6 +42,7 @@
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+  .timeline-line { background: linear-gradient(to bottom, transparent, #b8965a 10%, #b8965a 90%, transparent); }
 </style>
 </head>
 <body class="font-sans text-neutral-800 bg-cream antialiased">
@@ -52,11 +53,11 @@
       <span class="font-serif text-3xl tracking-widest text-white">AURELIA</span>
       <nav class="hidden md:flex items-center gap-10 text-sm font-light letter-spaced text-white/90">
         <a href="#kolekcja" class="hover:text-gold-light transition">KOLEKCJA</a>
-        <a href="#filozofia" class="hover:text-gold-light transition">FILOZOFIA</a>
+        <a href="#dziedzictwo" class="hover:text-gold-light transition">DZIEDZICTWO</a>
         <a href="#atelier" class="hover:text-gold-light transition">ATELIER</a>
         <a href="#kontakt" class="hover:text-gold-light transition">KONTAKT</a>
       </nav>
-      <a href="#" class="hidden sm:inline-block text-xs font-medium letter-spaced text-white border border-white/50 px-5 py-2.5 hover:bg-white hover:text-neutral-900 transition">UMÓW SPOTKANIE</a>
+      <a href="#kontakt" class="hidden sm:inline-block text-xs font-medium letter-spaced text-white border border-white/50 px-5 py-2.5 hover:bg-white hover:text-neutral-900 transition">UMÓW SPOTKANIE</a>
     </div>
   </header>
 
@@ -74,13 +75,23 @@
       </p>
       <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
         <a href="#kolekcja" class="px-9 py-3.5 bg-gold text-white text-sm letter-spaced font-medium hover:bg-gold-dark transition">ODKRYJ KOLEKCJĘ</a>
-        <a href="#" class="px-9 py-3.5 border border-white/40 text-white text-sm letter-spaced font-medium hover:bg-white/10 transition">POZNAJ NASZĄ HISTORIĘ</a>
+        <a href="#dziedzictwo" class="px-9 py-3.5 border border-white/40 text-white text-sm letter-spaced font-medium hover:bg-white/10 transition">POZNAJ NASZĄ HISTORIĘ</a>
       </div>
     </div>
   </section>
 
-  <!-- Intro -->
-  <section id="filozofia" class="max-w-4xl mx-auto px-6 py-28 text-center">
+  <!-- Press strip -->
+  <section class="border-b border-neutral-200 py-10 bg-cream">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="text-center text-xs letter-spaced text-neutral-400 mb-6">O NAS PISZĄ</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-14 gap-y-4 text-neutral-400 font-serif text-2xl italic">
+        <span>Vogue Polska</span><span>Forbes</span><span>Elle</span><span>Twój Styl</span><span>Harper's Bazaar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Heritage / Philosophy -->
+  <section id="dziedzictwo" class="max-w-4xl mx-auto px-6 py-28 text-center">
     <p class="text-gold text-xs letter-spaced font-medium">NASZA FILOZOFIA</p>
     <h2 class="divider font-serif text-3xl sm:text-4xl mt-4 text-neutral-900">Rzemiosło, które przetrwa pokolenia</h2>
     <p class="mt-6 text-neutral-600 font-light leading-relaxed">
@@ -90,11 +101,61 @@
     </p>
   </section>
 
+  <!-- Timeline -->
+  <section class="max-w-4xl mx-auto px-6 pb-28">
+    <div class="text-center mb-16">
+      <p class="text-gold text-xs letter-spaced font-medium">NASZA HISTORIA</p>
+      <h2 class="font-serif text-3xl sm:text-4xl mt-4">Cztery dekady precyzji</h2>
+    </div>
+    <div class="relative pl-10 sm:pl-0">
+      <div class="timeline-line absolute left-10 sm:left-1/2 top-0 bottom-0 w-px sm:-translate-x-1/2"></div>
+      <div class="space-y-14">
+        <div class="relative sm:grid sm:grid-cols-2 sm:gap-10 items-center">
+          <div class="absolute left-10 sm:left-1/2 -translate-x-1/2 -translate-y-1 h-2.5 w-2.5 rounded-full bg-gold"></div>
+          <div class="sm:text-right sm:pr-10">
+            <p class="font-serif text-3xl text-gold-dark">1987</p>
+            <h3 class="font-serif text-xl mt-1">Narodziny atelier</h3>
+            <p class="text-sm text-neutral-500 font-light mt-2">Rodzina Laurent zakłada niewielką pracownię zegarmistrzowską w Genewie, z pasji do precyzyjnego rzemiosła.</p>
+          </div>
+          <div class="hidden sm:block"></div>
+        </div>
+        <div class="relative sm:grid sm:grid-cols-2 sm:gap-10 items-center">
+          <div class="absolute left-10 sm:left-1/2 -translate-x-1/2 -translate-y-1 h-2.5 w-2.5 rounded-full bg-gold"></div>
+          <div class="hidden sm:block"></div>
+          <div class="sm:pl-10">
+            <p class="font-serif text-3xl text-gold-dark">1998</p>
+            <h3 class="font-serif text-xl mt-1">Debiut kolekcji Signature</h3>
+            <p class="text-sm text-neutral-500 font-light mt-2">Otwarcie pierwszego butiku firmowego i premiera kolekcji, która do dziś definiuje styl marki.</p>
+          </div>
+        </div>
+        <div class="relative sm:grid sm:grid-cols-2 sm:gap-10 items-center">
+          <div class="absolute left-10 sm:left-1/2 -translate-x-1/2 -translate-y-1 h-2.5 w-2.5 rounded-full bg-gold"></div>
+          <div class="sm:text-right sm:pr-10">
+            <p class="font-serif text-3xl text-gold-dark">2011</p>
+            <h3 class="font-serif text-xl mt-1">Grand Prix d'Horlogerie</h3>
+            <p class="text-sm text-neutral-500 font-light mt-2">Model Château Automatik zdobywa uznanie międzynarodowego jury zegarmistrzów.</p>
+          </div>
+          <div class="hidden sm:block"></div>
+        </div>
+        <div class="relative sm:grid sm:grid-cols-2 sm:gap-10 items-center">
+          <div class="absolute left-10 sm:left-1/2 -translate-x-1/2 -translate-y-1 h-2.5 w-2.5 rounded-full bg-gold"></div>
+          <div class="hidden sm:block"></div>
+          <div class="sm:pl-10">
+            <p class="font-serif text-3xl text-gold-dark">2024</p>
+            <h3 class="font-serif text-xl mt-1">Salon w Warszawie</h3>
+            <p class="text-sm text-neutral-500 font-light mt-2">Aurelia otwiera prywatny salon w Warszawie, przybliżając europejskie rzemiosło polskim kolekcjonerom.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Collection -->
   <section id="kolekcja" class="max-w-7xl mx-auto px-6 pb-28">
     <div class="text-center mb-16">
       <p class="text-gold text-xs letter-spaced font-medium">WYBRANE MODELE</p>
       <h2 class="font-serif text-3xl sm:text-4xl mt-4">Kolekcja Signature</h2>
+      <p class="mt-4 text-neutral-500 font-light max-w-lg mx-auto">Zegarki i biżuteria łączone ręcznie w naszym atelier — każdy egzemplarz numerowany i wpisany do rejestru pochodzenia.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       <div class="group">
@@ -103,9 +164,21 @@
           <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 1"/></svg>
         </div>
         <div class="mt-5 text-center">
-          <h3 class="font-serif text-xl">Château Automatik</h3>
+          <p class="text-[11px] letter-spaced text-gold">ZEGARKI</p>
+          <h3 class="font-serif text-xl mt-1">Château Automatik</h3>
           <p class="text-sm text-neutral-500 font-light mt-1">18-karatowe różowe złoto, skóra krokodyla</p>
           <p class="mt-3 text-gold-dark font-medium">54 900 zł</p>
+        </div>
+      </div>
+      <div class="group">
+        <div class="aspect-[4/5] bg-gradient-to-br from-sand to-neutral-300 flex items-center justify-center overflow-hidden">
+          <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l3 3"/><path d="M9 3h6"/></svg>
+        </div>
+        <div class="mt-5 text-center">
+          <p class="text-[11px] letter-spaced text-gold">ZEGARKI</p>
+          <h3 class="font-serif text-xl mt-1">Méridien Chronograph</h3>
+          <p class="text-sm text-neutral-500 font-light mt-1">Stal chirurgiczna, tarcza z macicy perłowej</p>
+          <p class="mt-3 text-gold-dark font-medium">28 900 zł</p>
         </div>
       </div>
       <div class="group">
@@ -113,7 +186,8 @@
           <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg>
         </div>
         <div class="mt-5 text-center">
-          <h3 class="font-serif text-xl">Étoile — pierścionek</h3>
+          <p class="text-[11px] letter-spaced text-gold">PIERŚCIONKI</p>
+          <h3 class="font-serif text-xl mt-1">Étoile</h3>
           <p class="text-sm text-neutral-500 font-light mt-1">Platyna, diament 1,2 ct</p>
           <p class="mt-3 text-gold-dark font-medium">39 900 zł</p>
         </div>
@@ -123,9 +197,32 @@
           <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M12 2C9 6 6 9 6 13a6 6 0 0012 0c0-4-3-7-6-11z"/></svg>
         </div>
         <div class="mt-5 text-center">
-          <h3 class="font-serif text-xl">Perle — naszyjnik</h3>
+          <p class="text-[11px] letter-spaced text-gold">NASZYJNIKI</p>
+          <h3 class="font-serif text-xl mt-1">Perle</h3>
           <p class="text-sm text-neutral-500 font-light mt-1">Perły Akoya, złoto 18-karatowe</p>
           <p class="mt-3 text-gold-dark font-medium">24 500 zł</p>
+        </div>
+      </div>
+      <div class="group">
+        <div class="aspect-[4/5] bg-gradient-to-br from-sand to-neutral-300 flex items-center justify-center overflow-hidden">
+          <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><circle cx="9" cy="12" r="3"/><circle cx="15" cy="12" r="3"/></svg>
+        </div>
+        <div class="mt-5 text-center">
+          <p class="text-[11px] letter-spaced text-gold">KOLCZYKI</p>
+          <h3 class="font-serif text-xl mt-1">Lumière</h3>
+          <p class="text-sm text-neutral-500 font-light mt-1">Białe złoto 18-karatowe, diamenty brylantowe 0,8 ct</p>
+          <p class="mt-3 text-gold-dark font-medium">18 400 zł</p>
+        </div>
+      </div>
+      <div class="group">
+        <div class="aspect-[4/5] bg-gradient-to-br from-sand to-neutral-300 flex items-center justify-center overflow-hidden">
+          <svg class="h-24 w-24 text-white/70 group-hover:scale-105 transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/><path d="M4 12c2 3 4 3 6 0"/></svg>
+        </div>
+        <div class="mt-5 text-center">
+          <p class="text-[11px] letter-spaced text-gold">BRANSOLETKI</p>
+          <h3 class="font-serif text-xl mt-1">Solstice</h3>
+          <p class="text-sm text-neutral-500 font-light mt-1">Żółte złoto próby 750, motyw plecionego warkocza</p>
+          <p class="mt-3 text-gold-dark font-medium">21 900 zł</p>
         </div>
       </div>
     </div>
@@ -134,23 +231,72 @@
     </div>
   </section>
 
+  <!-- Craftsmanship process -->
+  <section class="bg-sand py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-gold-dark text-xs letter-spaced font-medium">JAK POWSTAJE NASZE DZIEŁO</p>
+        <h2 class="font-serif text-3xl sm:text-4xl mt-4">Od szkicu do arcydzieła</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold">01</p>
+          <h3 class="font-serif text-lg mt-3">Szkic i projekt</h3>
+          <p class="text-sm text-neutral-600 font-light mt-2">Każdy model rodzi się jako ręczny szkic, zanim trafi na deskę kreślarską projektanta.</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold">02</p>
+          <h3 class="font-serif text-lg mt-3">Dobór kamieni</h3>
+          <p class="text-sm text-neutral-600 font-light mt-2">Nasi gemolodzy akceptują mniej niż 2% kamieni, które poddają ocenie.</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold">03</p>
+          <h3 class="font-serif text-lg mt-3">Ręczny montaż</h3>
+          <p class="text-sm text-neutral-600 font-light mt-2">Zegarmistrz składa mechanizm ręcznie — nierzadko ponad 80 godzin pracy nad jednym egzemplarzem.</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold">04</p>
+          <h3 class="font-serif text-lg mt-3">Kontrola jakości</h3>
+          <p class="text-sm text-neutral-600 font-light mt-2">Każdy egzemplarz przechodzi 42-punktową kontrolę, zanim opuści atelier.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Feature strip -->
   <section class="bg-neutral-900 py-20">
-    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12 text-center text-white">
-      <div>
-        <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <h3 class="font-serif text-xl">Dożywotnia gwarancja</h3>
-        <p class="text-sm text-white/60 font-light mt-2">Na każdy element kolekcji Signature.</p>
-      </div>
-      <div>
-        <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-        <h3 class="font-serif text-xl">Dyskretna dostawa</h3>
-        <p class="text-sm text-white/60 font-light mt-2">Ubezpieczona, zapieczętowana i dostarczona osobiście.</p>
-      </div>
-      <div>
-        <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <h3 class="font-serif text-xl">Osobiste doradztwo</h3>
-        <p class="text-sm text-white/60 font-light mt-2">Indywidualne spotkania w naszym butiku.</p>
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 text-center text-white">
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <h3 class="font-serif text-xl">Dożywotnia gwarancja</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Na każdy element kolekcji Signature.</p>
+        </div>
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <h3 class="font-serif text-xl">Dyskretna dostawa</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Ubezpieczona, zapieczętowana i dostarczona osobiście.</p>
+        </div>
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <h3 class="font-serif text-xl">Osobiste doradztwo</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Indywidualne spotkania w naszym butiku.</p>
+        </div>
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6.586-6.586a2 2 0 012.828 0l1.172 1.172a2 2 0 010 2.828L13 15l-4 1 1-4z"/></svg>
+          <h3 class="font-serif text-xl">Grawerowanie</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Osobista dedykacja lub symbol rodzinny na każdym zamówieniu.</p>
+        </div>
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          <h3 class="font-serif text-xl">Certyfikat autentyczności</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Międzynarodowy certyfikat i pełna historia pochodzenia kamieni.</p>
+        </div>
+        <div>
+          <svg class="h-8 w-8 mx-auto text-gold-light mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <h3 class="font-serif text-xl">Serwis i konserwacja</h3>
+          <p class="text-sm text-white/60 font-light mt-2">Bezpłatny przegląd mechanizmu co 24 miesiące w dowolnym salonie.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -161,6 +307,46 @@
       „Prawdziwa elegancja nie krzyczy — ujawnia się w detalu, który dostrzega się dopiero za drugim spojrzeniem."
     </p>
     <p class="mt-6 text-sm letter-spaced text-gold-dark font-medium">— MARIE LAURENT, GŁÓWNA PROJEKTANTKA</p>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="bg-sand py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-gold-dark text-xs letter-spaced font-medium">GŁOS NASZYCH KLIENTÓW</p>
+        <h2 class="font-serif text-3xl sm:text-4xl mt-4">Zaufanie budowane latami</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div class="bg-cream p-8">
+          <p class="font-serif italic text-lg text-neutral-700 leading-relaxed">„Aurelia to jedyny dom jubilerski, w którym poczułam, że kupuję dziedzictwo, nie tylko przedmiot."</p>
+          <p class="mt-6 text-sm letter-spaced text-gold-dark font-medium">— ANNA WYSOCKA</p>
+          <p class="text-xs text-neutral-500 mt-1">Kolekcjonerka</p>
+        </div>
+        <div class="bg-cream p-8">
+          <p class="font-serif italic text-lg text-neutral-700 leading-relaxed">„Obsługa na poziomie, którego nie spotkałem nigdzie indziej w Europie. Château noszę codziennie od trzech lat."</p>
+          <p class="mt-6 text-sm letter-spaced text-gold-dark font-medium">— PIOTR MALINOWSKI</p>
+          <p class="text-xs text-neutral-500 mt-1">Przedsiębiorca</p>
+        </div>
+        <div class="bg-cream p-8">
+          <p class="font-serif italic text-lg text-neutral-700 leading-relaxed">„Personalizacja pierścionka zaręczynowego przekroczyła moje oczekiwania — detal, o którym nawet nie pomyślałam."</p>
+          <p class="mt-6 text-sm letter-spaced text-gold-dark font-medium">— KAROLINA ZIĘBA</p>
+          <p class="text-xs text-neutral-500 mt-1">Klientka</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIP Newsletter -->
+  <section class="bg-neutral-900 py-24">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <p class="text-gold-light text-xs letter-spaced font-medium">KRĄG AURELIA</p>
+      <h2 class="font-serif text-3xl sm:text-4xl text-white mt-4">Dołącz do prywatnego grona</h2>
+      <p class="mt-4 text-white/70 font-light">Bądź pierwszym, który dowie się o limitowanych edycjach, prywatnych pokazach kolekcji i zaproszeniach do salonu.</p>
+      <form class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="Twój adres e-mail" class="flex-1 px-5 py-3.5 bg-white/5 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold-light">
+        <button type="button" class="px-7 py-3.5 bg-gold text-white text-sm letter-spaced font-medium hover:bg-gold-dark transition">ZAPISZ SIĘ</button>
+      </form>
+    </div>
   </section>
 
   <!-- CTA -->
