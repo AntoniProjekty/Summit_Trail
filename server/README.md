@@ -47,9 +47,19 @@ Sesja przenoszona jest przez ciasteczko `stt_session` (httpOnly). Frontend musi 
 
 To jest zwykła aplikacja Node.js — działa na każdym hostingu, który uruchamia `node`:
 
-1. **Render / Railway / Fly.io** (najprościej, darmowe plany startowe): połącz z repozytorium GitHub, wskaż katalog `server/`, komenda startowa `npm start`, ustaw zmienne `NODE_ENV=production` i `ALLOWED_ORIGINS=<adres Twojego frontendu>`.
-2. **Własny VPS**: `git clone`, `cd server && npm install --production`, uruchom pod `pm2` lub jako `systemd` service, wystaw przez Nginx z certyfikatem TLS (wymagane — ciasteczka sesji w produkcji wymagają `Secure` + HTTPS).
-3. Zapisz adres wdrożonego API (np. `https://api.summitandtrail.pl`) i wskaż go w froncie — patrz `web/index.html`, stała `window.STT_API_BASE` na początku skryptu.
+### Render (gotowy Blueprint — najszybsza opcja)
+
+W repozytorium jest plik [`render.yaml`](../render.yaml), który opisuje usługę za Ciebie:
+
+1. Wejdź na [render.com](https://render.com), zaloguj się przez GitHub.
+2. **New +** → **Blueprint** → wybierz to repozytorium (branch `claude/summit-trail-ecommerce-spec-pdgh6e` lub `main`) → Render sam wykryje `render.yaml` i zaproponuje usługę `summit-trail-api` (root `server/`, plan Free).
+3. Zatwierdź (**Apply**) — po zbudowaniu Render przypisze adres typu `https://summit-trail-api.onrender.com` (jeśli nazwa wolna; jeśli zajęta, dostaniesz wariant z losowym sufiksem).
+4. Sprawdź zmienną `ALLOWED_ORIGINS` w ustawieniach usługi — musi wskazywać na realny adres frontendu (domyślnie w `render.yaml` wpisany jest adres GitHub Pages tego repo).
+5. Skopiuj przypisany adres API i wpisz go w `web/index.html` w linii `window.STT_API_BASE = window.STT_API_BASE || "..."` (na początku sekcji `<script>` przed głównym kodem), commit i push — frontend na GitHub Pages przełączy się z `localStorage` na realne konta.
+
+Alternatywy bez Blueprintu — **Railway / Fly.io**: połącz z repozytorium GitHub, wskaż katalog `server/`, komenda startowa `npm start`, ustaw zmienne `NODE_ENV=production` i `ALLOWED_ORIGINS=<adres Twojego frontendu>`.
+
+**Własny VPS**: `git clone`, `cd server && npm install --production`, uruchom pod `pm2` lub jako `systemd` service, wystaw przez Nginx z certyfikatem TLS (wymagane — ciasteczka sesji w produkcji wymagają `Secure` + HTTPS).
 
 ⚠️ Baza SQLite to plik na dysku kontenera — na platformach z efemerycznym systemem plików (część darmowych planów Render/Railway) dane przepadną po restarcie kontenera. Do trwałego wdrożenia produkcyjnego użyj wolumenu trwałego (persistent disk) albo podmień na hostowaną bazę Postgres (np. Neon, Supabase) — schemat w `src/db.js` jest prosty do przeniesienia.
 

@@ -452,11 +452,15 @@
     <div><b>Zwroty</b><br>14 dni na odstąpienie od umowy</div>
     <div><b>Kontakt</b><br>kontakt@summitandtrail.pl</div>
   </div>
-  <div class="wrap demo-note" style="margin-top:22px;">Prototyp demonstracyjny sklepu — koszyk i płatność są symulowane, żadne dane nie są wysyłane ani przetwarzane.</div>
+  <div class="wrap demo-note" style="margin-top:22px;">Prototyp sklepu — płatność jest symulowana (brak integracji z operatorem płatności), konto, koszyk i zamówienia są zapisywane na serwerze.</div>
 </footer>
 
 <div class="toast" id="toast"></div>
 
+<script>
+  // Adres wdrożonego backendu (server/, patrz server/README.md). Puste = tryb offline (localStorage).
+  window.STT_API_BASE = window.STT_API_BASE || "https://summit-trail-api.onrender.com";
+</script>
 <script>
 (function(){
 "use strict";
@@ -486,7 +490,8 @@ async function initApi(){
   if (!STT_API_BASE) { apiAvailable = false; return; }
   try {
     const ctrl = new AbortController();
-    const timer = setTimeout(()=>ctrl.abort(), 2500);
+    // Darmowy plan Render usypia instancję po bezczynności — pierwsze wybudzenie może trwać nawet ~30-50s.
+    const timer = setTimeout(()=>ctrl.abort(), 20000);
     const res = await fetch(STT_API_BASE + "/api/health", { credentials: "include", signal: ctrl.signal });
     clearTimeout(timer);
     apiAvailable = res.ok;
@@ -1899,6 +1904,8 @@ document.addEventListener("click", (e)=>{
 window.addEventListener("hashchange", render);
 
 (async function bootstrap(){
+  // Darmowa instancja backendu bywa uśpiona i budzi się nawet ~30-50s — bez tego #app byłby pusty przez ten czas.
+  document.getElementById("app").innerHTML = '<div class="wrap" style="padding:60px 0;text-align:center;color:var(--ink-faint);">Wczytywanie…</div>';
   await initApi();
   render();
 })();

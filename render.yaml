@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: summit-trail-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://antospuszczewicz-ai.github.io
