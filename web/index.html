@@ -1,0 +1,1906 @@
+<title>Summit & Trail — sklep outdoorowy</title>
+<style>
+  :root {
+    --paper: #EEF0E7; --paper-raised: #FFFFFF; --paper-sunk: #E2E6D9;
+    --ink: #1B231D; --ink-soft: #465241; --ink-faint: #7C8874;
+    --line: #D6DBC9; --line-strong: #BFC7AC;
+    --forest: #2F4A3A; --forest-ink: #24382C;
+    --rust: #C1521F; --rust-ink: #A2410F;
+    --shadow: 0 10px 28px rgba(30,40,25,0.10);
+    color-scheme: light dark;
+    --font: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #101710; --paper-raised: #172018; --paper-sunk: #0A0F0A;
+      --ink: #E9EDE2; --ink-soft: #AEBAA4; --ink-faint: #6E7A66;
+      --line: #263021; --line-strong: #37432E;
+      --forest: #6FAE86; --forest-ink: #8FC29E;
+      --rust: #FF7A45; --rust-ink: #FF9469;
+      --shadow: 0 10px 28px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101710; --paper-raised: #172018; --paper-sunk: #0A0F0A;
+    --ink: #E9EDE2; --ink-soft: #AEBAA4; --ink-faint: #6E7A66;
+    --line: #263021; --line-strong: #37432E;
+    --forest: #6FAE86; --forest-ink: #8FC29E; --rust: #FF7A45; --rust-ink: #FF9469;
+    --shadow: 0 10px 28px rgba(0,0,0,0.4);
+  }
+  :root[data-theme="light"] {
+    --paper: #EEF0E7; --paper-raised: #FFFFFF; --paper-sunk: #E2E6D9;
+    --ink: #1B231D; --ink-soft: #465241; --ink-faint: #7C8874;
+    --line: #D6DBC9; --line-strong: #BFC7AC;
+    --forest: #2F4A3A; --forest-ink: #24382C; --rust: #C1521F; --rust-ink: #A2410F;
+    --shadow: 0 10px 28px rgba(30,40,25,0.10);
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { *{ animation-duration:.001ms!important; transition-duration:.001ms!important; } }
+  html,body{ margin:0; }
+  body{
+    background: var(--paper); color: var(--ink); font-family: var(--font);
+    font-size: 16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; }
+  ::selection{ background: color-mix(in srgb, var(--rust) 30%, transparent); }
+  a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; border-radius:3px; }
+
+  /* ---------- motion ---------- */
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes pageIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes pulse{ 0%{ transform:scale(1); } 35%{ transform:scale(1.4); } 100%{ transform:scale(1); } }
+  @keyframes toDown{ from{ opacity:0; max-height:0; } to{ opacity:1; max-height:200px; } }
+  #app.page-anim{ animation: pageIn .38s cubic-bezier(.16,.8,.3,1) both; }
+  .p-card{ animation: cardIn .5s cubic-bezier(.16,.8,.3,1) both; }
+  .cart-count.pulse{ animation: pulse .45s ease; }
+  .btn, .filter-chip, .pill, .swatch, .tab-btn, .wish-btn, .option-card, .navlink, .cat-tile, .search-item {
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+  }
+  .btn:active{ transform:scale(.96); }
+  .wish-btn:active{ transform:scale(.82); }
+  .filter-chip:hover{ border-color:var(--line-strong); }
+  .ship-progress-fill{ transition: width .4s cubic-bezier(.16,.8,.3,1); }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 5vw; }
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(10px); border-bottom:1px solid var(--line);
+  }
+  .site-bar{ display:flex; align-items:center; gap:26px; padding:16px 0; }
+  .logo{ display:flex; align-items:center; gap:9px; font-weight:800; font-size:1.05rem; letter-spacing:-0.01em; flex:none; }
+  .logo-mark{ width:26px; height:26px; flex:none; }
+  .site-nav{ display:flex; gap:22px; flex:1; }
+  .site-nav a{ font-weight:700; font-size:0.92rem; color: var(--ink-soft); padding:6px 2px; border-bottom:2px solid transparent; }
+  .site-nav a:hover, .site-nav a.active{ color: var(--ink); border-color: var(--rust); }
+  .bar-actions{ display:flex; align-items:center; gap:14px; flex:none; }
+  .icon-btn{ background:none; border:none; cursor:pointer; color:var(--ink); position:relative; padding:6px; display:flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:50%; }
+  .icon-btn:hover{ background:var(--paper-sunk); }
+  .avatar-badge{ width:22px; height:22px; border-radius:50%; background:var(--forest); color:#EAF3EC; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.75rem; }
+  .cart-count{
+    position:absolute; top:-3px; right:-3px; background:var(--rust); color:#2a1207; font-family:var(--font-mono);
+    font-size:0.62rem; font-weight:800; border-radius:999px; min-width:16px; height:16px; display:flex; align-items:center; justify-content:center; padding:0 3px;
+  }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--line-strong); border-radius:8px; padding:7px 10px; font-weight:700; font-size:.85rem; cursor:pointer; }
+
+  /* ---------- generic ---------- */
+  .eyebrow{ font-family:var(--font-mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--forest-ink); font-weight:700; margin:0 0 10px; }
+  .h-title{ font-weight:800; letter-spacing:-0.02em; text-wrap:balance; margin:0 0 14px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.94rem; padding:13px 24px; border-radius:10px; cursor:pointer; border:1px solid transparent; }
+  .btn-primary{ background: var(--forest); color:#EAF3EC; }
+  .btn-primary:hover{ background: var(--forest-ink); }
+  .btn-rust{ background: var(--rust); color:#2A1207; }
+  .btn-rust:hover{ background: var(--rust-ink); }
+  .btn-outline{ background:transparent; border-color:var(--line-strong); color:var(--ink); }
+  .btn-outline:hover{ border-color:var(--ink-faint); }
+  .btn-block{ width:100%; justify-content:center; }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .price{ font-family:var(--font-mono); font-weight:800; font-variant-numeric:tabular-nums; }
+
+  /* ---------- pages ---------- */
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; overflow:hidden; background: var(--forest); color:#EAF3EC;
+    padding:76px 0 64px;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0 1px, transparent 1px 34px),
+      repeating-radial-gradient(circle at 80% 75%, rgba(255,255,255,0.05) 0 1px, transparent 1px 46px);
+    opacity:.8;
+  }
+  .hero-inner{ position:relative; max-width:640px; }
+  .hero .eyebrow{ color:#BFE0CB; }
+  .hero h1{ font-size:clamp(2.1rem,4.6vw,3.2rem); line-height:1.08; margin:0 0 18px; }
+  .hero h1 .hl{ color: var(--rust-ink); }
+  .hero p{ font-size:1.08rem; color:#D7E7DC; max-width:48ch; margin:0 0 28px; }
+  .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+  .hero .btn-outline{ border-color:rgba(255,255,255,.35); color:#EAF3EC; }
+
+  /* ---------- category tiles ---------- */
+  .section{ padding:60px 0; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:26px; flex-wrap:wrap; }
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .cat-tile{
+    background: var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:22px;
+    display:flex; flex-direction:column; gap:10px; transition: border-color .15s ease, transform .15s ease;
+  }
+  .cat-tile:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .cat-tile .cat-icon{ width:52px; height:52px; }
+  .cat-tile b{ font-size:1.02rem; }
+  .cat-tile span.count{ font-size:.82rem; color:var(--ink-faint); }
+
+  /* ---------- product grid & card ---------- */
+  .filter-row{ display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap; }
+  .filter-chip{
+    border:1px solid var(--line-strong); background:transparent; color:var(--ink-soft); border-radius:999px;
+    padding:8px 16px; font-weight:700; font-size:.86rem; cursor:pointer;
+  }
+  .filter-chip.active{ background:var(--forest); color:#EAF3EC; border-color:var(--forest); }
+  .product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .p-card{
+    display:flex; flex-direction:column; background:var(--paper-raised); border:1px solid var(--line); border-radius:16px;
+    overflow:hidden; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .p-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  .p-card .thumb{ aspect-ratio:4/3; background:var(--paper-sunk); display:flex; align-items:center; justify-content:center; position:relative; padding:18px; }
+  .p-card .thumb svg{ width:78%; height:78%; }
+  .p-badge{ position:absolute; top:12px; left:12px; background:var(--rust); color:#2A1207; font-size:.68rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:4px 9px; border-radius:6px; }
+  .p-body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .p-cat{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:700; }
+  .p-name{ font-weight:800; font-size:1.02rem; letter-spacing:-0.01em; }
+  .p-teaser{ font-size:.86rem; color:var(--ink-soft); flex:1; }
+  .mini-swatches{ display:flex; gap:5px; margin:1px 0 2px; }
+  .mini-swatch{ width:13px; height:13px; border-radius:50%; border:1px solid var(--line-strong); }
+  .p-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+  .p-price{ font-size:1.08rem; }
+  .p-go{ font-size:.84rem; font-weight:800; color:var(--forest-ink); }
+
+  /* ---------- trust bar ---------- */
+  .trust-bar{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding:34px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .trust-item{ display:flex; gap:12px; align-items:flex-start; }
+  .trust-item svg{ width:26px; height:26px; flex:none; color:var(--forest-ink); }
+  .trust-item b{ display:block; font-size:.9rem; margin-bottom:2px; }
+  .trust-item span{ font-size:.8rem; color:var(--ink-faint); }
+
+  /* ---------- newsletter ---------- */
+  .newsletter{ background:var(--paper-sunk); border-radius:20px; padding:40px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .newsletter h3{ margin:0 0 6px; font-size:1.2rem; }
+  .newsletter p{ margin:0; color:var(--ink-soft); font-size:.9rem; }
+  .newsletter form{ display:flex; gap:8px; flex-wrap:wrap; }
+  .newsletter input{ border:1px solid var(--line-strong); background:var(--paper-raised); border-radius:9px; padding:11px 14px; font-size:.9rem; min-width:220px; color:var(--ink); }
+
+  /* ---------- breadcrumb ---------- */
+  .crumbs{ font-size:.82rem; color:var(--ink-faint); padding:22px 0 0; }
+  .crumbs a{ color:var(--ink-soft); font-weight:600; }
+  .crumbs a:hover{ color:var(--forest-ink); }
+
+  /* ---------- PDP ---------- */
+  .pdp{ display:grid; grid-template-columns:1fr 1fr; gap:44px; padding:26px 0 50px; align-items:start; }
+  .pdp-gallery{ position:sticky; top:90px; }
+  .pdp-frame{ background:var(--paper-sunk); border-radius:20px; padding:34px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
+  .pdp-frame svg{ width:85%; height:85%; }
+  .swatch-row{ display:flex; gap:10px; margin-top:14px; }
+  .swatch{ width:30px; height:30px; border-radius:8px; border:2px solid var(--line-strong); cursor:pointer; }
+  .swatch.active{ border-color:var(--forest-ink); box-shadow:0 0 0 2px var(--paper), 0 0 0 3px var(--forest-ink); }
+
+  .pdp-info .p-cat{ margin-bottom:6px; }
+  .pdp-info h1{ font-size:clamp(1.6rem,2.6vw,2.1rem); margin:0 0 8px; letter-spacing:-0.02em; }
+  .pdp-sku{ font-family:var(--font-mono); font-size:.78rem; color:var(--ink-faint); margin-bottom:16px; }
+  .pdp-price{ font-size:1.9rem; margin-bottom:20px; }
+  .pdp-price .was{ font-size:1rem; color:var(--ink-faint); text-decoration:line-through; font-weight:600; margin-right:8px; }
+
+  .variant-block{ margin-bottom:18px; }
+  .variant-label{ font-size:.82rem; font-weight:800; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .variant-label .sel{ color:var(--ink-faint); font-weight:600; }
+  .pill-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill{
+    border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px;
+    padding:9px 14px; font-size:.85rem; font-weight:700; cursor:pointer;
+  }
+  .pill.active{ border-color:var(--forest-ink); background: color-mix(in srgb, var(--forest) 12%, var(--paper-raised)); }
+
+  .qty-row{ display:flex; align-items:center; gap:14px; margin:22px 0; flex-wrap:wrap; }
+  .qty-stepper{ display:flex; align-items:center; border:1px solid var(--line-strong); border-radius:9px; }
+  .qty-stepper button{ background:none; border:none; width:36px; height:38px; font-size:1.1rem; cursor:pointer; color:var(--ink); }
+  .qty-stepper span{ width:34px; text-align:center; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  .ship-note{ display:flex; gap:10px; align-items:flex-start; font-size:.84rem; color:var(--ink-soft); background:var(--paper-sunk); border-radius:10px; padding:12px 14px; margin-top:20px; }
+  .ship-note svg{ width:18px; height:18px; flex:none; margin-top:1px; color:var(--forest-ink); }
+
+  .tabs{ display:flex; gap:4px; border-bottom:1px solid var(--line); margin:44px 0 0; }
+  .tab-btn{ background:none; border:none; padding:12px 18px; font-weight:700; font-size:.9rem; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab-btn.active{ color:var(--ink); border-color:var(--rust); }
+  .tab-panel{ display:none; padding:26px 0 10px; max-width:70ch; }
+  .tab-panel.active{ display:block; }
+  .tab-panel h3{ font-size:1.05rem; margin:1.4em 0 .5em; }
+  .tab-panel h3:first-child{ margin-top:0; }
+  .spec-table{ width:100%; border-collapse:collapse; font-size:.88rem; }
+  .spec-table td{ padding:9px 0; border-bottom:1px solid var(--line); }
+  .spec-table td:first-child{ color:var(--ink-faint); width:46%; }
+  .spec-table td:last-child{ font-weight:600; }
+
+  /* ---------- contact tables & form ---------- */
+  .info-table{ width:100%; border-collapse:collapse; font-size:.88rem; margin-bottom:10px; min-width:480px; }
+  .info-table th{ text-align:left; padding:10px 12px; background:var(--paper-sunk); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); font-weight:800; }
+  .info-table td{ padding:12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .info-table tr:last-child td{ border-bottom:none; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin-bottom:40px; }
+  .contact-form textarea, .contact-form select{
+    width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+    border-radius:9px; padding:11px 13px; font-size:.9rem; font-family:inherit;
+  }
+
+  .related-head{ font-weight:800; font-size:1.15rem; margin:0 0 18px; }
+
+  /* ---------- cart / checkout ---------- */
+  .page-head{ padding:34px 0 6px; }
+  .page-head h1{ font-size:clamp(1.6rem,2.6vw,2rem); margin:0; letter-spacing:-0.02em; }
+
+  .cart-layout{ display:grid; grid-template-columns:1fr 320px; gap:36px; padding:26px 0 70px; align-items:start; }
+  .cart-line{ display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line); align-items:center; }
+  .cart-line .thumb-sm{ width:70px; height:70px; background:var(--paper-sunk); border-radius:10px; flex:none; display:flex; align-items:center; justify-content:center; padding:8px; }
+  .cart-line .thumb-sm svg{ width:100%; height:100%; }
+  .cart-line .grow{ flex:1; min-width:0; }
+  .cart-line .name{ font-weight:700; font-size:.95rem; }
+  .cart-line .variant{ font-size:.8rem; color:var(--ink-faint); margin-top:2px; }
+  .cart-line .remove{ font-size:.78rem; color:var(--ink-faint); background:none; border:none; cursor:pointer; margin-top:6px; padding:0; text-decoration:underline; }
+  .cart-line .line-right{ text-align:right; flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+
+  .summary-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:22px; position:sticky; top:90px; }
+  .summary-row{ display:flex; justify-content:space-between; font-size:.9rem; padding:7px 0; color:var(--ink-soft); }
+  .summary-row.total{ border-top:1px solid var(--line); margin-top:8px; padding-top:14px; font-size:1.1rem; font-weight:800; color:var(--ink); }
+  .empty-state{ text-align:center; padding:70px 0; color:var(--ink-soft); }
+  .empty-state svg{ width:56px; height:56px; margin-bottom:16px; color:var(--ink-faint); }
+
+  .checkout-layout{ display:grid; grid-template-columns:1fr 320px; gap:36px; padding:26px 0 70px; align-items:start; }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px; }
+  .form-grid .full{ grid-column:1/-1; }
+  .form-grid input{ width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); border-radius:9px; padding:11px 13px; font-size:.9rem; color:var(--ink); }
+  .field-label{ font-size:.76rem; font-weight:700; color:var(--ink-faint); margin-bottom:5px; display:block; }
+  .option-card{ border:1px solid var(--line-strong); border-radius:11px; padding:13px 16px; display:flex; align-items:center; gap:12px; margin-bottom:8px; cursor:pointer; }
+  .option-card.active{ border-color:var(--forest-ink); background: color-mix(in srgb, var(--forest) 10%, var(--paper-raised)); }
+  .option-card input{ accent-color:var(--forest-ink); }
+  .option-card .grow{ flex:1; }
+  .option-card b{ display:block; font-size:.9rem; }
+  .option-card span{ font-size:.78rem; color:var(--ink-faint); }
+  .option-card .op-price{ font-weight:700; font-size:.86rem; }
+  .block-label{ font-weight:800; font-size:.9rem; margin:26px 0 10px; }
+  .demo-note{ font-size:.78rem; color:var(--ink-faint); margin-top:14px; }
+
+  .confirm-wrap{ max-width:560px; margin:0 auto; padding:70px 0 90px; text-align:center; }
+  .confirm-icon{ width:64px; height:64px; margin:0 auto 20px; color:var(--forest-ink); }
+  .confirm-wrap h1{ font-size:1.8rem; margin:0 0 10px; }
+  .order-no{ font-family:var(--font-mono); font-weight:700; color:var(--rust-ink); }
+  .confirm-summary{ text-align:left; background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin:26px 0; }
+
+  /* ---------- account / membership ---------- */
+  .auth-tabs{ display:flex; gap:6px; margin-bottom:24px; background:var(--paper-sunk); border-radius:11px; padding:5px; max-width:340px; }
+  .auth-tab{ flex:1; text-align:center; padding:9px 0; border-radius:8px; font-weight:700; font-size:.88rem; cursor:pointer; color:var(--ink-soft); background:none; border:none; }
+  .auth-tab.active{ background:var(--paper-raised); color:var(--ink); box-shadow:var(--shadow); }
+  .auth-form{ max-width:380px; display:flex; flex-direction:column; gap:12px; }
+  .auth-form input{ width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px; padding:11px 13px; font-size:.9rem; }
+  .auth-error{ color:var(--rust-ink); font-size:.84rem; font-weight:600; }
+  .auth-panel{ display:none; }
+  .auth-panel.active{ display:block; }
+
+  .account-hero{ display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+  .account-avatar{ width:56px; height:56px; border-radius:50%; background:var(--forest); color:#EAF3EC; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.4rem; flex:none; }
+  .account-name{ font-weight:800; font-size:1.2rem; }
+  .account-email{ font-size:.85rem; color:var(--ink-faint); }
+
+  .tier-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:26px; }
+  .tier-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+  .tier-badge{ display:inline-flex; align-items:center; gap:6px; background:color-mix(in srgb, var(--rust) 15%, transparent); color:var(--rust-ink); font-weight:800; font-size:.82rem; padding:5px 12px; border-radius:999px; }
+  .tier-points{ font-family:var(--font-mono); font-weight:800; font-size:1.3rem; }
+  .tier-progress-track{ height:8px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .tier-progress-fill{ height:100%; background:var(--forest); border-radius:99px; transition:width .4s ease; }
+  .tier-note{ font-size:.82rem; color:var(--ink-faint); margin-top:10px; }
+  .tier-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+  .tier-mini{ border:1px solid var(--line); border-radius:12px; padding:14px; font-size:.82rem; }
+  .tier-mini.current{ border-color:var(--forest-ink); background:color-mix(in srgb, var(--forest) 8%, var(--paper-raised)); }
+  .tier-mini b{ display:block; font-size:.92rem; margin-bottom:4px; }
+
+  .order-item{ background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:10px; }
+  .order-item-head{ display:flex; justify-content:space-between; font-size:.85rem; margin-bottom:6px; }
+  .order-item-head b{ font-family:var(--font-mono); }
+  .guest-banner{ display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--paper-sunk); border-radius:12px; padding:14px 16px; margin-bottom:18px; font-size:.85rem; flex-wrap:wrap; }
+
+  footer.site{ border-top:1px solid var(--line); padding:40px 0 30px; margin-top:30px; }
+  .foot-grid{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:.85rem; color:var(--ink-faint); }
+  .foot-grid b{ color:var(--ink); }
+
+  .toast{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(12px); background:var(--forest);
+    color:#EAF3EC; padding:13px 20px; border-radius:11px; font-weight:700; font-size:.88rem; box-shadow:var(--shadow);
+    opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; z-index:80; display:flex; align-items:center; gap:8px;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---------- search ---------- */
+  .search-wrap{ position:relative; flex:1; max-width:280px; }
+  .search-input{
+    width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+    border-radius:9px; padding:9px 12px; font-size:.86rem;
+  }
+  .search-results{
+    position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); overflow:hidden; z-index:60; max-height:360px; overflow-y:auto;
+  }
+  .search-item{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-bottom:1px solid var(--line); }
+  .search-item:last-child{ border-bottom:none; }
+  .search-item:hover{ background:var(--paper-sunk); }
+  .search-thumb{ width:34px; height:34px; background:var(--paper-sunk); border-radius:7px; flex:none; display:flex; align-items:center; justify-content:center; padding:5px; }
+  .search-name{ flex:1; font-size:.85rem; font-weight:600; }
+  .search-empty{ padding:14px; font-size:.85rem; color:var(--ink-faint); }
+
+  /* ---------- ratings ---------- */
+  .rating-row{ display:flex; align-items:center; gap:5px; font-size:.78rem; }
+  .stars{ color:var(--rust); letter-spacing:1px; font-size:.82rem; }
+  .star-off{ opacity:.28; }
+  .rating-num{ font-weight:700; color:var(--ink); }
+  .rating-count{ color:var(--ink-faint); }
+
+  /* ---------- wishlist heart ---------- */
+  .wish-btn{
+    position:absolute; top:10px; right:10px; width:30px; height:30px; border-radius:50%; border:1px solid var(--line-strong);
+    background:var(--paper-raised); color:var(--ink-faint); font-size:15px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2; line-height:1;
+  }
+  .wish-btn.active{ color:var(--rust); border-color:var(--rust); }
+  .wish-btn-pdp{ flex:none; }
+
+  /* ---------- sale price ---------- */
+  .p-was{ font-size:.82rem; color:var(--ink-faint); text-decoration:line-through; font-weight:600; margin-right:6px; }
+  .omnibus-note{ font-size:.78rem; color:var(--ink-faint); margin:-12px 0 18px; }
+
+  /* ---------- shop toolbar ---------- */
+  .shop-toolbar{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+  .sort-select{ border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px; padding:9px 12px; font-size:.85rem; font-weight:600; }
+  .result-count{ font-size:.82rem; color:var(--ink-faint); }
+
+  /* ---------- shipping progress ---------- */
+  .ship-progress{ background:var(--paper-sunk); border-radius:12px; padding:14px 16px; margin-bottom:18px; font-size:.85rem; }
+  .ship-progress.done{ display:flex; align-items:center; gap:8px; color:var(--forest-ink); font-weight:700; }
+  .ship-progress.done svg{ width:18px; height:18px; flex:none; }
+  .ship-progress.muted{ color:var(--ink-faint); }
+  .ship-progress-text{ margin-bottom:9px; color:var(--ink-soft); }
+  .ship-progress-track{ height:6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .ship-progress-fill{ height:100%; background:var(--rust); border-radius:99px; transition:width .3s ease; }
+
+  /* ---------- promo code ---------- */
+  .promo-row{ display:flex; gap:8px; margin-top:14px; }
+  .promo-row input{ flex:1; border:1px solid var(--line-strong); border-radius:8px; padding:9px 11px; font-size:.85rem; background:var(--paper-raised); color:var(--ink); }
+  .promo-applied{ color:var(--rust-ink); }
+  .promo-applied button{ background:none; border:none; color:var(--ink-faint); text-decoration:underline; cursor:pointer; font-size:.78rem; margin-left:6px; }
+
+  /* ---------- reviews ---------- */
+  .review-item{ padding:16px 0; border-bottom:1px solid var(--line); }
+  .review-item:last-child{ border-bottom:none; }
+  .review-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; gap:10px; }
+  .review-author{ font-weight:700; font-size:.88rem; }
+  .review-date{ font-size:.76rem; color:var(--ink-faint); flex:none; }
+  .review-text{ font-size:.87rem; color:var(--ink-soft); margin:0; }
+
+  @media (max-width: 980px){
+    .search-wrap{ display:none; }
+    .site-nav{ display:none; }
+    .nav-toggle{ display:block; }
+    .cat-grid, .product-grid{ grid-template-columns:1fr 1fr; }
+    .pdp, .cart-layout, .checkout-layout{ grid-template-columns:1fr; }
+    .pdp-gallery{ position:static; }
+    .summary-card{ position:static; }
+    .trust-bar{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 620px){
+    .cat-grid, .product-grid{ grid-template-columns:1fr; }
+    .form-grid{ grid-template-columns:1fr; }
+    .trust-bar{ grid-template-columns:1fr; }
+    .cart-line{ flex-wrap:wrap; }
+  }
+</style>
+
+<header class="site">
+  <div class="wrap site-bar">
+    <a class="logo" href="#/" data-link>
+      <svg class="logo-mark" viewBox="0 0 26 26"><polygon points="13,3 23,22 3,22" fill="var(--forest)"/><polygon points="13,10 18,22 8,22" fill="var(--rust)"/></svg>
+      Summit &amp; Trail
+    </a>
+    <nav class="site-nav" id="siteNav">
+      <a href="#/sklep" data-link>Sklep</a>
+      <a href="#/sklep?cat=bike" data-link>E-Bike</a>
+      <a href="#/sklep?cat=tent" data-link>Sprzęt biwakowy</a>
+      <a href="#/sklep?cat=power" data-link>Zasilanie</a>
+      <a href="#/sklep?cat=accessory" data-link>Akcesoria</a>
+      <a href="#/kontakt" data-link>Kontakt</a>
+    </nav>
+    <div class="search-wrap">
+      <input type="search" id="searchInput" class="search-input" placeholder="Szukaj produktów…" autocomplete="off" aria-label="Szukaj produktów">
+      <div class="search-results" id="searchResults" hidden></div>
+    </div>
+    <div class="bar-actions">
+      <button class="icon-btn account-btn" id="accountBtn" data-link data-href="#/logowanie" aria-label="Zaloguj się">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <button class="icon-btn" id="wishBtn" data-link data-href="#/lista-zyczen" aria-label="Lista życzeń">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.6C12 5.2 13.5 4 15.5 4c4 0 5.5 4 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        <span class="cart-count" id="wishCount" hidden>0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" data-link data-href="#/koszyk" aria-label="Koszyk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="21" r="1.4" fill="currentColor" stroke="none"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+      <button class="nav-toggle" id="navToggle">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div><b>Summit &amp; Trail</b><br>E-rowery, sprzęt outdoor i biwak.</div>
+    <div><b>Dostawa</b><br>InPost, DPD, Raben (gabaryty)<br>Darmowo od 300 zł</div>
+    <div><b>Zwroty</b><br>14 dni na odstąpienie od umowy</div>
+    <div><b>Kontakt</b><br>kontakt@summitandtrail.pl</div>
+  </div>
+  <div class="wrap demo-note" style="margin-top:22px;">Prototyp demonstracyjny sklepu — koszyk i płatność są symulowane, żadne dane nie są wysyłane ani przetwarzane.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============== BACKEND API ==============
+   Set window.STT_API_BASE (e.g. in a <script> tag before this one, or by editing
+   the constant below) to the deployed Summit & Trail API URL — see server/README.md.
+   Left empty, the store runs fully offline on localStorage, exactly as before. */
+const STT_API_BASE = window.STT_API_BASE || "";
+let apiAvailable = false;
+
+async function apiFetch(path, opts){
+  opts = opts || {};
+  const res = await fetch(STT_API_BASE + path, {
+    method: opts.method || "GET",
+    credentials: "include",
+    headers: opts.body ? { "Content-Type": "application/json" } : undefined,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  let data = null;
+  try { data = await res.json(); } catch(e){ /* empty body */ }
+  if (!res.ok) throw new Error((data && data.error) || ("Błąd serwera (" + res.status + ")"));
+  return data || {};
+}
+
+async function initApi(){
+  if (!STT_API_BASE) { apiAvailable = false; return; }
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(()=>ctrl.abort(), 2500);
+    const res = await fetch(STT_API_BASE + "/api/health", { credentials: "include", signal: ctrl.signal });
+    clearTimeout(timer);
+    apiAvailable = res.ok;
+    if (apiAvailable){
+      const me = await apiFetch("/api/auth/me");
+      if (me.user){ apiUser = me.user; await loadCartFromApi(); await loadWishlistFromApi(); }
+    }
+  } catch(e){ apiAvailable = false; }
+}
+
+/* ============== DATA ============== */
+const ICONS = {
+  bike: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="45" cy="90" r="22" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="155" cy="90" r="22" stroke="var(--ink)" stroke-width="4"/>
+    <path d="M45 90 L85 50 L120 50 L155 90 M85 50 L70 30 L100 30 M120 50 L100 90 M100 90 L45 90" stroke="${color}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="100" cy="30" r="6" fill="var(--rust)"/>
+  </svg>`,
+  tent: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="85" width="160" height="9" rx="3" fill="var(--ink-faint)"/>
+    <polygon points="60,85 140,85 115,38 85,38" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="72" y1="85" x2="58" y2="104" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="85" x2="66" y2="104" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="152" cy="28" r="9" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  power: () => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="55" y="24" width="90" height="76" rx="12" stroke="var(--forest)" stroke-width="5"/>
+    <rect x="90" y="13" width="20" height="12" rx="3" fill="var(--ink-faint)"/>
+    <circle cx="80" cy="52" r="5" fill="var(--ink)" opacity=".45"/>
+    <circle cx="100" cy="52" r="5" fill="var(--ink)" opacity=".45"/>
+    <circle cx="120" cy="52" r="5" fill="var(--ink)" opacity=".45"/>
+    <path d="M108 66 L90 86 L101 86 L94 102 L118 78 L105 78 Z" fill="var(--rust)"/>
+  </svg>`,
+  tentGround: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="20" y1="98" x2="180" y2="98" stroke="var(--ink-faint)" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="55,98 145,98 100,32" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="100" y1="32" x2="100" y2="98" stroke="${color}" stroke-width="3" opacity=".5"/>
+    <line x1="45" y1="98" x2="30" y2="108" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="155" y1="98" x2="170" y2="108" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="150" cy="26" r="8" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  sleepingbag: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M70 20 h40 a20 20 0 0 1 20 20 v40 a30 30 0 0 1 -30 30 h-20 a30 30 0 0 1 -30 -30 v-40 a20 20 0 0 1 20 -20 z" stroke="${color}" stroke-width="5"/>
+    <line x1="70" y1="45" x2="130" y2="45" stroke="${color}" stroke-width="3" opacity=".5"/>
+    <line x1="66" y1="70" x2="134" y2="70" stroke="${color}" stroke-width="3" opacity=".5"/>
+    <circle cx="100" cy="30" r="7" fill="var(--rust)"/>
+  </svg>`,
+  stove: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="40" y="70" width="120" height="26" rx="6" stroke="${color}" stroke-width="5"/>
+    <circle cx="75" cy="70" r="18" stroke="${color}" stroke-width="4"/>
+    <circle cx="125" cy="70" r="18" stroke="${color}" stroke-width="4"/>
+    <path d="M75 40c6 8-6 10 0 18M125 40c6 8-6 10 0 18" stroke="var(--rust)" stroke-width="4" stroke-linecap="round"/>
+  </svg>`,
+  solar: () => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="35" y="35" width="130" height="70" rx="6" stroke="var(--forest)" stroke-width="5"/>
+    <line x1="35" y1="58" x2="165" y2="58" stroke="var(--forest)" stroke-width="3" opacity=".55"/>
+    <line x1="35" y1="82" x2="165" y2="82" stroke="var(--forest)" stroke-width="3" opacity=".55"/>
+    <line x1="78" y1="35" x2="78" y2="105" stroke="var(--forest)" stroke-width="3" opacity=".55"/>
+    <line x1="122" y1="35" x2="122" y2="105" stroke="var(--forest)" stroke-width="3" opacity=".55"/>
+    <circle cx="165" cy="22" r="10" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  powerbank: () => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="65" y="20" width="70" height="90" rx="14" stroke="var(--forest)" stroke-width="5"/>
+    <rect x="88" y="10" width="24" height="10" rx="3" fill="var(--ink-faint)"/>
+    <rect x="80" y="80" width="40" height="6" rx="2" fill="var(--ink)" opacity=".3"/>
+    <rect x="80" y="68" width="40" height="6" rx="2" fill="var(--ink)" opacity=".3"/>
+    <path d="M108 40 L92 62 L102 62 L96 80 L118 55 L106 55 Z" fill="var(--rust)"/>
+  </svg>`,
+  roofrack: () => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 95 q75 -40 150 0" stroke="var(--ink-faint)" stroke-width="4" fill="none"/>
+    <rect x="55" y="55" width="10" height="34" rx="3" fill="var(--forest)"/>
+    <rect x="135" y="55" width="10" height="34" rx="3" fill="var(--forest)"/>
+    <rect x="45" y="48" width="30" height="9" rx="4" fill="var(--forest)"/>
+    <rect x="125" y="48" width="30" height="9" rx="4" fill="var(--forest)"/>
+    <circle cx="100" cy="30" r="8" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  jacket: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M85 20 L100 32 L115 20 L140 30 L150 65 L132 70 L132 105 L68 105 L68 70 L50 65 L60 30 Z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="100" y1="32" x2="100" y2="105" stroke="${color}" stroke-width="3" opacity=".4"/>
+    <circle cx="100" cy="50" r="5" fill="var(--rust)"/>
+  </svg>`,
+  compass: () => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="60" r="42" stroke="var(--forest)" stroke-width="5"/>
+    <polygon points="100,28 110,60 100,92 90,60" fill="var(--rust)"/>
+    <circle cx="100" cy="60" r="4" fill="var(--ink)"/>
+  </svg>`
+};
+
+const PRODUCTS = [
+  {
+    id: "ranger-x1", cat: "bike", catLabel: "E-Bike Trekkingowy", sku: "SNT-EBK-RGX1",
+    name: "Summit & Trail Ranger X1", badge: "Bestseller",
+    teaser: "Trekkingowy e-bike z silnikiem Bosch i zasięgiem do 130 km.",
+    basePrice: 10200, compareAtPrice: 11800, shipping: "paletowa", rating: 4.8, reviewCount: 126,
+    colors: [{name:"Czarny Grafit", hex:"#2b2f2c"},{name:"Zielony Leśny", hex:"#2f4a3a"}],
+    sizes: ["S (46 cm)","M (50 cm)","L (54 cm)","XL (58 cm)"],
+    capacities: [{label:"Bateria 500 Wh — zasięg do 90 km", delta:0},{label:"Bateria 720 Wh — zasięg do 130 km", delta:800}],
+    icon: ICONS.bike,
+    description: [
+      ["Ranger X1 — trekkingowy e-bike, który przewiezie Cię dalej, niż myślisz","Summit & Trail Ranger X1 to elektryczny rower trekkingowy dla osób, które nie dzielą przygody na „miasto” i „szlak”. Silnik środkowy 250 W, bateria do 720 Wh i geometria trekkingowa sprawiają, że Ranger X1 radzi sobie równie dobrze w dojazdach do pracy, jak i na wielodniowych wyprawach z bagażem."],
+      ["Zasięg, który nie ogranicza planów","Dzięki akumulatorowi zintegrowanemu w ramie Ranger X1 pokonuje nawet 130 km na jednym ładowaniu w trybie Eco."],
+      ["Napęd Bosch Performance Line","Środkowy silnik Bosch (250 W, 65 Nm) współpracuje z 10-biegową kasetą Shimano Deore, zapewniając płynne przejścia mocy niezależnie od terenu."]
+    ],
+    specs: [["Silnik","Bosch Performance Line, 250 W, 65 Nm"],["Bateria","500 Wh / 720 Wh"],["Zasięg (Eco)","do 90–130 km"],["Czas ładowania","4,5 h"],["Rama","Aluminium 6061, S/M/L/XL"],["Hamulce","Hydrauliczne tarczowe Shimano MT200"],["Maks. obciążenie","150 kg"],["Waga roweru","24,8–25,6 kg"]],
+    reviews: [
+      {author:"Marek K.", stars:5, date:"2026-05-12", text:"Zasięg 720 Wh w praktyce to spokojnie 110 km po trasie z podjazdami. Silnik Bosch bardzo płynny."},
+      {author:"Ola W.", stars:5, date:"2026-04-02", text:"Dojeżdżam 30 km dziennie do pracy — po tygodniu żałowałam, że nie kupiłam wcześniej."},
+      {author:"Grzegorz P.", stars:4, date:"2026-03-20", text:"Świetny rower, jedyny minus to waga przy wnoszeniu po schodach."}
+    ]
+  },
+  {
+    id: "skynest-3", cat: "tent", catLabel: "Namiot Dachowy", sku: "SNT-TNT-SKN3",
+    name: "Summit & Trail SkyNest 3", badge: "Nowość",
+    teaser: "Namiot dachowy rozkładany w 3 minuty, dla 2–3 osób.",
+    basePrice: 8000, shipping: "paletowa", rating: 4.7, reviewCount: 58,
+    colors: [{name:"Piaskowy", hex:"#cbb994"},{name:"Oliwkowy", hex:"#5b6b4a"}],
+    capacities: [{label:"2-osobowy (SkyNest 2)", delta:-500},{label:"3-osobowy (SkyNest 3)", delta:0}],
+    icon: ICONS.tent,
+    description: [
+      ["SkyNest 3 — Twój hotel na czterech kołach, gdziekolwiek zaparkujesz","Namiot dachowy Summit & Trail SkyNest 3 zmienia dach każdego SUV-a, kombi czy pickupa w wygodną sypialnię z widokiem. Rozkładany w mniej niż 3 minuty, mieści do 3 osób."],
+      ["Rozstaw w 3 minuty, bez narzędzi","Konstrukcja hard-shell na zawiasie gazowym otwiera się jednym ruchem. Wbudowana drabinka aluminiowa teleskopowa dopasowuje wejście do wysokości bagażnika."],
+      ["Materiały klasy premium","Poszycie Rip-Stop 280 g/m² zapewnia oddychalność przy pełnej wodoodporności 5000 mm słupa wody."]
+    ],
+    specs: [["Pojemność","2–3 osoby"],["Materiał","Rip-Stop 280 g/m², natłuszczana"],["Słup wodny","5000 mm"],["Materac","Piana wysokiej gęstości, 7,5 cm"],["Czas montażu","2–3 minuty"],["Wymiary złożony","210 × 130 × 30 cm"],["Waga","58 kg"]],
+    reviews: [
+      {author:"Tomek R.", stars:5, date:"2026-06-01", text:"Rozkładanie zajmuje dosłownie 2 minuty. Materac wygodniejszy niż się spodziewałem."},
+      {author:"Kasia M.", stars:4, date:"2026-05-15", text:"Świetny na dłuższe wyjazdy, jedyny minus — trzeba mocnego bagażnika (kupiłam RoofRunner i jest ok)."}
+    ]
+  },
+  {
+    id: "powerbase-1000", cat: "power", catLabel: "Stacja Zasilania", sku: "SNT-PWR-PB1000",
+    name: "Summit & Trail PowerBase 1000", badge: null,
+    teaser: "Przenośna stacja zasilania LiFePO4 na biwak i awarię.",
+    basePrice: 4000, compareAtPrice: 4500, shipping: "standardowa", rating: 4.6, reviewCount: 94,
+    capacities: [{label:"1024 Wh", delta:0},{label:"1500 Wh", delta:1200}],
+    bundles: [{label:"Stacja sama (Solo)", delta:0},{label:"+ panel solarowy SolarFlex 100 W", delta:900},{label:"+ panel solarowy SolarFlex 200 W", delta:1600}],
+    icon: ICONS.power,
+    description: [
+      ["PowerBase 1000 — energia elektryczna wszędzie, gdzie zabierze Cię szlak","Przenośna stacja zasilania na ogniwach LiFePO4 do zasilania sprzętu biwakowego, lodówek turystycznych i elektroniki bez dostępu do sieci."],
+      ["Ogniwa LiFePO4 — 3500+ cykli ładowania","Ponad 3500 cykli pełnego ładowania przy zachowaniu 80% pojemności — ekwiwalent ponad 10 lat użytkowania sezonowego."],
+      ["Ładowanie z trzech źródeł równocześnie","AC 230 V, wejście solarowe (do 200 W) oraz ładowanie z gniazda 12 V w samochodzie."]
+    ],
+    specs: [["Pojemność","1024 Wh / 1500 Wh"],["Moc ciągła / szczytowa","1200 W / 2400 W"],["Porty","2× AC230V, 2× USB-A, 2× USB-C PD100W"],["Czas ładowania AC","50 min do 80%"],["Żywotność","> 3500 cykli"],["Waga","12,8 kg"]],
+    reviews: [
+      {author:"Piotr Sz.", stars:5, date:"2026-05-28", text:"Wystarcza na cały weekend biwakowy z lodówką turystyczną i ładowaniem sprzętu foto."},
+      {author:"Nina D.", stars:4, date:"2026-04-19", text:"Ładowanie z panelu solarowego działa nawet w pochmurny dzień, choć wolniej niż z gniazdka."}
+    ]
+  },
+  {
+    id: "alpine-mx", cat: "bike", catLabel: "E-Bike Górski (MTB)", sku: "SNT-EBK-ALPMX",
+    name: "Summit & Trail Alpine MX", badge: "Nowość",
+    teaser: "Pełna amortyzacja i silnik Shimano EP8 na najtrudniejsze zjazdy.",
+    basePrice: 13500, shipping: "paletowa", rating: 4.9, reviewCount: 31,
+    colors: [{name:"Grafitowy Mat", hex:"#3a3f3d"},{name:"Rdzawy Terra", hex:"#8a4326"}],
+    sizes: ["S (42 cm)","M (46 cm)","L (50 cm)"],
+    capacities: [{label:"Bateria 630 Wh — zasięg do 80 km", delta:0},{label:"Bateria 800 Wh — zasięg do 110 km", delta:1100}],
+    icon: ICONS.bike,
+    description: [
+      ["Alpine MX — góra nie jest już limitem","Pełnozawieszony e-MTB z 150 mm skoku amortyzatora i silnikiem Shimano EP8 (85 Nm) — zaprojektowany do technicznych zjazdów i długich podjazdów bez kompromisów."],
+      ["Amortyzacja, która czyta teren","Regulowane zawieszenie powietrzne przód/tył pozwala dopasować sztywność do wagi i stylu jazdy."],
+      ["Hamulce na trudne zjazdy","4-tłoczkowe hamulce hydrauliczne Magura MT5 z tarczami 203 mm z przodu."]
+    ],
+    specs: [["Silnik","Shimano EP8, 250 W, 85 Nm"],["Bateria","630 Wh / 800 Wh"],["Zawieszenie","150 mm przód/tył, powietrzne"],["Hamulce","Magura MT5, tarcze 203/180 mm"],["Rama","Aluminium 6061, S/M/L"],["Waga","23,9 kg"]],
+    reviews: [
+      {author:"Bartek L.", stars:5, date:"2026-06-10", text:"Zawieszenie czyta korzenie i kamienie zjazdowe zaskakująco dobrze jak na e-MTB."},
+      {author:"Ada F.", stars:5, date:"2026-05-03", text:"Silnik EP8 daje realną moc na podjazdach technicznych — nie czuć, że to elektryk, tylko wspomaganie."}
+    ]
+  },
+  {
+    id: "urban-c1", cat: "bike", catLabel: "E-Bike Miejski", sku: "SNT-EBK-URBC1",
+    name: "Summit & Trail Urban C1", badge: null,
+    teaser: "Lekki miejski e-bike z napędem pasowym — bez smaru, bez hałasu.",
+    basePrice: 7200, shipping: "paletowa", rating: 4.5, reviewCount: 47,
+    colors: [{name:"Piaskowy Beż", hex:"#c9b48a"},{name:"Czarny Mat", hex:"#232624"}],
+    sizes: ["Uniseks S/M","Uniseks L/XL"],
+    capacities: [{label:"Bateria 360 Wh — zasięg do 60 km", delta:0},{label:"Bateria 500 Wh — zasięg do 85 km", delta:650}],
+    icon: ICONS.bike,
+    description: [
+      ["Urban C1 — dojazdy do pracy bez wysiłku i bez smaru","Napęd pasowy Gates Carbon Drive zamiast łańcucha oznacza czyste ręce i minimalną konserwację na co dzień."],
+      ["Zintegrowane oświetlenie i bagażnik","Przednie i tylne światło zasilane z akumulatora oraz bagażnik tylny w standardzie — gotowy do dojazdów od pierwszego dnia."]
+    ],
+    specs: [["Silnik","Bafang tylny piastowy, 250 W"],["Bateria","360 Wh / 500 Wh"],["Napęd","Pas Gates Carbon Drive"],["Rama","Aluminium, niski przelot, S/M oraz L/XL"],["Waga","19,4 kg"]],
+    reviews: [
+      {author:"Michał T.", stars:5, date:"2026-05-20", text:"Napęd pasowy to najlepsza decyzja — zero smaru na spodniach po roku użytkowania."},
+      {author:"Zofia K.", stars:4, date:"2026-04-11", text:"Lekki i zwrotny w mieście, bagażnik przydaje się codziennie."}
+    ]
+  },
+  {
+    id: "basecamp-4", cat: "tent", catLabel: "Namiot Naziemny", sku: "SNT-TNT-BC4",
+    name: "Summit & Trail BaseCamp 4", badge: null,
+    teaser: "Tunelowy namiot naziemny dla 4 osób na dłuższe wyprawy.",
+    basePrice: 2200, shipping: "paletowa", rating: 4.4, reviewCount: 22,
+    colors: [{name:"Zielony Mech", hex:"#4a5a3e"},{name:"Szary Kamień", hex:"#6b6f68"}],
+    capacities: [{label:"4-osobowy", delta:0},{label:"6-osobowy", delta:700}],
+    icon: ICONS.tentGround,
+    description: [
+      ["BaseCamp 4 — dom na wielodniową wyprawę","Konstrukcja tunelowa z przedsionkiem gospodarczym daje przestrzeń na sprzęt bez zajmowania miejsca do spania."],
+      ["Odporny na wiatr i deszcz","Poszycie 4000 mm słupa wody i aluminiowe maszty stawiają czoła zmiennej pogodzie w górach."]
+    ],
+    specs: [["Pojemność","4–6 osób"],["Słup wodny","4000 mm"],["Maszty","Aluminium 7001"],["Przedsionek","Tak, gospodarczy"],["Waga","6,8 kg"]],
+    reviews: [
+      {author:"Robert N.", stars:5, date:"2026-05-08", text:"Przedsionek gospodarczy to strzał w dziesiątkę — cały sprzęt zmieścił się bez zajmowania miejsca do spania."},
+      {author:"Ewa J.", stars:4, date:"2026-04-24", text:"Wytrzymał silny wiatr na kempingu w górach, jestem zadowolona."}
+    ]
+  },
+  {
+    id: "driftlite", cat: "tent", catLabel: "Śpiwór", sku: "SNT-SLP-DRL",
+    name: "Summit & Trail DriftLite", badge: null,
+    teaser: "Puchowy śpiwór na temperatury do -10°C, waga 890 g.",
+    basePrice: 890, shipping: "standardowa", rating: 4.6, reviewCount: 39,
+    colors: [{name:"Grafitowy", hex:"#333a35"},{name:"Rdzawy", hex:"#a85a2c"}],
+    capacities: [{label:"Komfort do -10°C", delta:0},{label:"Komfort do -18°C (zimowy)", delta:280}],
+    icon: ICONS.sleepingbag,
+    description: [
+      ["DriftLite — lekkość, która nie marznie","Wypełnienie puchem gęsim 800 cuin zapewnia komfort cieplny przy minimalnej wadze — kluczowe na wielodniowych trekkingach."],
+      ["Kaptur z regulacją i komora na stopy","Anatomiczny krój i ściągana kominowa konstrukcja ograniczają utratę ciepła w najchłodniejsze noce."]
+    ],
+    specs: [["Wypełnienie","Puch gęsi 800 cuin"],["Temperatura komfortu","-10°C / -18°C (wariant)"],["Waga","890 g"],["Kompresja","Worek kompresyjny w zestawie"]],
+    reviews: [
+      {author:"Julia S.", stars:5, date:"2026-04-30", text:"Bardzo lekki jak na tak ciepły śpiwór — idealny na wielodniowy trekking."},
+      {author:"Kamil B.", stars:4, date:"2026-03-14", text:"Wariant zimowy sprawdził się przy -12°C, spałem w bieliźnie termicznej bez problemu."}
+    ]
+  },
+  {
+    id: "trailstove-duo", cat: "tent", catLabel: "Kuchenka Turystyczna", sku: "SNT-CMP-TSD",
+    name: "Summit & Trail Trailstove Duo", badge: null,
+    teaser: "Składana kuchenka gazowa 2-palnikowa do obozu.",
+    basePrice: 450, shipping: "standardowa", rating: 4.3, reviewCount: 18,
+    icon: ICONS.stove,
+    description: [
+      ["Trailstove Duo — pełny obiad na dwóch palnikach","Regulowane palniki piezo pozwalają gotować dwa dania jednocześnie, a składana konstrukcja chowa się do jednej walizki."],
+      ["Osłona przeciwwietrzna w standardzie","Boczne osłony chronią płomień na wietrznym kempingu i skracają czas gotowania."]
+    ],
+    specs: [["Palniki","2× regulowane, zapłon piezo"],["Moc łączna","2× 2,3 kW"],["Zasilanie","Kartusze gazowe butan/propan"],["Waga","4,1 kg"]],
+    reviews: [
+      {author:"Damian W.", stars:4, date:"2026-05-02", text:"Osłona przeciwwietrzna realnie działa — gotowanie na wietrze bez tego byłoby męką."},
+      {author:"Sylwia G.", stars:4, date:"2026-03-27", text:"Kompaktowa, dobrze się składa do bagażnika, dwa palniki przyspieszają gotowanie."}
+    ]
+  },
+  {
+    id: "solarflex-200", cat: "power", catLabel: "Panel Solarowy", sku: "SNT-SOL-SF200",
+    name: "Summit & Trail SolarFlex 200", badge: null,
+    teaser: "Składany panel solarowy 200 W do stacji zasilania.",
+    basePrice: 1800, shipping: "standardowa", rating: 4.5, reviewCount: 27,
+    icon: ICONS.solar,
+    description: [
+      ["SolarFlex 200 — energia ze słońca w każdym miejscu biwaku","Monokrystaliczne ogniwa o wysokiej sprawności ładują stacje zasilania PowerBase nawet w rozproszonym świetle."],
+      ["Składany i przenośny","Panel składa się do formatu teczki i waży poniżej 8 kg — gotowy do zabrania na każdy wyjazd."]
+    ],
+    specs: [["Moc szczytowa","200 W"],["Typ ogniw","Monokrystaliczne"],["Złącze","MC4 / kompatybilne z PowerBase"],["Waga","7,6 kg"]],
+    reviews: [
+      {author:"Filip A.", stars:5, date:"2026-06-05", text:"Ładuje PowerBase 1000 w pełnym słońcu w niecałe 6 godzin, zgodnie z opisem."},
+      {author:"Marta O.", stars:4, date:"2026-04-08", text:"Składanie i rozkładanie proste, waga akceptowalna do noszenia w plecaku."}
+    ]
+  },
+  {
+    id: "pocketcharge-20k", cat: "power", catLabel: "Powerbank", sku: "SNT-PWB-PC20",
+    name: "Summit & Trail PocketCharge 20K", badge: "Bestseller",
+    teaser: "Powerbank 20 000 mAh z szybkim ładowaniem PD 65 W.",
+    basePrice: 320, shipping: "standardowa", rating: 4.7, reviewCount: 203,
+    icon: ICONS.powerbank,
+    description: [
+      ["PocketCharge 20K — zapas energii w kieszeni","20 000 mAh i port PD 65 W wystarczą, by naładować laptopa, telefon i latarkę na kilkudniowej wycieczce."],
+      ["Wskaźnik LED poziomu naładowania","Czytelny wyświetlacz pokazuje dokładny procent baterii, bez zgadywania."]
+    ],
+    specs: [["Pojemność","20 000 mAh"],["Wyjście","USB-C PD 65 W, 2× USB-A"],["Czas ładowania","2,5 h (ładowarka 30 W)"],["Waga","390 g"]],
+    reviews: [
+      {author:"Rafał M.", stars:5, date:"2026-06-15", text:"Naładuje laptopa i telefon dwa razy — biorę na każdy wyjazd, waga niezauważalna w plecaku."},
+      {author:"Ania P.", stars:5, date:"2026-05-01", text:"Wskaźnik LED bardzo przydatny, nie trzeba zgadywać poziomu baterii."}
+    ]
+  },
+  {
+    id: "roofrunner", cat: "accessory", catLabel: "Bagażnik Dachowy", sku: "SNT-ACC-RFR",
+    name: "Summit & Trail RoofRunner", badge: null,
+    teaser: "Aluminiowy bagażnik dachowy pod namiot dachowy lub rowery.",
+    basePrice: 1100, shipping: "paletowa", rating: 4.4, reviewCount: 15,
+    icon: ICONS.roofrack,
+    description: [
+      ["RoofRunner — solidna baza na dach","Belki aluminiowe o udźwigu dynamicznym 75 kg — gotowa baza pod namiot dachowy SkyNest lub uchwyty rowerowe."],
+      ["Montaż bez wiercenia","System zaciskowy dopasowany do punktów montażowych fabrycznych relingów — montaż w około 20 minut."]
+    ],
+    specs: [["Udźwig dynamiczny","75 kg"],["Materiał","Aluminium anodowane"],["Montaż","Zaciskowy, bez wiercenia"],["Kompatybilność","SkyNest 2/3, uchwyty rowerowe"]],
+    reviews: [
+      {author:"Wojtek C.", stars:5, date:"2026-05-19", text:"Montaż zajął mi 25 minut bez żadnego wiercenia, pasuje idealnie pod SkyNest 3."},
+      {author:"Hania Z.", stars:4, date:"2026-04-06", text:"Solidne belki, na autostradzie żadnych wibracji nawet z pełnym obciążeniem."}
+    ]
+  },
+  {
+    id: "trailshell-jacket", cat: "accessory", catLabel: "Odzież Techniczna", sku: "SNT-ACC-TSJ",
+    name: "Summit & Trail TrailShell Jacket", badge: "Nowość",
+    teaser: "Kurtka techniczna Gore-Tex na deszcz i wiatr.",
+    basePrice: 980, compareAtPrice: 1150, shipping: "standardowa", rating: 4.8, reviewCount: 61,
+    colors: [{name:"Głęboka Zieleń", hex:"#2f4a3a"},{name:"Grafit", hex:"#2c2f2d"}],
+    sizes: ["S","M","L","XL"],
+    icon: ICONS.jacket,
+    description: [
+      ["TrailShell — sucho i ciepło niezależnie od pogody","Membrana Gore-Tex zapewnia pełną wodoodporność przy zachowaniu oddychalności — sprawdza się od miejskich dojazdów rowerem do górskich szlaków."],
+      ["Przemyślane detale","Wentylowane pod pachami, regulowany kaptur pod kask oraz kieszenie dostępne z plecakiem na ramionach."]
+    ],
+    specs: [["Membrana","Gore-Tex 3-warstwowa"],["Wodoodporność","28 000 mm"],["Rozmiary","S–XL"],["Waga","390 g (rozmiar M)"]],
+    reviews: [
+      {author:"Igor B.", stars:5, date:"2026-06-02", text:"Testowana w ulewie na rowerze — sucho od początku do końca, wentylacja pod pachami działa."},
+      {author:"Weronika L.", stars:5, date:"2026-04-27", text:"Kaptur świetnie dopasowuje się pod kask, kieszenie dostępne nawet z plecakiem."}
+    ]
+  },
+  {
+    id: "navcompass-gps", cat: "accessory", catLabel: "Nawigacja Outdoorowa", sku: "SNT-ACC-NCG",
+    name: "Summit & Trail NavCompass GPS", badge: null,
+    teaser: "Odbiornik GPS outdoorowy z kompasem elektronicznym.",
+    basePrice: 1450, shipping: "standardowa", rating: 4.5, reviewCount: 12,
+    icon: ICONS.compass,
+    description: [
+      ["NavCompass GPS — nie zgub szlaku","Wodoodporna nawigacja outdoorowa z mapami topograficznymi offline i baterią na 20 dni pracy w trybie GPS."],
+      ["Kompas elektroniczny i wysokościomierz","Trzyosiowy kompas i barometryczny wysokościomierz działają nawet bez zasięgu sieci."]
+    ],
+    specs: [["Wodoodporność","IPX7"],["Bateria","do 20 dni (tryb GPS)"],["Mapy","Topograficzne offline"],["Waga","230 g"]],
+    reviews: [
+      {author:"Dawid H.", stars:5, date:"2026-05-11", text:"Mapy offline uratowały mnie na trasie bez zasięgu w Bieszczadach."},
+      {author:"Klaudia R.", stars:4, date:"2026-03-30", text:"Bateria trzyma naprawdę długo, wysokościomierz działa dokładnie."}
+    ]
+  }
+];
+
+/* ============== CATALOG EXPANSION (generated variants) ============== */
+function slugify(s){
+  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+}
+function rnd(min,max){ return Math.floor(min + Math.random()*(max-min+1)); }
+function pick(arr){ return arr[rnd(0, arr.length-1)]; }
+
+const FIRST_NAMES = ["Marek","Ola","Tomek","Kasia","Piotr","Nina","Bartek","Ada","Michał","Zofia","Robert","Ewa","Julia","Kamil","Damian","Sylwia","Filip","Marta","Rafał","Ania","Wojtek","Hania","Igor","Weronika","Dawid","Klaudia","Łukasz","Natalia","Grzegorz","Magda"];
+
+const CAT_TEMPLATES = {
+  bike: {
+    catLabel: "E-Bike",
+    motors: ["Bafang, 250 W","Shimano EP8, 250 W","Bosch Active Line, 250 W","Bosch Performance Line, 250 W"],
+    prefixes: ["Ranger","Alpine","Urban","Summit","Peak","Trailhead","Ridge","Canyon","Glacier","Horizon","Timber","Granite","Cascade","Boulder","Windrow","Highridge","Stonepath","Everline"],
+    suffixes: ["X1","X2","GT","SE","Pro","Lite","Sport","Elite","Max","S","RS","Tour"],
+    colors: [["Czarny Grafit","#2b2f2c"],["Zielony Leśny","#2f4a3a"],["Piaskowy","#c9b48a"],["Rdzawy Terra","#8a4326"],["Szary Stal","#5c6460"]],
+    icon: () => ICONS.bike,
+    reviewBank: ["Zasięg w praktyce zgodny z opisem, silnik płynny na podjazdach.","Dojeżdżam do pracy codziennie — świetna sprawa.","Solidne wykonanie, po pół roku żadnych usterek.","Trochę ciężki do wnoszenia po schodach, ale jazda super.","Baterii wystarcza na cały dzień wycieczki.","Amortyzacja radzi sobie nawet na gorszych drogach."]
+  },
+  tent: {
+    catLabel: "Sprzęt biwakowy",
+    prefixes: ["SkyNest","BaseCamp","Drift","Trail","Northwind","Highland","Forestline","Ridgeline","Moonvalley","Pinehaven","Rockshade"],
+    suffixes: ["2","3","4","Duo","Lite","Pro","XT","Camo"],
+    colors: [["Piaskowy","#cbb994"],["Oliwkowy","#5b6b4a"],["Zielony Mech","#4a5a3e"],["Szary Kamień","#6b6f68"]],
+    icon: (i) => i%2===0 ? ICONS.tent : ICONS.tentGround,
+    reviewBank: ["Rozstaw ekspresowy, materiał wytrzymuje deszcz bez przeciekania.","Wystarczyło na cały tydzień biwaku bez problemów.","Lekki jak na swoją pojemność.","Dobra wentylacja, brak kondensacji rano.","Solidne szwy, żadnych przecieków po burzy."]
+  },
+  power: {
+    catLabel: "Zasilanie przenośne",
+    prefixes: ["PowerBase","SolarFlex","PocketCharge","VoltPack","SunCell","GridAway","WattStore"],
+    suffixes: ["500","1000","1500","2000","Mini","Pro","Duo"],
+    colors: null,
+    icon: (i) => [ICONS.power, ICONS.solar, ICONS.powerbank][i%3],
+    reviewBank: ["Ładuje się szybciej niż się spodziewałem.","Wystarcza na cały weekend biwakowy.","Dobra jakość wykonania, wyświetlacz czytelny.","Lekka i poręczna w transporcie.","Panel solarowy uzupełnia energię nawet w pochmurny dzień."]
+  },
+  accessory: {
+    catLabel: "Akcesoria outdoorowe",
+    prefixes: ["TrailShell","RoofRunner","NavCompass","PackLite","GripTrail","StormGuard","DrySack","TrekPole"],
+    suffixes: ["Jacket","GPS","Pro","Duo","Mini","XT"],
+    colors: [["Głęboka Zieleń","#2f4a3a"],["Grafit","#2c2f2d"],["Piaskowy","#c9b48a"]],
+    icon: (i) => [ICONS.jacket, ICONS.compass, ICONS.roofrack][i%3],
+    reviewBank: ["Jakość wykonania na wysokim poziomie.","Sprawdza się w każdych warunkach pogodowych.","Lekkie i wygodne w użytkowaniu.","Dobry stosunek jakości do ceny.","Polecam, używam na każdym wyjeździe."]
+  }
+};
+
+const RESERVED_NAMES = new Set(PRODUCTS.map(p => p.name));
+
+function generateCatalog(perCategory){
+  const out = [];
+  const usedNames = new Set(RESERVED_NAMES);
+  Object.keys(CAT_TEMPLATES).forEach(cat=>{
+    const t = CAT_TEMPLATES[cat];
+    for (let i=0;i<perCategory;i++){
+      // mixed-radix indexing (not a shared modulus) so prefix/suffix pairs stay unique across the run;
+      // retry with the next index if a combo happens to match a hand-written hero product name
+      let ni = i + 5, prefix, suffix, name;
+      for (let tries=0; tries<40; tries++){
+        suffix = t.suffixes[ni % t.suffixes.length];
+        prefix = t.prefixes[Math.floor(ni / t.suffixes.length) % t.prefixes.length];
+        name = `Summit & Trail ${prefix} ${suffix}`;
+        if (!usedNames.has(name)) break;
+        ni++;
+      }
+      usedNames.add(name);
+      const id = slugify(`${prefix}-${suffix}-${cat}-${i}`);
+      const icon = typeof t.icon === "function" ? t.icon(i) : t.icon;
+      const color = t.colors ? t.colors[i % t.colors.length] : null;
+      const color2 = t.colors ? t.colors[(i+2) % t.colors.length] : null;
+      let basePrice, specs, teaser;
+      if (cat === "bike"){
+        const motor = t.motors[i % t.motors.length];
+        const range = rnd(60,140);
+        const weight = (rnd(190,260)/10).toFixed(1);
+        basePrice = rnd(65,155)*100;
+        teaser = `E-bike z napędem ${motor.split(",")[0]} i zasięgiem do ${range} km.`;
+        specs = [["Silnik", motor],["Zasięg (Eco)", `do ${range} km`],["Waga roweru", `${weight} kg`],["Hamulce","Hydrauliczne tarczowe"]];
+      } else if (cat === "tent"){
+        const cap = pick([2,3,4,6]);
+        const wp = rnd(3000,6000);
+        const weight = (rnd(45,75)/10).toFixed(1);
+        basePrice = rnd(7,60)*100;
+        teaser = `Namiot dla ${cap} osób, słup wodny ${wp} mm.`;
+        specs = [["Pojemność", `${cap} osoby`],["Słup wodny", `${wp} mm`],["Waga", `${weight} kg`]];
+      } else if (cat === "power"){
+        const cap = pick([500,800,1024,1500,2000]);
+        const power = rnd(600,2200);
+        basePrice = rnd(9,45)*100;
+        teaser = `Zasilanie przenośne ${cap} Wh, moc ciągła ${power} W.`;
+        specs = [["Pojemność", `${cap} Wh`],["Moc ciągła", `${power} W`],["Typ ogniw","LiFePO4"]];
+      } else {
+        basePrice = rnd(3,14)*100;
+        teaser = `Akcesorium outdoorowe klasy ${suffix} do codziennych wypraw.`;
+        specs = [["Materiał","Techniczny, wysokiej trwałości"],["Waga", `${(rnd(2,9)/10).toFixed(1)} kg`]];
+      }
+      const description = [[`${prefix} ${suffix} — sprawdzony wybór na szlak`, `${teaser} Zaprojektowany do intensywnego użytkowania w terenie, z materiałów wybranych pod kątem trwałości i komfortu.`]];
+      const reviews = [
+        {author: pick(FIRST_NAMES)+" "+String.fromCharCode(65+rnd(0,25))+".", stars: rnd(4,5), date: `2026-0${rnd(1,6)}-${String(rnd(1,28)).padStart(2,"0")}`, text: pick(t.reviewBank)},
+        {author: pick(FIRST_NAMES)+" "+String.fromCharCode(65+rnd(0,25))+".", stars: rnd(4,5), date: `2026-0${rnd(1,6)}-${String(rnd(1,28)).padStart(2,"0")}`, text: pick(t.reviewBank)}
+      ];
+      out.push({
+        id, cat, catLabel: t.catLabel, sku: `SNT-${cat.slice(0,3).toUpperCase()}-${1000+i}`,
+        name, badge: i % 6 === 0 ? "Nowość" : null,
+        teaser, basePrice, shipping: (cat==="bike" || (cat==="tent" && suffix!=="Duo" && suffix!=="Lite")) ? "paletowa" : "standardowa",
+        rating: rnd(40,49)/10, reviewCount: rnd(5,180),
+        colors: color ? [{name:color[0], hex:color[1]}, ...(color2 && color2[0]!==color[0] ? [{name:color2[0], hex:color2[1]}] : [])] : undefined,
+        icon, description, specs, reviews
+      });
+    }
+  });
+  return out;
+}
+
+PRODUCTS.push(...generateCatalog(15));
+
+const byId = (id) => PRODUCTS.find(p => p.id === id);
+const money = (n) => n.toLocaleString("pl-PL", {minimumFractionDigits:0}) + " zł";
+const catNames = {bike:"E-Bike", tent:"Sprzęt biwakowy", power:"Zasilanie przenośne", accessory:"Akcesoria outdoorowe"};
+const FEATURED_IDS = ["ranger-x1","skynest-3","powerbase-1000","alpine-mx","basecamp-4","trailshell-jacket"];
+const PROMOS = { "SZLAK10": 0.10, "WITAMY5": 0.05 };
+
+function starsHTML(rating, count){
+  const full = Math.round(rating);
+  const stars = Array.from({length:5}, (_,i)=> `<span class="${i<full?"star-on":"star-off"}">★</span>`).join("");
+  return `<span class="rating-row"><span class="stars">${stars}</span><span class="rating-num">${rating.toFixed(1)}</span>${count!=null?`<span class="rating-count">(${count})</span>`:""}</span>`;
+}
+function matchesQuery(p, q){
+  const t = (p.name + " " + p.catLabel + " " + p.teaser).toLowerCase();
+  return t.includes(q.toLowerCase());
+}
+function sortItems(items, sort){
+  const arr = items.slice();
+  if (sort === "cena-asc") arr.sort((a,b)=>a.basePrice-b.basePrice);
+  else if (sort === "cena-desc") arr.sort((a,b)=>b.basePrice-a.basePrice);
+  else if (sort === "ocena") arr.sort((a,b)=>b.rating-a.rating);
+  else arr.sort((a,b)=>(b.reviewCount||0)-(a.reviewCount||0));
+  return arr;
+}
+
+/* ============== ACCOUNT / MEMBERSHIP STATE ==============
+   Two modes, same UI code above: with a live backend (apiAvailable), the account is
+   the server's session user (apiUser). Without one, everything falls back to a
+   localStorage-only "offline demo" account store — see server/README.md to go live. */
+let users = {};
+try { users = JSON.parse(localStorage.getItem("stt_users") || "{}"); } catch(e){ users = {}; }
+let sessionEmail = localStorage.getItem("stt_session") || null;
+let apiUser = null;
+let apiOrders = [];
+
+function currentUser(){ return apiAvailable ? apiUser : (sessionEmail ? users[sessionEmail] : null); }
+function saveUsers(){ localStorage.setItem("stt_users", JSON.stringify(users)); }
+function accountMode(){ return apiAvailable ? "api" : "local"; }
+
+const TIERS = [
+  { name: "Explorer", threshold: 0, perk: "1 pkt za każde 10 zł, urodzinowy kupon" },
+  { name: "Trailblazer", threshold: 3000, perk: "Darmowa dostawa standardowa, wcześniejszy dostęp do wyprzedaży" },
+  { name: "Summit", threshold: 10000, perk: "Dedykowany opiekun, darmowy przegląd serwisowy roweru raz w roku" }
+];
+function tierFor(spent){
+  let current = TIERS[0], next = TIERS[1];
+  for (let i=0;i<TIERS.length;i++){
+    if (spent >= TIERS[i].threshold){ current = TIERS[i]; next = TIERS[i+1] || null; }
+  }
+  return { current, next };
+}
+
+async function syncGuestDataToAccount(){
+  if (!apiAvailable) return;
+  const guestCart = cart.slice();
+  const guestWish = wishlist.slice();
+  for (const line of guestCart){
+    try { await apiFetch("/api/cart", { method:"POST", body:{ productId:line.productId, name:line.name, variantLabel:line.variantLabel, unitPrice:line.unitPrice, qty:line.qty } }); } catch(e){}
+  }
+  for (const pid of guestWish){
+    try { await apiFetch("/api/wishlist/" + encodeURIComponent(pid), { method:"POST" }); } catch(e){}
+  }
+  localStorage.removeItem("stt_cart");
+  localStorage.removeItem("stt_wishlist");
+  await loadCartFromApi();
+  await loadWishlistFromApi();
+}
+
+async function registerUser(name, email, password){
+  if (apiAvailable){
+    try {
+      const data = await apiFetch("/api/auth/register", { method:"POST", body:{ name, email, password } });
+      apiUser = data.user;
+      await syncGuestDataToAccount();
+      return { ok: true };
+    } catch(e){ return { error: e.message }; }
+  }
+  email = email.trim().toLowerCase();
+  if (!name.trim() || !email || !password) return { error: "Wypełnij wszystkie pola." };
+  if (users[email]) return { error: "Konto z tym adresem e-mail już istnieje." };
+  users[email] = { name: name.trim(), email, password, points: 0, totalSpent: 0, joinedAt: new Date().toISOString().slice(0,10), orders: [] };
+  saveUsers();
+  sessionEmail = email; localStorage.setItem("stt_session", email);
+  return { ok: true };
+}
+async function loginUser(email, password){
+  if (apiAvailable){
+    try {
+      const data = await apiFetch("/api/auth/login", { method:"POST", body:{ email, password } });
+      apiUser = data.user;
+      await syncGuestDataToAccount();
+      return { ok: true };
+    } catch(e){ return { error: e.message }; }
+  }
+  email = email.trim().toLowerCase();
+  const u = users[email];
+  if (!u || u.password !== password) return { error: "Nieprawidłowy e-mail lub hasło." };
+  sessionEmail = email; localStorage.setItem("stt_session", email);
+  return { ok: true };
+}
+async function logoutUser(){
+  if (apiAvailable){
+    try { await apiFetch("/api/auth/logout", { method:"POST" }); } catch(e){}
+    apiUser = null; cart = []; wishlist = []; apiOrders = [];
+  } else {
+    sessionEmail = null; localStorage.removeItem("stt_session");
+  }
+  showToast("Wylogowano");
+  location.hash = "/";
+}
+function updateAccountUI(){
+  const btn = document.getElementById("accountBtn");
+  const u = currentUser();
+  if (u){
+    btn.dataset.href = "#/konto";
+    btn.setAttribute("aria-label", "Moje konto — " + u.name);
+    btn.innerHTML = `<span class="avatar-badge">${u.name.trim()[0].toUpperCase()}</span>`;
+  } else {
+    btn.dataset.href = "#/logowanie";
+    btn.setAttribute("aria-label", "Zaloguj się");
+    btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>`;
+  }
+}
+
+/* ============== WISHLIST STATE ============== */
+let wishlist = [];
+try { wishlist = JSON.parse(localStorage.getItem("stt_wishlist") || "[]"); } catch(e){ wishlist = []; }
+function saveWishlist(){ localStorage.setItem("stt_wishlist", JSON.stringify(wishlist)); updateWishCount(); }
+function updateWishCount(){
+  const el = document.getElementById("wishCount");
+  el.textContent = wishlist.length; el.hidden = wishlist.length === 0;
+}
+async function loadWishlistFromApi(){
+  try { const data = await apiFetch("/api/wishlist"); wishlist = data.productIds; updateWishCount(); }
+  catch(e){ /* keep previous state */ }
+}
+async function toggleWishlist(id){
+  if (apiAvailable && currentUser()){
+    const isIn = wishlist.includes(id);
+    try {
+      const data = isIn
+        ? await apiFetch("/api/wishlist/" + encodeURIComponent(id), { method:"DELETE" })
+        : await apiFetch("/api/wishlist/" + encodeURIComponent(id), { method:"POST" });
+      wishlist = data.productIds;
+      showToast(isIn ? "Usunięto z listy życzeń" : "Dodano do listy życzeń");
+    } catch(e){ showToast("Błąd: " + e.message); }
+    updateWishCount();
+    return;
+  }
+  const i = wishlist.indexOf(id);
+  if (i > -1){ wishlist.splice(i,1); showToast("Usunięto z listy życzeń"); }
+  else { wishlist.push(id); showToast("Dodano do listy życzeń"); }
+  saveWishlist();
+}
+async function handleWishClick(id){
+  await toggleWishlist(id);
+  const isIn = wishlist.includes(id);
+  document.querySelectorAll(`[data-wish="${id}"]`).forEach(btn=>{
+    btn.classList.toggle("active", isIn);
+    if (btn.classList.contains("wish-btn")) btn.textContent = isIn ? "♥" : "♡";
+    if (btn.classList.contains("wish-btn-pdp")) btn.innerHTML = isIn ? "♥ Na liście życzeń" : "♡ Dodaj do listy życzeń";
+  });
+  if (location.hash.replace("#","").split("?")[0] === "/lista-zyczen"){
+    document.getElementById("app").innerHTML = pageWishlist();
+  }
+}
+
+/* ============== PROMO STATE ============== */
+let promo = null;
+try { promo = JSON.parse(localStorage.getItem("stt_promo") || "null"); } catch(e){ promo = null; }
+function discountAmount(){ return promo ? Math.round(cartSubtotal() * PROMOS[promo]) : 0; }
+function applyPromo(code){
+  code = (code || "").trim().toUpperCase();
+  if (PROMOS[code]){
+    promo = code; localStorage.setItem("stt_promo", JSON.stringify(promo));
+    showToast("Kod zastosowany: -" + Math.round(PROMOS[code]*100) + "%");
+  } else {
+    showToast("Nieprawidłowy kod rabatowy");
+  }
+  render();
+}
+function removePromo(){ promo = null; localStorage.removeItem("stt_promo"); render(); }
+function loyaltyPoints(total){ return Math.floor(total/10); }
+
+/* ============== CART STATE ==============
+   cartMode() decides per-action whether a mutation goes to the API (logged-in user,
+   live backend) or stays in localStorage (guest, or no backend configured). Both
+   paths keep `cart` in the same shape so every render function above is unaware
+   of which mode is active. */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("stt_cart") || "[]"); } catch(e){ cart = []; }
+let lastOrder = null;
+try { lastOrder = JSON.parse(localStorage.getItem("stt_last_order") || "null"); } catch(e){}
+
+function cartMode(){ return apiAvailable && currentUser() ? "api" : "local"; }
+function apiLineToLocal(row){
+  return { key: String(row.id), productId: row.productId, name: row.name, variantLabel: row.variantLabel, unitPrice: row.unitPrice, qty: row.qty };
+}
+async function loadCartFromApi(){
+  try { const data = await apiFetch("/api/cart"); cart = data.items.map(apiLineToLocal); updateCartCount(); }
+  catch(e){ /* keep previous state */ }
+}
+
+function saveCart(){ localStorage.setItem("stt_cart", JSON.stringify(cart)); updateCartCount(); }
+let lastCartCount = cart.reduce((s,l)=>s+l.qty,0);
+function updateCartCount(){
+  const n = cart.reduce((s,l)=>s+l.qty,0);
+  const el = document.getElementById("cartCount");
+  el.textContent = n; el.hidden = n === 0;
+  if (n > lastCartCount){ el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); }
+  lastCartCount = n;
+}
+function cartSubtotal(){ return cart.reduce((s,l)=>s + l.unitPrice*l.qty, 0); }
+function cartHasPaletowa(){ return cart.some(l => byId(l.productId).shipping === "paletowa"); }
+
+async function addToCart(product, variantLabel, unitPrice, qty){
+  if (cartMode() === "api"){
+    try {
+      const data = await apiFetch("/api/cart", { method:"POST", body:{ productId:product.id, name:product.name, variantLabel, unitPrice, qty } });
+      cart = data.items.map(apiLineToLocal);
+      updateCartCount();
+      showToast("Dodano do koszyka: " + product.name);
+    } catch(e){ showToast("Błąd: " + e.message); }
+    return;
+  }
+  const key = product.id + "::" + variantLabel;
+  const existing = cart.find(l => l.key === key);
+  if (existing) existing.qty += qty;
+  else cart.push({ key, productId: product.id, name: product.name, variantLabel, unitPrice, qty });
+  saveCart();
+  showToast("Dodano do koszyka: " + product.name);
+}
+async function removeLine(key){
+  if (cartMode() === "api"){
+    try { const data = await apiFetch("/api/cart/" + key, { method:"DELETE" }); cart = data.items.map(apiLineToLocal); }
+    catch(e){ showToast("Błąd: " + e.message); }
+  } else {
+    cart = cart.filter(l => l.key !== key); saveCart();
+  }
+  render();
+}
+async function changeLineQty(key, delta){
+  const l = cart.find(x => x.key === key); if(!l) return;
+  const newQty = Math.max(1, l.qty + delta);
+  if (cartMode() === "api"){
+    try { const data = await apiFetch("/api/cart/" + key, { method:"PATCH", body:{ qty:newQty } }); cart = data.items.map(apiLineToLocal); }
+    catch(e){ showToast("Błąd: " + e.message); }
+  } else {
+    l.qty = newQty; saveCart();
+  }
+  render();
+}
+
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* ============== ICONS (misc) ============== */
+const SVG_TRUCK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>`;
+const SVG_RETURN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>`;
+const SVG_CARD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>`;
+const SVG_SHIELD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6z"/></svg>`;
+const SVG_EMPTY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/><circle cx="9" cy="21" r="1.2"/><circle cx="18" cy="21" r="1.2"/></svg>`;
+const SVG_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l3 3 5-6"/></svg>`;
+
+/* ============== RENDER: shared bits ============== */
+function productCard(p, i){
+  const iconColor = p.colors ? p.colors[0].hex : "var(--forest)";
+  const inWish = wishlist.includes(p.id);
+  const pct = p.compareAtPrice ? Math.round((1 - p.basePrice/p.compareAtPrice)*100) : 0;
+  const badgeHtml = p.compareAtPrice ? `<span class="p-badge">-${pct}%</span>` : (p.badge ? `<span class="p-badge">${p.badge}</span>` : "");
+  const delay = i != null ? Math.min(i*35, 350) : 0;
+  return `<a class="p-card" href="#/produkt/${p.id}" data-link style="animation-delay:${delay}ms">
+    <div class="thumb">${badgeHtml}<button class="wish-btn ${inWish?"active":""}" data-wish="${p.id}" aria-label="Lista życzeń">${inWish?"♥":"♡"}</button>${p.icon(iconColor)}</div>
+    <div class="p-body">
+      <span class="p-cat">${p.catLabel}</span>
+      <span class="p-name">${p.name}</span>
+      ${starsHTML(p.rating, p.reviewCount)}
+      ${p.colors && p.colors.length > 1 ? `<div class="mini-swatches">${p.colors.map(c=>`<span class="mini-swatch" style="background:${c.hex}" title="${c.name}"></span>`).join("")}</div>` : ""}
+      <span class="p-teaser">${p.teaser}</span>
+      <div class="p-foot"><span class="p-price">${p.compareAtPrice?`<span class="p-was price">${money(p.compareAtPrice)}</span>`:""}<span class="price">${money(p.basePrice)}</span></span><span class="p-go">Zobacz →</span></div>
+    </div>
+  </a>`;
+}
+
+/* ============== PAGES ============== */
+function pageHome(){
+  return `
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Rowery elektryczne · Outdoor · Biwak</div>
+      <h1>Sprzęt, który wytrzyma <span class="hl">więcej niż plany.</span></h1>
+      <p>Summit & Trail — e-rowery, namioty dachowe i przenośne zasilanie zaprojektowane na trasy, które nie kończą się po zmroku.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-rust" href="#/sklep" data-link>Zobacz sklep</a>
+        <a class="btn btn-outline" href="#/produkt/ranger-x1" data-link>Ranger X1 →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section">
+      <div class="section-head"><h2 class="h-title" style="font-size:1.4rem;margin:0;">Kategorie</h2></div>
+      <div class="cat-grid">
+        <a class="cat-tile" href="#/sklep?cat=bike" data-link>${ICONS.bike("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>E-Bike</b><span class="count">${PRODUCTS.filter(p=>p.cat==="bike").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=tent" data-link>${ICONS.tent("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Sprzęt biwakowy</b><span class="count">${PRODUCTS.filter(p=>p.cat==="tent").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=power" data-link>${ICONS.power().replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Zasilanie przenośne</b><span class="count">${PRODUCTS.filter(p=>p.cat==="power").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=accessory" data-link>${ICONS.roofrack().replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Akcesoria outdoorowe</b><span class="count">${PRODUCTS.filter(p=>p.cat==="accessory").length} oferty</span></a>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="section-head"><h2 class="h-title" style="font-size:1.4rem;margin:0;">Polecane produkty</h2><a href="#/sklep" data-link style="font-weight:700;font-size:.88rem;">Zobacz wszystkie ${PRODUCTS.length} ofert →</a></div>
+      <div class="product-grid">${FEATURED_IDS.map(byId).map((p,i)=>productCard(p,i)).join("")}</div>
+    </section>
+
+    <section class="trust-bar">
+      <div class="trust-item">${SVG_TRUCK}<div><b>Darmowa dostawa od 300 zł</b><span>Paczkomat, kurier DPD</span></div></div>
+      <div class="trust-item">${SVG_RETURN}<div><b>14 dni na zwrot</b><span>Bez podania przyczyny</span></div></div>
+      <div class="trust-item">${SVG_CARD}<div><b>BLIK, karta, raty 0%</b><span>PayU / Przelewy24</span></div></div>
+      <div class="trust-item">${SVG_SHIELD}<div><b>Serwis stacjonarny</b><span>Salony w całej Polsce</span></div></div>
+    </section>
+
+    <section class="section">
+      <div class="newsletter">
+        <div><h3>Bądź na szlaku pierwszy</h3><p>Nowości, testy sprzętu i kody rabatowe raz w tygodniu.</p></div>
+        <form id="newsForm"><input type="email" required placeholder="twoj@email.pl"><button class="btn btn-primary" type="submit">Zapisz się</button></form>
+      </div>
+    </section>
+  </div>`;
+}
+
+let shopFilter = "all";
+let shopSearch = "";
+let shopSort = "popularnosc";
+function shopItems(){
+  let items = PRODUCTS.filter(p => shopFilter === "all" || p.cat === shopFilter);
+  if (shopSearch) items = items.filter(p => matchesQuery(p, shopSearch));
+  return sortItems(items, shopSort);
+}
+function renderShopGrid(){
+  const items = shopItems();
+  document.getElementById("shopGrid").innerHTML = items.map((p,i)=>productCard(p,i)).join("") || "<p>Brak produktów spełniających kryteria.</p>";
+  const countEl = document.getElementById("shopCount");
+  if (countEl) countEl.textContent = items.length + (items.length===1?" oferta":" ofert");
+}
+function pageShop(query){
+  const initialCat = (query.get("cat")) || "all";
+  shopFilter = ["bike","tent","power","accessory"].includes(initialCat) ? initialCat : "all";
+  shopSearch = query.get("q") || "";
+  shopSort = "popularnosc";
+  const items = shopItems();
+  return `
+  <div class="wrap">
+    <div class="page-head"><div class="eyebrow">Sklep</div><h1>Cały katalog · ${PRODUCTS.length} ofert</h1></div>
+    <section class="section" style="padding-top:20px;">
+      <div class="filter-row">
+        ${["all","bike","tent","power","accessory"].map(c => `<button class="filter-chip ${c===shopFilter?"active":""}" data-cat="${c}">${c==="all"?"Wszystkie":catNames[c]}</button>`).join("")}
+      </div>
+      <div class="shop-toolbar">
+        <span class="result-count" id="shopCount">${items.length}${items.length===1?" oferta":" ofert"}</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="popularnosc" ${shopSort==="popularnosc"?"selected":""}>Sortuj: Popularność</option>
+          <option value="cena-asc" ${shopSort==="cena-asc"?"selected":""}>Cena: od najniższej</option>
+          <option value="cena-desc" ${shopSort==="cena-desc"?"selected":""}>Cena: od najwyższej</option>
+          <option value="ocena" ${shopSort==="ocena"?"selected":""}>Ocena klientów</option>
+        </select>
+      </div>
+      <div class="product-grid" id="shopGrid">${items.map((p,i)=>productCard(p,i)).join("") || "<p>Brak produktów spełniających kryteria.</p>"}</div>
+    </section>
+  </div>`;
+}
+
+function pageWishlist(){
+  const items = wishlist.map(byId).filter(Boolean);
+  if (!items.length){
+    return `<div class="wrap"><div class="page-head"><h1>Lista życzeń</h1></div>
+      <div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:56px;height:56px;margin-bottom:16px;color:var(--ink-faint)"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.6C12 5.2 13.5 4 15.5 4c4 0 5.5 4 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg><p>Twoja lista życzeń jest pusta.</p><a class="btn btn-primary" href="#/sklep" data-link>Przejdź do sklepu</a></div></div>`;
+  }
+  return `<div class="wrap">
+    <div class="page-head"><h1>Lista życzeń (${items.length})</h1></div>
+    <section class="section" style="padding-top:20px;"><div class="product-grid" id="wishGrid">${items.map((p,i)=>productCard(p,i)).join("")}</div></section>
+  </div>`;
+}
+
+function pageContact(){
+  return `<div class="wrap">
+    <div class="page-head"><div class="eyebrow">Kontakt</div><h1>Jesteśmy w zasięgu</h1></div>
+    <section class="section" style="padding-top:20px;">
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Dane kontaktowe</h3>
+      <div class="table-scroll">
+        <table class="info-table">
+          <thead><tr><th>Dział</th><th>Kontakt</th><th>Godziny</th></tr></thead>
+          <tbody>
+            <tr><td><b>Obsługa klienta</b></td><td>kontakt@summitandtrail.pl<br>+48 22 000 00 00</td><td>Pon–Pt 8:00–18:00</td></tr>
+            <tr><td><b>Serwis i reklamacje</b></td><td>serwis@summitandtrail.pl<br>+48 22 000 00 01</td><td>Pon–Pt 9:00–17:00</td></tr>
+            <tr><td><b>Sprzedaż B2B</b></td><td>b2b@summitandtrail.pl<br>+48 22 000 00 02</td><td>Pon–Pt 9:00–17:00</td></tr>
+            <tr><td><b>Prasa i media</b></td><td>prasa@summitandtrail.pl</td><td>Odpowiadamy w 48h</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Salony stacjonarne</h3>
+      <div class="table-scroll">
+        <table class="info-table">
+          <thead><tr><th>Miasto</th><th>Adres</th><th>Godziny</th></tr></thead>
+          <tbody>
+            <tr><td><b>Warszawa</b></td><td>ul. Górska 12</td><td>Pon–Sob 10:00–20:00</td></tr>
+            <tr><td><b>Kraków</b></td><td>ul. Szlakowa 4</td><td>Pon–Sob 10:00–19:00</td></tr>
+            <tr><td><b>Wrocław</b></td><td>ul. Leśna 8</td><td>Pon–Sob 10:00–19:00</td></tr>
+            <tr><td><b>Gdańsk</b></td><td>ul. Nadmorska 21</td><td>Pon–Sob 10:00–19:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Napisz do nas</h3>
+      <form id="contactForm" class="contact-form form-grid" style="max-width:640px;">
+        <div><label class="field-label">Imię i nazwisko</label><input type="text" required placeholder="Jan Kowalski"></div>
+        <div><label class="field-label">E-mail</label><input type="email" required placeholder="jan@przyklad.pl"></div>
+        <div class="full"><label class="field-label">Temat</label>
+          <select>
+            <option>Zamówienie</option><option>Reklamacja / zwrot</option><option>Współpraca B2B</option><option>Inne</option>
+          </select>
+        </div>
+        <div class="full"><label class="field-label">Wiadomość</label><textarea required rows="4" placeholder="W czym możemy pomóc?"></textarea></div>
+        <div class="full"><button class="btn btn-rust" type="submit">Wyślij wiadomość</button></div>
+      </form>
+      <p class="demo-note">Formularz demonstracyjny — wiadomość nie jest faktycznie wysyłana.</p>
+    </section>
+  </div>`;
+}
+
+let authTab = "login";
+function pageLogin(){
+  if (currentUser()){ location.hash = "/konto"; return ""; }
+  return `<div class="wrap">
+    <div class="page-head"><div class="eyebrow">Konto</div><h1>Zaloguj się lub dołącz do Summit Club</h1></div>
+    <section class="section" style="padding-top:20px;max-width:420px;">
+      <div class="auth-tabs">
+        <button class="auth-tab ${authTab==="login"?"active":""}" data-authtab="login">Zaloguj się</button>
+        <button class="auth-tab ${authTab==="register"?"active":""}" data-authtab="register">Zarejestruj się</button>
+      </div>
+
+      <div class="auth-panel ${authTab==="login"?"active":""}" data-authpanel="login">
+        <form id="loginForm" class="auth-form">
+          <div><label class="field-label">E-mail</label><input type="email" id="loginEmail" required placeholder="jan@przyklad.pl"></div>
+          <div><label class="field-label">Hasło</label><input type="password" id="loginPassword" required placeholder="••••••••"></div>
+          <p class="auth-error" id="loginError" hidden></p>
+          <button class="btn btn-rust btn-block" type="submit">Zaloguj się</button>
+        </form>
+        <p class="demo-note">Konto demonstracyjne: zarejestruj się jednym kliknięciem w zakładce "Zarejestruj się" — dane trzymane są tylko lokalnie w Twojej przeglądarce.</p>
+      </div>
+
+      <div class="auth-panel ${authTab==="register"?"active":""}" data-authpanel="register">
+        <form id="registerForm" class="auth-form">
+          <div><label class="field-label">Imię i nazwisko</label><input type="text" id="regName" required placeholder="Jan Kowalski"></div>
+          <div><label class="field-label">E-mail</label><input type="email" id="regEmail" required placeholder="jan@przyklad.pl"></div>
+          <div><label class="field-label">Hasło</label><input type="password" id="regPassword" required placeholder="min. 4 znaki"></div>
+          <p class="auth-error" id="registerError" hidden></p>
+          <button class="btn btn-rust btn-block" type="submit">Utwórz konto</button>
+        </form>
+      </div>
+    </section>
+  </div>`;
+}
+
+function pageAccount(){
+  const u = currentUser();
+  if (!u){ location.hash = "/logowanie"; return ""; }
+  const orders = apiAvailable ? apiOrders : u.orders;
+  const { current, next } = tierFor(u.totalSpent);
+  const pct = next ? Math.min(100, Math.round((u.totalSpent - current.threshold) / (next.threshold - current.threshold) * 100)) : 100;
+  return `<div class="wrap">
+    <div class="page-head"><h1>Moje konto</h1></div>
+    <section class="section" style="padding-top:20px;max-width:640px;">
+      <div class="account-hero">
+        <div class="account-avatar">${u.name.trim()[0].toUpperCase()}</div>
+        <div><div class="account-name">${u.name}</div><div class="account-email">${u.email} · w Summit Club od ${u.joinedAt}</div></div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-row"><span class="tier-badge">★ ${current.name}</span><span class="tier-points">${u.points} pkt</span></div>
+        ${next ? `<div class="tier-progress-track"><div class="tier-progress-fill" style="width:${pct}%"></div></div><div class="tier-note">Wydano ${money(u.totalSpent)} — jeszcze ${money(next.threshold - u.totalSpent)} do poziomu ${next.name}.</div>` : `<div class="tier-note">Najwyższy poziom członkostwa — dziękujemy za zaufanie!</div>`}
+        <div class="tier-grid">
+          ${TIERS.map(t=>`<div class="tier-mini ${t.name===current.name?"current":""}"><b>${t.name}</b>${t.perk}</div>`).join("")}
+        </div>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Historia zamówień</h3>
+      ${orders.length ? orders.map(o=>`<div class="order-item"><div class="order-item-head"><b>${o.number}</b><span>${o.date}</span></div><div style="font-size:.85rem;color:var(--ink-soft);">${o.items.length} pozycji · ${money(o.total)} · +${o.points} pkt</div></div>`).join("") : `<p style="color:var(--ink-faint);font-size:.88rem;">Brak zamówień na koncie. <a href="#/sklep" data-link style="text-decoration:underline;">Zobacz sklep →</a></p>`}
+
+      <button class="btn btn-outline" id="logoutBtn" style="margin-top:24px;">Wyloguj się</button>
+    </section>
+  </div>`;
+}
+
+let pdpState = null;
+function pageProduct(id){
+  const p = byId(id);
+  if (!p){ location.hash = "#/sklep"; return ""; }
+  pdpState = {
+    productId: p.id,
+    color: p.colors ? 0 : null,
+    size: p.sizes ? 0 : null,
+    capacity: p.capacities ? 0 : null,
+    bundle: p.bundles ? 0 : null,
+    qty: 1,
+    tab: "opis"
+  };
+  return renderPDP();
+}
+function pdpPrice(p, s){
+  let price = p.basePrice;
+  if (p.capacities && s.capacity != null) price += p.capacities[s.capacity].delta;
+  if (p.bundles && s.bundle != null) price += p.bundles[s.bundle].delta;
+  return price;
+}
+function renderPDP(){
+  const p = byId(pdpState.productId); const s = pdpState;
+  const color = p.colors ? p.colors[s.color].hex : "var(--forest)";
+  const price = pdpPrice(p, s);
+  const shipText = p.shipping === "paletowa"
+    ? "Przesyłka gabarytowa (paletowa) — dostawa 2–4 dni robocze, koszt wyliczany w kasie."
+    : "Przesyłka standardowa (paczkomat/kurier) — darmowa od 300 zł.";
+  return `
+  <div class="wrap">
+    <div class="crumbs"><a href="#/sklep" data-link>Sklep</a> / <a href="#/sklep?cat=${p.cat}" data-link>${p.catLabel}</a> / ${p.name}</div>
+    <div class="pdp">
+      <div class="pdp-gallery">
+        <div class="pdp-frame" id="pdpFrame">${p.icon(color)}</div>
+        ${p.colors ? `<div class="swatch-row">${p.colors.map((c,i)=>`<button class="swatch ${i===s.color?"active":""}" data-role="color" data-i="${i}" style="background:${c.hex}" title="${c.name}"></button>`).join("")}</div>` : ""}
+      </div>
+      <div class="pdp-info">
+        <span class="p-cat">${p.catLabel}</span>
+        <h1>${p.name}</h1>
+        <div style="margin-bottom:10px;">${starsHTML(p.rating, p.reviewCount)}</div>
+        <div class="pdp-sku">SKU: ${p.sku}${p.colors ? " · " + p.colors[s.color].name : ""}</div>
+        <div class="price pdp-price" id="pdpPrice">${p.compareAtPrice?`<span class="was">${money(p.compareAtPrice)}</span>`:""}${money(price)}</div>
+        ${p.compareAtPrice ? `<p class="omnibus-note">Najniższa cena z 30 dni przed obniżką: ${money(p.compareAtPrice)}</p>` : ""}
+
+        ${p.sizes ? `<div class="variant-block"><div class="variant-label"><span>Rozmiar ramy</span><span class="sel">${p.sizes[s.size]}</span></div><div class="pill-row">${p.sizes.map((sz,i)=>`<button class="pill ${i===s.size?"active":""}" data-role="size" data-i="${i}">${sz.split(" ")[0]}</button>`).join("")}</div></div>` : ""}
+
+        ${p.capacities ? `<div class="variant-block"><div class="variant-label"><span>Wariant</span></div><div class="pill-row">${p.capacities.map((c,i)=>`<button class="pill ${i===s.capacity?"active":""}" data-role="capacity" data-i="${i}">${c.label.split(" — ")[0]}</button>`).join("")}</div></div>` : ""}
+
+        ${p.bundles ? `<div class="variant-block"><div class="variant-label"><span>Zestaw</span></div><div class="pill-row">${p.bundles.map((b,i)=>`<button class="pill ${i===s.bundle?"active":""}" data-role="bundle" data-i="${i}">${b.label}</button>`).join("")}</div></div>` : ""}
+
+        <div class="qty-row">
+          <div class="qty-stepper"><button data-role="qty" data-d="-1">−</button><span id="qtyVal">${s.qty}</span><button data-role="qty" data-d="1">+</button></div>
+          <button class="btn btn-rust" id="addToCartBtn">Dodaj do koszyka</button>
+          <button class="btn btn-outline wish-btn-pdp ${wishlist.includes(p.id)?"active":""}" data-wish="${p.id}">${wishlist.includes(p.id)?"♥ Na liście życzeń":"♡ Dodaj do listy życzeń"}</button>
+        </div>
+
+        <div class="ship-note">${SVG_TRUCK}<span>${shipText}</span></div>
+
+        <div class="tabs">
+          <button class="tab-btn ${s.tab==="opis"?"active":""}" data-tab="opis">Opis</button>
+          <button class="tab-btn ${s.tab==="spec"?"active":""}" data-tab="spec">Specyfikacja</button>
+          <button class="tab-btn ${s.tab==="opinie"?"active":""}" data-tab="opinie">Opinie (${p.reviewCount})</button>
+          <button class="tab-btn ${s.tab==="dostawa"?"active":""}" data-tab="dostawa">Dostawa i zwroty</button>
+        </div>
+        <div class="tab-panel ${s.tab==="opis"?"active":""}" data-panel="opis">
+          ${p.description.map(([h,t])=>`<h3>${h}</h3><p>${t}</p>`).join("")}
+        </div>
+        <div class="tab-panel ${s.tab==="spec"?"active":""}" data-panel="spec">
+          <table class="spec-table">${p.specs.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>
+        </div>
+        <div class="tab-panel ${s.tab==="opinie"?"active":""}" data-panel="opinie">
+          ${p.reviews.map(r=>`<div class="review-item"><div class="review-head"><span class="review-author">${r.author}</span><span class="review-date">${r.date}</span></div><div class="stars" style="margin-bottom:6px;">${Array.from({length:5},(_,i)=>`<span class="${i<r.stars?"star-on":"star-off"}">★</span>`).join("")}</div><p class="review-text">${r.text}</p></div>`).join("")}
+        </div>
+        <div class="tab-panel ${s.tab==="dostawa"?"active":""}" data-panel="dostawa">
+          <p>${shipText}</p>
+          <p>Prawo do odstąpienia od umowy w ciągu 14 dni bez podania przyczyny. Dla produktów gabarytowych odbiór przez przewoźnika paletowego organizuje sklep na koszt konsumenta, zgodnie z Ustawą o prawach konsumenta.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" style="padding-top:10px;">
+      <h3 class="related-head">Może Cię zainteresować</h3>
+      <div class="product-grid">${PRODUCTS.filter(x=>x.id!==p.id).map((p,i)=>productCard(p,i)).join("")}</div>
+    </section>
+  </div>`;
+}
+
+function pageCart(){
+  if (cart.length === 0){
+    return `<div class="wrap"><div class="page-head"><h1>Koszyk</h1></div>
+      <div class="empty-state">${SVG_EMPTY}<p>Twój koszyk jest pusty.</p><a class="btn btn-primary" href="#/sklep" data-link>Przejdź do sklepu</a></div></div>`;
+  }
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const hasPaleta = cartHasPaletowa();
+  let shipBar = "";
+  if (hasPaleta){
+    shipBar = `<div class="ship-progress muted">Zamówienie zawiera towar gabarytowy — koszt przesyłki paletowej wyliczymy w kasie.</div>`;
+  } else if (subtotal >= 300){
+    shipBar = `<div class="ship-progress done">${SVG_CHECK}<span>Masz darmową dostawę!</span></div>`;
+  } else {
+    const pct = Math.min(100, Math.round(subtotal/300*100));
+    shipBar = `<div class="ship-progress"><div class="ship-progress-text">Dodaj produkty za <strong>${money(300-subtotal)}</strong>, aby uzyskać darmową dostawę</div><div class="ship-progress-track"><div class="ship-progress-fill" style="width:${pct}%"></div></div></div>`;
+  }
+  return `<div class="wrap">
+    <div class="page-head"><h1>Koszyk (${cart.reduce((s,l)=>s+l.qty,0)})</h1></div>
+    <div class="cart-layout">
+      <div>
+        ${shipBar}
+        ${cart.map(l => {
+          const p = byId(l.productId); const color = p.colors ? p.colors[0].hex : "var(--forest)";
+          return `<div class="cart-line">
+            <div class="thumb-sm">${p.icon(color)}</div>
+            <div class="grow"><div class="name">${l.name}</div><div class="variant">${l.variantLabel}</div>
+              <button class="remove" data-remove="${l.key}">Usuń</button></div>
+            <div class="line-right">
+              <div class="qty-stepper"><button data-qty="-1" data-key="${l.key}">−</button><span>${l.qty}</span><button data-qty="1" data-key="${l.key}">+</button></div>
+              <span class="price">${money(l.unitPrice*l.qty)}</span>
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="summary-card">
+        <div class="summary-row"><span>Suma produktów</span><span class="price">${money(subtotal)}</span></div>
+        ${promo ? `<div class="summary-row promo-applied"><span>Kod ${promo}<button id="removePromoBtn">usuń</button></span><span class="price">−${money(discount)}</span></div>` : ""}
+        <div class="summary-row"><span>Dostawa</span><span>obliczona w kasie</span></div>
+        <div class="summary-row total"><span>Razem</span><span class="price">${money(subtotal - discount)}</span></div>
+        ${!promo ? `<div class="promo-row"><input id="promoInput" placeholder="Kod rabatowy"><button class="btn btn-outline" id="applyPromoBtn">Zastosuj</button></div>` : ""}
+        <a class="btn btn-rust btn-block" href="#/checkout" data-link style="margin-top:16px;">Przejdź do zamówienia</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+let checkoutState = { delivery: null, payment: "blik" };
+function shippingOptions(){
+  const subtotal = cartSubtotal();
+  if (cartHasPaletowa()){
+    return [
+      {id:"paleta", label:"Przesyłka paletowa (Raben)", desc:"2–4 dni robocze, awizacja telefoniczna", price:149},
+      {id:"odbior", label:"Odbiór osobisty w salonie", desc:"Gotowe w 5 dni roboczych", price:0}
+    ];
+  }
+  const free = subtotal >= 300;
+  return [
+    {id:"paczkomat", label:"Paczkomat InPost", desc:"1–2 dni robocze", price: free?0:14.99},
+    {id:"kurier", label:"Kurier DPD", desc:"1 dzień roboczy", price: free?0:16.99},
+    {id:"odbior", label:"Odbiór osobisty w salonie", desc:"Gotowe w 5 dni roboczych", price:0}
+  ];
+}
+function pageCheckout(){
+  if (cart.length === 0){ location.hash = "#/koszyk"; return ""; }
+  const opts = shippingOptions();
+  if (!checkoutState.delivery || !opts.find(o=>o.id===checkoutState.delivery)) checkoutState.delivery = opts[0].id;
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const shipCost = opts.find(o=>o.id===checkoutState.delivery).price;
+  const total = subtotal - discount + shipCost;
+  const u = currentUser();
+  const payments = [
+    {id:"blik", label:"BLIK", desc:"Płatność natychmiastowa"},
+    {id:"karta", label:"Karta płatnicza", desc:"Visa / Mastercard, 3D-Secure"},
+    {id:"przelew", label:"Przelew tradycyjny", desc:"Realizacja po zaksięgowaniu wpłaty"}
+  ];
+  return `<div class="wrap">
+    <div class="page-head"><h1>Zamówienie</h1></div>
+    <div class="checkout-layout">
+      <div>
+        ${!u ? `<div class="guest-banner"><span>Zaloguj się, aby zbierać punkty Summit Club i zapisać historię zamówienia.</span><a class="btn btn-outline" href="#/logowanie" data-link>Zaloguj się</a></div>` : `<div class="guest-banner"><span>Zamawiasz jako <b>${u.name}</b> — punkty trafią na Twoje konto Summit Club.</span></div>`}
+        <div class="block-label">Adres dostawy</div>
+        <div class="form-grid">
+          <div><label class="field-label">Imię i nazwisko</label><input type="text" placeholder="Jan Kowalski" ${u?`value="${u.name}"`:""}></div>
+          <div><label class="field-label">Telefon</label><input type="tel" placeholder="+48 600 000 000"></div>
+          <div class="full"><label class="field-label">Adres</label><input type="text" placeholder="ul. Górska 12"></div>
+          <div><label class="field-label">Miasto</label><input type="text" placeholder="Kraków"></div>
+          <div><label class="field-label">Kod pocztowy</label><input type="text" placeholder="30-001"></div>
+        </div>
+
+        <div class="block-label">Metoda dostawy</div>
+        ${opts.map(o => `<label class="option-card ${checkoutState.delivery===o.id?"active":""}">
+          <input type="radio" name="ship" value="${o.id}" ${checkoutState.delivery===o.id?"checked":""} data-role="ship">
+          <div class="grow"><b>${o.label}</b><span>${o.desc}</span></div>
+          <span class="op-price price">${o.price===0?"Darmowo":money(o.price)}</span>
+        </label>`).join("")}
+
+        <div class="block-label">Metoda płatności</div>
+        ${payments.map(pm => `<label class="option-card ${checkoutState.payment===pm.id?"active":""}">
+          <input type="radio" name="pay" value="${pm.id}" ${checkoutState.payment===pm.id?"checked":""} data-role="pay">
+          <div class="grow"><b>${pm.label}</b><span>${pm.desc}</span></div>
+        </label>`).join("")}
+        <p class="demo-note">To środowisko demonstracyjne — żadna płatność nie zostanie faktycznie obciążona.</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-row"><span>Suma produktów</span><span class="price">${money(subtotal)}</span></div>
+        ${promo ? `<div class="summary-row promo-applied"><span>Kod ${promo}<button id="removePromoBtn">usuń</button></span><span class="price">−${money(discount)}</span></div>` : `<div class="promo-row"><input id="promoInput" placeholder="Kod rabatowy"><button class="btn btn-outline" id="applyPromoBtn">Zastosuj</button></div>`}
+        <div class="summary-row"><span>Dostawa</span><span class="price">${shipCost===0?"Darmowo":money(shipCost)}</span></div>
+        <div class="summary-row total"><span>Razem</span><span class="price">${money(total)}</span></div>
+        <div class="summary-row" style="color:var(--forest-ink);font-weight:700;"><span>Punkty Summit Club</span><span>+${loyaltyPoints(total)} pkt</span></div>
+        <button class="btn btn-rust btn-block" id="placeOrderBtn" style="margin-top:16px;">Zamów i zapłać</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function placeOrder(){
+  const opts = shippingOptions();
+  const shipCost = opts.find(o=>o.id===checkoutState.delivery).price;
+  const delivery = opts.find(o=>o.id===checkoutState.delivery).label;
+
+  if (cartMode() === "api"){
+    const btn = document.getElementById("placeOrderBtn");
+    if (btn){ btn.disabled = true; btn.textContent = "Przetwarzanie…"; }
+    try {
+      const data = await apiFetch("/api/orders/checkout", {
+        method:"POST",
+        body:{ promoCode: promo, shipCost, delivery, payment: checkoutState.payment },
+      });
+      const o = data.order;
+      lastOrder = {
+        number: o.number, subtotal: o.subtotal, discount: o.discount, promo: o.promo,
+        shipCost: o.shipCost, total: o.total, points: o.points, delivery: o.delivery, payment: o.payment,
+        items: cart.map(l => ({ name:l.name, variant:l.variantLabel, qty:l.qty, unitPrice:l.unitPrice })),
+      };
+      cart = []; updateCartCount();
+      promo = null; localStorage.removeItem("stt_promo");
+      location.hash = "#/potwierdzenie";
+    } catch(e){
+      showToast("Błąd: " + e.message);
+      if (btn){ btn.disabled = false; btn.textContent = "Zamów i zapłać"; }
+    }
+    return;
+  }
+
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const total = subtotal - discount + shipCost;
+  lastOrder = {
+    number: "SNT-" + Math.floor(100000 + Math.random()*899999),
+    items: cart.map(l => ({name:l.name, variant:l.variantLabel, qty:l.qty, unitPrice:l.unitPrice})),
+    subtotal, discount, promo, shipCost, total,
+    points: loyaltyPoints(total),
+    delivery, payment: checkoutState.payment
+  };
+  localStorage.setItem("stt_last_order", JSON.stringify(lastOrder));
+  const u = currentUser();
+  if (u){
+    u.points += lastOrder.points;
+    u.totalSpent += (subtotal - discount);
+    u.orders.unshift({ number: lastOrder.number, date: new Date().toISOString().slice(0,10), items: lastOrder.items, total: lastOrder.total, points: lastOrder.points });
+    saveUsers();
+  }
+  cart = []; saveCart();
+  promo = null; localStorage.removeItem("stt_promo");
+  location.hash = "#/potwierdzenie";
+}
+
+function pageConfirm(){
+  if (!lastOrder) return `<div class="wrap"><div class="empty-state"><p>Brak ostatniego zamówienia.</p><a class="btn btn-primary" href="#/sklep" data-link>Wróć do sklepu</a></div></div>`;
+  return `<div class="wrap"><div class="confirm-wrap">
+    <div class="confirm-icon">${SVG_CHECK}</div>
+    <h1>Dziękujemy za zamówienie!</h1>
+    <p>Numer zamówienia: <span class="order-no">${lastOrder.number}</span>. Potwierdzenie wysłaliśmy na podany adres e-mail.</p>
+    <div class="confirm-summary">
+      ${lastOrder.items.map(i=>`<div class="summary-row"><span>${i.qty}× ${i.name} <span style="color:var(--ink-faint)">(${i.variant})</span></span><span class="price">${money(i.unitPrice*i.qty)}</span></div>`).join("")}
+      ${lastOrder.discount ? `<div class="summary-row promo-applied"><span>Kod ${lastOrder.promo}</span><span class="price">−${money(lastOrder.discount)}</span></div>` : ""}
+      <div class="summary-row"><span>Dostawa — ${lastOrder.delivery}</span><span class="price">${lastOrder.shipCost===0?"Darmowo":money(lastOrder.shipCost)}</span></div>
+      <div class="summary-row total"><span>Razem</span><span class="price">${money(lastOrder.total)}</span></div>
+      <div class="summary-row" style="color:var(--forest-ink);font-weight:700;"><span>Punkty Summit Club</span><span>+${lastOrder.points} pkt</span></div>
+    </div>
+    <a class="btn btn-primary" href="#/sklep" data-link>Wróć do sklepu</a>
+  </div></div>`;
+}
+
+/* ============== ROUTER ============== */
+function parseHash(){
+  const raw = location.hash.slice(1) || "/";
+  const [path, qs] = raw.split("?");
+  return { path, query: new URLSearchParams(qs || "") };
+}
+
+async function render(){
+  const { path, query } = parseHash();
+  const app = document.getElementById("app");
+  let html = "";
+  if (path === "/" ) html = pageHome();
+  else if (path === "/sklep") html = pageShop(query);
+  else if (path.startsWith("/produkt/")) html = pageProduct(path.split("/produkt/")[1]);
+  else if (path === "/koszyk") html = pageCart();
+  else if (path === "/checkout") html = pageCheckout();
+  else if (path === "/potwierdzenie") html = pageConfirm();
+  else if (path === "/lista-zyczen") html = pageWishlist();
+  else if (path === "/kontakt") html = pageContact();
+  else if (path === "/logowanie") html = pageLogin();
+  else if (path === "/konto"){
+    if (apiAvailable && currentUser()){
+      try {
+        const [me, orders] = await Promise.all([apiFetch("/api/auth/me"), apiFetch("/api/orders")]);
+        if (me.user) apiUser = me.user;
+        apiOrders = orders.orders;
+      } catch(e){ apiOrders = []; }
+    }
+    html = pageAccount();
+  }
+  else html = pageHome();
+  app.classList.remove("page-anim");
+  app.innerHTML = html;
+  void app.offsetWidth;
+  app.classList.add("page-anim");
+  updateCartCount();
+  updateWishCount();
+  updateAccountUI();
+  window.scrollTo(0,0);
+  bindPageEvents(path);
+  highlightNav(path);
+}
+
+function highlightNav(path){
+  document.querySelectorAll("#siteNav a").forEach(a=>{
+    const href = a.getAttribute("href").replace("#","");
+    a.classList.toggle("active", path === href.split("?")[0] && (href.indexOf("?")===-1 || location.hash.indexOf(href)>-1));
+  });
+}
+
+function bindPageEvents(path){
+  if (path === "/sklep"){
+    document.querySelectorAll(".filter-chip").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        shopFilter = btn.dataset.cat;
+        document.querySelectorAll(".filter-chip").forEach(b=>b.classList.toggle("active", b===btn));
+        renderShopGrid();
+      });
+    });
+    const sortSelect = document.getElementById("sortSelect");
+    if (sortSelect) sortSelect.addEventListener("change", ()=>{ shopSort = sortSelect.value; renderShopGrid(); });
+  }
+  if (path.startsWith("/produkt/")){
+    const p = byId(pdpState.productId);
+    document.querySelectorAll('[data-role="color"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.color = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="size"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.size = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="capacity"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.capacity = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="bundle"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.bundle = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="qty"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.qty = Math.max(1, pdpState.qty + (+b.dataset.d)); rerenderPDP(); }));
+    document.querySelectorAll(".tab-btn").forEach(b=>b.addEventListener("click", ()=>{ pdpState.tab = b.dataset.tab; rerenderPDP(); }));
+    const addBtn = document.getElementById("addToCartBtn");
+    if (addBtn) addBtn.addEventListener("click", ()=>{
+      const s = pdpState; const price = pdpPrice(p, s);
+      let variantLabel = [];
+      if (p.sizes) variantLabel.push(p.sizes[s.size]);
+      if (p.colors) variantLabel.push(p.colors[s.color].name);
+      if (p.capacities) variantLabel.push(p.capacities[s.capacity].label.split(" — ")[0]);
+      if (p.bundles) variantLabel.push(p.bundles[s.bundle].label);
+      addToCart(p, variantLabel.length ? variantLabel.join(" · ") : "Wariant standardowy", price, s.qty);
+    });
+  }
+  if (path === "/koszyk"){
+    document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click", ()=>removeLine(b.dataset.remove)));
+    document.querySelectorAll("[data-qty]").forEach(b=>b.addEventListener("click", ()=>changeLineQty(b.dataset.key, +b.dataset.qty)));
+    bindPromoEvents();
+  }
+  if (path === "/checkout"){
+    document.querySelectorAll('[data-role="ship"]').forEach(r=>r.addEventListener("change", ()=>{ checkoutState.delivery = r.value; rerenderCheckout(); }));
+    document.querySelectorAll('[data-role="pay"]').forEach(r=>r.addEventListener("change", ()=>{ checkoutState.payment = r.value; rerenderCheckout(); }));
+    const place = document.getElementById("placeOrderBtn");
+    if (place) place.addEventListener("click", placeOrder);
+    bindPromoEvents();
+  }
+  const newsForm = document.getElementById("newsForm");
+  if (newsForm) newsForm.addEventListener("submit", (e)=>{ e.preventDefault(); showToast("Zapisano do newslettera ✓"); newsForm.reset(); });
+  if (path === "/kontakt"){
+    const cf = document.getElementById("contactForm");
+    if (cf) cf.addEventListener("submit", (e)=>{ e.preventDefault(); showToast("Wiadomość wysłana — odpowiemy w ciągu 24h"); cf.reset(); });
+  }
+  if (path === "/logowanie"){
+    document.querySelectorAll("[data-authtab]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{ authTab = btn.dataset.authtab; rerenderLogin(); });
+    });
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) loginForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const submitBtn = loginForm.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
+      const res = await loginUser(document.getElementById("loginEmail").value, document.getElementById("loginPassword").value);
+      if (submitBtn) submitBtn.disabled = false;
+      const err = document.getElementById("loginError");
+      if (res.error){ err.textContent = res.error; err.hidden = false; return; }
+      showToast("Zalogowano jako " + currentUser().name);
+      location.hash = "/konto";
+    });
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) registerForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const submitBtn = registerForm.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
+      const res = await registerUser(document.getElementById("regName").value, document.getElementById("regEmail").value, document.getElementById("regPassword").value);
+      if (submitBtn) submitBtn.disabled = false;
+      const err = document.getElementById("registerError");
+      if (res.error){ err.textContent = res.error; err.hidden = false; return; }
+      showToast("Witamy w Summit Club, " + currentUser().name + "!");
+      location.hash = "/konto";
+    });
+  }
+  if (path === "/konto"){
+    const out = document.getElementById("logoutBtn");
+    if (out) out.addEventListener("click", logoutUser);
+  }
+}
+
+function rerenderLogin(){ document.getElementById("app").innerHTML = pageLogin(); bindPageEvents("/logowanie"); }
+
+function rerenderPDP(){ document.getElementById("app").innerHTML = renderPDP(); bindPageEvents(location.hash.slice(1).split("?")[0]); }
+function rerenderCheckout(){ document.getElementById("app").innerHTML = pageCheckout(); bindPageEvents("/checkout"); }
+
+function bindPromoEvents(){
+  const applyBtn = document.getElementById("applyPromoBtn");
+  const input = document.getElementById("promoInput");
+  if (applyBtn && input) applyBtn.addEventListener("click", ()=> applyPromo(input.value));
+  if (input) input.addEventListener("keydown", (e)=>{ if (e.key === "Enter"){ e.preventDefault(); applyPromo(input.value); } });
+  const removeBtn = document.getElementById("removePromoBtn");
+  if (removeBtn) removeBtn.addEventListener("click", removePromo);
+}
+
+/* ============== nav toggle (mobile) ============== */
+document.getElementById("navToggle").addEventListener("click", ()=>{
+  const nav = document.getElementById("siteNav");
+  const open = nav.style.display === "flex";
+  nav.style.display = open ? "none" : "flex";
+  nav.style.flexDirection = "column";
+  nav.style.position = "absolute"; nav.style.top = "64px"; nav.style.left = "0"; nav.style.right = "0";
+  nav.style.background = "var(--paper-raised)"; nav.style.padding = "16px 5vw"; nav.style.borderBottom = "1px solid var(--line)";
+});
+
+document.addEventListener("click", (e)=>{
+  const wishBtn = e.target.closest("[data-wish]");
+  if (wishBtn){
+    e.preventDefault();
+    handleWishClick(wishBtn.dataset.wish);
+    return;
+  }
+  const link = e.target.closest("[data-link]");
+  if (!link) return;
+  e.preventDefault();
+  const href = link.dataset.href || link.getAttribute("href");
+  location.hash = href.replace("#","");
+  document.getElementById("siteNav").style.display = "";
+  document.getElementById("searchResults").hidden = true;
+});
+
+/* ============== search (header, persists across pages) ============== */
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+searchInput.addEventListener("input", ()=>{
+  const q = searchInput.value.trim();
+  if (location.hash.replace("#","").split("?")[0] === "/sklep"){
+    shopSearch = q; renderShopGrid();
+  }
+  if (!q){ searchResults.hidden = true; return; }
+  const matches = PRODUCTS.filter(p => matchesQuery(p, q)).slice(0,6);
+  searchResults.innerHTML = matches.length
+    ? matches.map(p => `<a class="search-item" href="#/produkt/${p.id}" data-link><span class="search-thumb">${p.icon(p.colors?p.colors[0].hex:"var(--forest)")}</span><span class="search-name">${p.name}</span><span class="price">${money(p.basePrice)}</span></a>`).join("")
+    : `<div class="search-empty">Brak wyników dla „${q}”.</div>`;
+  searchResults.hidden = false;
+});
+searchInput.addEventListener("keydown", (e)=>{
+  if (e.key === "Enter"){
+    e.preventDefault();
+    location.hash = "/sklep?q=" + encodeURIComponent(searchInput.value.trim());
+    searchResults.hidden = true;
+  }
+});
+document.addEventListener("click", (e)=>{
+  if (!e.target.closest(".search-wrap")) searchResults.hidden = true;
+});
+
+window.addEventListener("hashchange", render);
+
+(async function bootstrap(){
+  await initApi();
+  render();
+})();
+})();
+</script>

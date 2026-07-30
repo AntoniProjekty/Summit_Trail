@@ -25,6 +25,14 @@ Niniejsze repozytorium zawiera **kompletną specyfikację funkcjonalno-techniczn
 | 13 | [Wielojęzyczność (PL/EN/UK) i kompatybilność wielourządzeniowa](docs/13-wielojezycznosc-i-kompatybilnosc.md) | Trójjęzyczny interfejs od startu, responsywność mobile/desktop, PWA, testy cross-browser i cross-device |
 | 14 | [Harmonogram wdrożenia i kosztorys](docs/14-harmonogram-i-kosztorys.md) | Fazowanie projektu, zespół, orientacyjny kosztorys, kamienie płatności, rejestr ryzyk |
 
+## Działający prototyp: frontend + prawdziwy backend
+
+Poza dokumentacją repozytorium zawiera **działający prototyp sklepu z prawdziwym kontem użytkownika**, nie tylko demo w `localStorage`:
+
+- [`web/`](web/index.html) — frontend sklepu (katalog 73 produktów, koszyk, checkout, konto, program lojalnościowy Summit Club). Domyślnie działa w trybie offline (localStorage); po ustawieniu `window.STT_API_BASE` na adres wdrożonego backendu przełącza się automatycznie na prawdziwe konta i zamówienia trwałe między urządzeniami.
+- [`server/`](server/README.md) — backend API (Node.js + Express + SQLite): rejestracja/logowanie, koszyk, lista życzeń, checkout z naliczaniem punktów, historia zamówień. Zweryfikowany end-to-end (rejestracja → zakup → ponowne logowanie z innego „urządzenia" i odzyskanie tych samych danych z bazy).
+- Instrukcja uruchomienia lokalnego i wdrożenia produkcyjnego: patrz [`server/README.md`](server/README.md).
+
 ## Streszczenie wykonawcze
 
 Summit & Trail to platforma projektowana w modelu **composable commerce** (najlepsze-w-swojej-klasie komponenty połączone przez API, nie monolit), co pozwala na niezależne skalowanie katalogu, wyszukiwania, płatności i CMS-a — analogicznie do architektur stosowanych przez liderów rynku (Zalando, Decathlon, REI). Projekt obejmuje pełny cykl życia klienta: od odkrycia produktu (SEO/AI), przez zakup (checkout, płatności, logistyka gabarytowa), po utrzymanie relacji (CRM, program lojalnościowy, serwis pogwarancyjny) oraz warstwę zarządczą (BI, KPI, zgodność prawna, bezpieczeństwo klasy enterprise).
