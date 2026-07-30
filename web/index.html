@@ -54,7 +54,6 @@
   @keyframes pulse{ 0%{ transform:scale(1); } 35%{ transform:scale(1.4); } 100%{ transform:scale(1); } }
   @keyframes toDown{ from{ opacity:0; max-height:0; } to{ opacity:1; max-height:200px; } }
   #app.page-anim{ animation: pageIn .38s cubic-bezier(.16,.8,.3,1) both; }
-  .p-card{ animation: cardIn .5s cubic-bezier(.16,.8,.3,1) both; }
   .cart-count.pulse{ animation: pulse .45s ease; }
   .btn, .filter-chip, .pill, .swatch, .tab-btn, .wish-btn, .option-card, .navlink, .cat-tile, .search-item {
     transition: background .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
@@ -68,8 +67,10 @@
 
   /* ---------- header ---------- */
   header.site{
-    position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(10px); border-bottom:1px solid var(--line);
+    /* No backdrop-filter here on purpose: a blurred sticky header repaints on every
+       scroll frame and is the main cause of choppy scrolling. */
+    position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--paper) 97%, transparent);
+    border-bottom:1px solid var(--line);
   }
   .site-bar{ display:flex; align-items:center; gap:26px; padding:16px 0; }
   .logo{ display:flex; align-items:center; gap:9px; font-weight:800; font-size:1.05rem; letter-spacing:-0.01em; flex:none; }
@@ -150,6 +151,9 @@
     display:flex; flex-direction:column; background:var(--paper-raised); border:1px solid var(--line); border-radius:16px;
     overflow:hidden; transition: transform .15s ease, box-shadow .15s ease;
   }
+  /* Only the first screenful of cards animates in; animating 70+ cards at once on every
+     grid re-render (filter/sort/category change) is what makes navigation feel choppy. */
+  .p-card.anim{ animation: cardIn .5s cubic-bezier(.16,.8,.3,1) both; }
   .p-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
   .p-card .thumb{ aspect-ratio:4/3; background:var(--paper-sunk); display:flex; align-items:center; justify-content:center; position:relative; padding:18px; }
   .p-card .thumb svg{ width:78%; height:78%; }
@@ -1203,8 +1207,9 @@ function productCard(p, i){
   const inWish = wishlist.includes(p.id);
   const pct = p.compareAtPrice ? Math.round((1 - p.basePrice/p.compareAtPrice)*100) : 0;
   const badgeHtml = p.compareAtPrice ? `<span class="p-badge">-${pct}%</span>` : (p.badge ? `<span class="p-badge">${p.badge}</span>` : "");
-  const delay = i != null ? Math.min(i*35, 350) : 0;
-  return `<a class="p-card" href="#/produkt/${p.id}" data-link style="animation-delay:${delay}ms">
+  const animate = i != null && i < 16;
+  const delay = animate ? i*35 : 0;
+  return `<a class="p-card${animate?" anim":""}" href="#/produkt/${p.id}" data-link${animate?` style="animation-delay:${delay}ms"`:""}>
     <div class="thumb">${badgeHtml}<button class="wish-btn ${inWish?"active":""}" data-wish="${p.id}" aria-label="Lista życzeń">${inWish?"♥":"♡"}</button>${p.icon(iconColor)}</div>
     <div class="p-body">
       <span class="p-cat">${p.catLabel}</span>
