@@ -58,7 +58,7 @@ Wirtualny doradca dostępny na stronie, w aplikacji mobilnej (Faza 3) i w kanał
 | Doradztwo produktowe | „Szukam e-bike do dojazdów 15 km dziennie po górzystym terenie, budżet do 12 tys." → asystent filtruje katalog (PIM, dok. 02), porównuje warianty, tłumaczy różnice techniczne w prostym języku |
 | Status zamówienia i RMA | Odpowiada na pytania o status bez przełączania klienta do BOK — pobiera dane z Order Management (dok. 04) w czasie rzeczywistym |
 | Doradztwo serwisowe | „Jak przygotować rower do zimy" — łączy wiedzę z bazy artykułów (dok. 07) i danych telemetrycznych klienta (12.7), jeśli klient jest zalogowany |
-| Wielojęzyczność | Natywna obsługa PL/DE/CZ (dok. 10) bez potrzeby osobnego treningu — LLM tłumaczy kontekstowo, zachowując terminologię techniczną z PIM |
+| Wielojęzyczność | Natywna obsługa PL/EN/UK od startu (dok. 13) oraz języków rynków ekspansji DE/CZ (dok. 10) bez potrzeby osobnego treningu — LLM tłumaczy kontekstowo, zachowując terminologię techniczną z PIM |
 | Eskalacja do człowieka | Przy niskiej pewności odpowiedzi, pytaniach finansowych/prawnych lub wyrażonej frustracji (sentiment — 12.8) — przekazanie do agenta z pełnym podsumowaniem rozmowy |
 
 ### Architektura RAG asystenta
@@ -108,7 +108,7 @@ Rozwija warstwę opisaną w dok. 07 o konkretną architekturę modelową:
 | Zastosowanie | Opis | Nadzór ludzki |
 |---|---|---|
 | Opisy produktowe SEO | Generowanie wariantów opisu marketingowego (dok. 02) na bazie specyfikacji technicznej z PIM — wiele wariantów do testów A/B (dok. 09) | Redaktor zatwierdza przed publikacją |
-| Tłumaczenia lokalizacyjne | Tłumaczenie opisów na DE/CZ z zachowaniem tonu marki i terminologii technicznej (dok. 10) | Lokalny redaktor weryfikuje próbkę 10% |
+| Tłumaczenia lokalizacyjne | Wstępne tłumaczenie opisów na EN/UK (dok. 13) i języki rynków ekspansji DE/CZ (dok. 10) z zachowaniem tonu marki i terminologii technicznej | Obowiązkowa redakcja native speakera (dok. 13) przed publikacją |
 | Meta title/description | Automatyczna generacja i testowanie wariantów pod CTR w wynikach wyszukiwania | Automatyczna publikacja z monitoringiem CTR |
 | Kreacje reklamowe (ad copy) | Warianty tekstów dla Meta/Google Ads dopasowane do segmentu odbiorcy (dok. 08) | Marketing zatwierdza kampanię |
 | Podsumowania recenzji klientów | Skrócone podsumowanie „co klienci mówią” na PDP na bazie dziesiątek recenzji | Oznaczone jako „podsumowanie AI”, link do pełnych recenzji |

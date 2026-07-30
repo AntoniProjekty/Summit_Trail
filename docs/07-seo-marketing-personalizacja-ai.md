@@ -11,7 +11,7 @@
 | Kanoniczne adresy URL | `rel=canonical` na każdej stronie z parametrami filtrów, unikanie duplicate content |
 | Paginacja i filtry fasetowe | Kontrola indeksacji (`noindex,follow` dla kombinacji filtrów niskiej wartości SEO) |
 | Szybkość strony | Zgodność z budżetem Core Web Vitals (dok. 03) — czynnik rankingowy Google |
-| Międzynarodowe SEO (hreflang) | `hreflang` dla wariantów językowych/rynkowych przy ekspansji (dok. 10) |
+| Wielojęzyczne SEO (hreflang) | `hreflang` dla wersji PL/EN/UK w ramach jednego rynku (dok. 13) oraz dla wariantów rynkowych przy ekspansji (dok. 10) |
 
 ### Dane strukturalne (schema.org)
 
