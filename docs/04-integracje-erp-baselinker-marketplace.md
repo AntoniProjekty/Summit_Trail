@@ -6,43 +6,23 @@
 
 BaseLinker działa jako centralny hub WMS/OMS pomiędzy sklepem Summit & Trail, kurierami, systemem księgowym/ERP i marketplace'ami. Sklep nigdy nie komunikuje się bezpośrednio z Allegro/Erli — całą logikę multi-channel przejmuje BaseLinker.
 
-```mermaid
-flowchart LR
-    subgraph Sklep["Sklep Summit & Trail"]
-        A[Silnik e-commerce]
-        DB[(Baza danych produktów/zamówień)]
-    end
-
-    subgraph BL["BaseLinker (WMS / OMS)"]
-        BLC[Katalog centralny]
-        BLO[Zamówienia]
-        BLI[Integracje kurierskie]
-        BLF[Fakturowanie]
-    end
-
-    subgraph ERP["System ERP / księgowy"]
-        FK[Comarch Optima / Fakturownia / Symfonia]
-    end
-
-    subgraph MP["Marketplace"]
-        ALG[Allegro]
-        ERLI[Erli]
-    end
-
-    subgraph EXT["Kurierzy"]
-        KUR[InPost / DPD / Raben]
-    end
-
-    A <-- "REST API: stany, ceny, zamówienia" --> BLC
-    DB <--> A
-    BLC <--> BLO
-    BLO -- "Webhook: nowe zamówienie" --> A
-    A -- "REST API: status zamówienia" --> BLO
-    BLO <--> ALG
-    BLO <--> ERLI
-    BLO --> BLI --> KUR
-    BLO --> BLF <--> FK
-```
+<div class="flow-wrap">
+<div class="flow-cols">
+  <div class="flow-col">
+    <div class="flow-col-title">Sklep Summit &amp; Trail</div>
+    <ul><li>Silnik e-commerce</li><li>Baza danych produktów/zamówień</li></ul>
+  </div>
+  <div class="flow-col flow-col-hub">
+    <div class="flow-col-title">BaseLinker — WMS/OMS</div>
+    <ul><li>Katalog centralny</li><li>Zamówienia</li><li>Integracje kurierskie</li><li>Fakturowanie</li></ul>
+  </div>
+  <div class="flow-col">
+    <div class="flow-col-title">Dalej synchronizuje z</div>
+    <ul><li>Marketplace: Allegro, Erli</li><li>Kurierzy: InPost, DPD, Raben</li><li>ERP/księgowość: Comarch, Fakturownia, Symfonia</li></ul>
+  </div>
+</div>
+</div>
+<p class="flow-note">Sklep wymienia z BaseLinker stany, ceny i zamówienia przez REST API oraz webhooki (<code>newOrder</code>, status zamówienia) — BaseLinker rozprowadza dane dalej do kurierów, marketplace i systemu księgowego, tak że sklep nigdy nie łączy się z nimi bezpośrednio.</p>
 
 ## 4.2 Dwukierunkowa synchronizacja
 

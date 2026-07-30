@@ -8,38 +8,17 @@ Poniższy harmonogram i kosztorys mają charakter **orientacyjny** — punkt wyj
 
 Projekt realizowany w modelu przyrostowym: każda faza kończy się działającym, wdrożonym produktem (nie „big bang" po 12 miesiącach), zgodnie z priorytetami MVP/Faza 2/Faza 3 zdefiniowanymi w [dokumencie 01](01-mapa-strony-ux-ia.md).
 
-```mermaid
-gantt
-    title Harmonogram realizacji Summit & Trail
-    dateFormat  YYYY-MM-DD
-    axisFormat  %m/%Y
-
-    section Faza 0 — Discovery & Design
-    Warsztaty i architektura informacji     :f0a, 2026-09-01, 3w
-    Design system i UX/UI (dok. 01)          :f0b, after f0a, 5w
-
-    section Faza 1 — MVP (Core Commerce)
-    Architektura techniczna (dok. 03)        :f1a, after f0b, 3w
-    Katalog, PIM, PDP (dok. 02)               :f1b, after f0b, 6w
-    Checkout, płatności, dostawy (dok. 05)    :f1c, after f1a, 6w
-    Integracja BaseLinker (dok. 04)           :f1d, after f1a, 5w
-    Bezpieczeństwo i zgodność (dok. 06)       :f1e, after f1a, 4w
-    Wielojęzyczność PL/EN/UK (dok. 13)        :f1f, after f1b, 4w
-    UAT i stabilizacja                        :f1g, after f1c, 3w
-    Start produkcyjny — MVP                   :milestone, after f1g, 0d
-
-    section Faza 2 — Wzrost i AI
-    CRM, automatyzacja marketingu (dok. 08)   :f2a, after f1g, 6w
-    Analityka i BI (dok. 09)                  :f2b, after f1g, 5w
-    Summit AI — asystent i wyszukiwanie (dok. 12) :f2c, after f1g, 8w
-    Program lojalnościowy, portal B2B (dok. 10) :f2d, after f2a, 6w
-    Start Fazy 2                              :milestone, after f2c, 0d
-
-    section Faza 3 — Skalowanie
-    Visual search/AR, predictive maintenance (dok. 12) :f3a, after f2c, 10w
-    Aplikacja mobilna natywna                 :f3b, after f2c, 12w
-    Ekspansja DE/CZ (dok. 10)                 :f3c, after f2d, 10w
-```
+<div class="flow-wrap">
+<div class="flow-row">
+  <span class="flow-step">Faza 0 — Discovery &amp; Design<br><small>6–8 tyg.</small></span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step flow-chip-accent">Faza 1 — MVP<br><small>4–5 mies.</small></span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Faza 2 — Wzrost i AI<br><small>3–4 mies.</small></span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Faza 3 — Skalowanie<br><small>roadmap ciągły</small></span>
+</div>
+</div>
 
 | Faza | Zakres | Czas trwania |
 |---|---|---|

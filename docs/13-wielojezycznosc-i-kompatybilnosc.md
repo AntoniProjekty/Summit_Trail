@@ -14,16 +14,22 @@ Waluta pozostaje **PLN** we wszystkich trzech wersjach językowych (to nie jest 
 
 ## 13.1 Architektura techniczna wielojęzyczności
 
-```mermaid
-flowchart LR
-    U["Użytkownik"] --> DETECT["Wykrycie języka:\nAccept-Language + GeoIP"]
-    DETECT --> SWITCH["Przełącznik języka w nagłówku\n(zawsze widoczny, dok. 01)"]
-    SWITCH --> ROUTE["Routing ścieżkowy:\n/pl/..., /en/..., /uk/..."]
-    ROUTE --> I18N["next-intl — słowniki UI + treści z PIM/CMS"]
-    I18N --> FALLBACK["Fallback: brak tłumaczenia → PL\n(nigdy puste pole)"]
-    ROUTE --> HREFLANG["hreflang pl-PL / en-PL / uk-PL\n(dok. 07)"]
-    PREF["Wybór klienta zapisany w:\ncookie + profil konta (dok. 08)"] --> DETECT
-```
+<div class="flow-wrap">
+<div class="flow-row">
+  <span class="flow-step">Użytkownik</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Wykrycie języka (Accept-Language + GeoIP)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Przełącznik języka w nagłówku (dok. 01)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step flow-chip-accent">Routing ścieżkowy: /pl/, /en/, /uk/</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">next-intl — słowniki UI + treści z PIM/CMS</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Fallback: brak tłumaczenia → PL</span>
+</div>
+</div>
+<p class="flow-note">Routing generuje też znaczniki <code>hreflang</code> (pl-PL / en-PL / uk-PL, dok. 07). Wybór języka zapisany w cookie i profilu konta (dok. 08) zasila wykrywanie języka przy kolejnej wizycie.</p>
 
 - **Struktura URL:** ścieżkowa (`summitandtrail.pl/pl/...`, `/en/...`, `/uk/...`), jedna domena — prostsze SEO (jeden domain authority) i prostsza obsługa niż subdomeny/ccTLD używane przy ekspansji rynkowej (dok. 10).
 - **Wykrywanie języka:** nagłówek `Accept-Language` przeglądarki + opcjonalny GeoIP jako podpowiedź, zawsze z możliwością manualnej zmiany — wybór klienta zapisywany trwale (cookie + profil konta, dok. 08), nigdy nie jest wymuszany ponownie.

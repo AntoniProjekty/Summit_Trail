@@ -6,16 +6,22 @@
 
 Wszystkie zdarzenia klienta (przeglądanie, koszyk, zakup, zgłoszenie serwisowe, kontakt z BOK) trafiają do CDP (np. Segment/mParticle lub warstwa event-based zbudowana na Kafka — dok. 03), tworząc **jednolity profil klienta (Customer 360)** wykorzystywany przez marketing, personalizację (dok. 07) i BOK.
 
-```mermaid
-flowchart LR
-    WEB["Zdarzenia web/app"] --> CDP["CDP — Customer 360"]
-    POS["Sprzedaż w salonie (POS)"] --> CDP
-    BOK["Zgłoszenia BOK/serwis"] --> CDP
-    CDP --> EMAIL["E-mail/SMS marketing (Klaviyo)"]
-    CDP --> ADS["Reklamy (Meta/Google Ads — Customer Match)"]
-    CDP --> RECO["Silnik rekomendacji (dok. 07)"]
-    CDP --> DWH["Data Warehouse (dok. 09)"]
-```
+<div class="flow-wrap">
+<div class="flow-cols">
+  <div class="flow-col">
+    <div class="flow-col-title">Źródła zdarzeń</div>
+    <ul><li>Zdarzenia web/app</li><li>Sprzedaż w salonie (POS)</li><li>Zgłoszenia BOK/serwis</li></ul>
+  </div>
+  <div class="flow-col flow-col-hub">
+    <div class="flow-col-title">CDP — Customer 360</div>
+    <ul><li>Jednolity profil klienta</li></ul>
+  </div>
+  <div class="flow-col">
+    <div class="flow-col-title">Wykorzystanie danych</div>
+    <ul><li>E-mail/SMS marketing (Klaviyo)</li><li>Reklamy — Meta/Google Customer Match</li><li>Silnik rekomendacji (dok. 07)</li><li>Data Warehouse (dok. 09)</li></ul>
+  </div>
+</div>
+</div>
 
 ## 8.2 Automatyzacja e-mail/SMS marketingu
 

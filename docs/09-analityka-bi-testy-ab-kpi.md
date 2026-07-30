@@ -4,17 +4,22 @@
 
 ## 9.1 Architektura danych analitycznych
 
-```mermaid
-flowchart LR
-    WEB["GA4 (client-side)"] --> SGTM["Server-side GTM"]
-    APP["Zdarzenia backendu (zamówienia, płatności)"] --> SGTM
-    SGTM --> DWH[("Data Warehouse\nBigQuery/Snowflake")]
-    CDP["CDP (dok. 08)"] --> DWH
-    BASELINKER["BaseLinker (dok. 04)"] --> DWH
-    DWH --> DBT["dbt — transformacje/modele"]
-    DBT --> BI["BI: Looker Studio / Power BI"]
-    DBT --> ML["Modele ML (rekomendacje, prognoza popytu)"]
-```
+<div class="flow-wrap">
+<div class="flow-cols">
+  <div class="flow-col">
+    <div class="flow-col-title">Źródła</div>
+    <ul><li>GA4 (client-side)</li><li>Zdarzenia backendu (zamówienia, płatności)</li><li>CDP (dok. 08)</li><li>BaseLinker (dok. 04)</li></ul>
+  </div>
+  <div class="flow-col flow-col-hub">
+    <div class="flow-col-title">Przetwarzanie</div>
+    <ul><li>Server-side GTM</li><li>Data Warehouse (BigQuery/Snowflake)</li><li>dbt — transformacje/modele</li></ul>
+  </div>
+  <div class="flow-col">
+    <div class="flow-col-title">Wykorzystanie</div>
+    <ul><li>BI: Looker Studio / Power BI</li><li>Modele ML — rekomendacje, prognoza popytu</li></ul>
+  </div>
+</div>
+</div>
 
 - **Server-side Google Tag Manager** — dane wysyłane przez serwer własny (nie bezpośrednio z przeglądarki), co poprawia dokładność pomiaru (adblocki, ITP w Safari) i bezpieczeństwo danych (kontrola nad tym, co wysyłane jest do stron trzecich).
 - **Data Warehouse** (BigQuery/Snowflake) jako centralne repozytorium — łączy dane z GA4, CDP, BaseLinker (zamówienia/magazyn) i ERP (finanse) w jeden model analityczny.

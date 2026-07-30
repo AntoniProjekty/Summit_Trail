@@ -6,63 +6,63 @@ Summit & Trail wykorzystuje model **composable commerce (MACH: Microservices, AP
 
 ## 3.1 Diagram architektury systemu
 
-```mermaid
-flowchart TB
-    subgraph Client["Warstwa klienta"]
-        WEB["Next.js (React) — SSR/ISR, PWA"]
-        MOBILE["Aplikacja mobilna (React Native) — Faza 3"]
-    end
-
-    subgraph Edge["Edge / CDN"]
-        CF["Cloudflare — WAF, CDN, cache, obrazy"]
-    end
-
-    subgraph API["API Gateway"]
-        GQL["GraphQL Federation / BFF (Backend-for-Frontend)"]
-    end
-
-    subgraph Services["Mikroserwisy domenowe"]
-        CATALOG["Catalog Service"]
-        PRICING["Pricing & Promotions Service"]
-        CART["Cart & Checkout Service"]
-        ORDERS["Order Management Service"]
-        SEARCH["Search Service (Algolia/Elasticsearch)"]
-        RECO["Recommendation Engine (AI)"]
-        USER["Customer/Identity Service"]
-        CMS["Headless CMS (Contentful/Storyblok)"]
-    end
-
-    subgraph Data["Warstwa danych"]
-        PG[(PostgreSQL — zamówienia, klienci)]
-        REDIS[(Redis — cache, sesje, koszyk)]
-        ES[(Elasticsearch/Algolia index)]
-        DWH[(Data Warehouse — BigQuery/Snowflake)]
-    end
-
-    subgraph Events["Event Bus"]
-        KAFKA["Kafka / SNS+SQS — zdarzenia domenowe"]
-    end
-
-    subgraph External["Integracje zewnętrzne"]
-        BL["BaseLinker (WMS/OMS)"]
-        PAY["PayU / Przelewy24"]
-        MP["Allegro / Erli"]
-    end
-
-    WEB --> CF --> GQL
-    MOBILE --> CF
-    GQL --> CATALOG & PRICING & CART & ORDERS & SEARCH & RECO & USER & CMS
-    CATALOG --> PG
-    ORDERS --> PG
-    CART --> REDIS
-    SEARCH --> ES
-    CATALOG -- "eventy: zmiana ceny/stanu" --> KAFKA
-    ORDERS -- "eventy: nowe zamówienie" --> KAFKA
-    KAFKA --> BL
-    KAFKA --> DWH
-    CART --> PAY
-    BL <--> MP
-```
+<div class="flow-wrap">
+<div class="flow-stack">
+  <div class="flow-layer">
+    <div class="flow-layer-title">Warstwa klienta</div>
+    <div class="flow-chips">
+      <span class="flow-chip">Next.js (Web, SSR/ISR, PWA)</span>
+      <span class="flow-chip">Aplikacja mobilna — Faza 3</span>
+    </div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-layer">
+    <div class="flow-layer-title">Edge / CDN</div>
+    <div class="flow-chips"><span class="flow-chip">Cloudflare — WAF, CDN, cache, obrazy</span></div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-layer">
+    <div class="flow-layer-title">API Gateway</div>
+    <div class="flow-chips"><span class="flow-chip">GraphQL Federation / BFF</span></div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-layer">
+    <div class="flow-layer-title">Mikroserwisy domenowe</div>
+    <div class="flow-chips">
+      <span class="flow-chip">Catalog</span>
+      <span class="flow-chip">Pricing &amp; Promotions</span>
+      <span class="flow-chip">Cart &amp; Checkout</span>
+      <span class="flow-chip">Order Management</span>
+      <span class="flow-chip">Search</span>
+      <span class="flow-chip">Recommendation (AI)</span>
+      <span class="flow-chip">Customer/Identity</span>
+      <span class="flow-chip">Headless CMS</span>
+    </div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-pair">
+    <div class="flow-layer">
+      <div class="flow-layer-title">Warstwa danych</div>
+      <div class="flow-chips">
+        <span class="flow-chip">PostgreSQL</span>
+        <span class="flow-chip">Redis</span>
+        <span class="flow-chip">Elasticsearch/Algolia</span>
+        <span class="flow-chip">Data Warehouse</span>
+      </div>
+    </div>
+    <div class="flow-layer">
+      <div class="flow-layer-title">Event Bus → integracje zewnętrzne</div>
+      <div class="flow-chips">
+        <span class="flow-chip">Kafka / SNS+SQS</span>
+        <span class="flow-chip">BaseLinker (WMS/OMS)</span>
+        <span class="flow-chip">PayU / Przelewy24</span>
+        <span class="flow-chip">Allegro / Erli</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<p class="flow-note">Katalog i zamówienia publikują zdarzenia (zmiana ceny/stanu, nowe zamówienie) na Event Bus, który zasila BaseLinker i Data Warehouse — pełny opis w dok. 04 i 09.</p>
 
 ## 3.2 Stack technologiczny
 

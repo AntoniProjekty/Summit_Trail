@@ -6,46 +6,59 @@ Summit AI to **własna, zastrzeżona warstwa inteligencji** rozsiana po całej p
 
 ## 12.1 Architektura platformy AI
 
-```mermaid
-flowchart TB
-    subgraph Apps["Warstwa aplikacyjna"]
-        WEB["Sklep web/mobile"]
-        BOK_APP["Panel BOK/Agent Assist"]
-        MERCH["Panel merchandisingu"]
-        OPS["Panel operacji/zakupów"]
-    end
-
-    subgraph AIGW["Summit AI Gateway"]
-        ROUTER["Router zapytań + guardrails"]
-        CACHE["Cache semantyczny odpowiedzi"]
-        SAFETY["Filtr bezpieczeństwa: PII redaction, prompt-injection detection, moderacja treści"]
-    end
-
-    subgraph Models["Warstwa modeli"]
-        LLM["LLM (Claude) — asystent, generowanie treści, agent assist"]
-        EMB["Model embeddingów — wyszukiwanie semantyczne, rekomendacje"]
-        CV["Modele wizji komputerowej — visual search, kontrola zdjęć, fit"]
-        FORECAST["Modele prognostyczne — popyt, ceny, churn, fraud score"]
-    end
-
-    subgraph MLPlatform["Platforma MLOps"]
-        FS["Feature Store (Feast) — cechy klienta/produktu w czasie rzeczywistym"]
-        VDB["Wektorowa baza danych (Pinecone/Weaviate/pgvector)"]
-        REG["Model Registry + wersjonowanie (MLflow)"]
-        MON["Monitoring driftu, jakości i kosztów inferencji"]
-    end
-
-    subgraph Data["Dane źródłowe"]
-        CDP["CDP — Customer 360 (dok. 08)"]
-        DWH["Data Warehouse (dok. 09)"]
-        PIM["PIM / Katalog (dok. 02)"]
-        IOT["Telemetria IoT e-bike"]
-    end
-
-    Apps --> AIGW --> Models
-    Models <--> MLPlatform
-    MLPlatform <--> Data
-```
+<div class="flow-wrap">
+<div class="flow-stack">
+  <div class="flow-layer">
+    <div class="flow-layer-title">Warstwa aplikacyjna</div>
+    <div class="flow-chips">
+      <span class="flow-chip">Sklep web/mobile</span>
+      <span class="flow-chip">Panel BOK / Agent Assist</span>
+      <span class="flow-chip">Panel merchandisingu</span>
+      <span class="flow-chip">Panel operacji/zakupów</span>
+    </div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-layer" style="border-color: color-mix(in srgb, var(--accent) 45%, var(--line));">
+    <div class="flow-layer-title">Summit AI Gateway</div>
+    <div class="flow-chips">
+      <span class="flow-chip flow-chip-accent">Router zapytań + guardrails</span>
+      <span class="flow-chip flow-chip-accent">Cache semantyczny odpowiedzi</span>
+      <span class="flow-chip flow-chip-accent">Filtr bezpieczeństwa: PII redaction, anty-prompt-injection, moderacja</span>
+    </div>
+  </div>
+  <div class="flow-down">↓</div>
+  <div class="flow-layer">
+    <div class="flow-layer-title">Warstwa modeli</div>
+    <div class="flow-chips">
+      <span class="flow-chip">LLM (Claude) — asystent, treści, agent assist</span>
+      <span class="flow-chip">Model embeddingów — wyszukiwanie, rekomendacje</span>
+      <span class="flow-chip">Modele wizji — visual search, fit, kontrola zdjęć</span>
+      <span class="flow-chip">Modele prognostyczne — popyt, ceny, fraud score</span>
+    </div>
+  </div>
+  <div class="flow-down">↕</div>
+  <div class="flow-pair">
+    <div class="flow-layer">
+      <div class="flow-layer-title">Platforma MLOps</div>
+      <div class="flow-chips">
+        <span class="flow-chip">Feature Store (Feast)</span>
+        <span class="flow-chip">Baza wektorowa (Pinecone/Weaviate/pgvector)</span>
+        <span class="flow-chip">Model Registry (MLflow)</span>
+        <span class="flow-chip">Monitoring driftu i kosztów</span>
+      </div>
+    </div>
+    <div class="flow-layer">
+      <div class="flow-layer-title">Dane źródłowe</div>
+      <div class="flow-chips">
+        <span class="flow-chip">CDP — Customer 360 (dok. 08)</span>
+        <span class="flow-chip">Data Warehouse (dok. 09)</span>
+        <span class="flow-chip">PIM / Katalog (dok. 02)</span>
+        <span class="flow-chip">Telemetria IoT e-bike</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 **Zasada projektowa:** żadna aplikacja nie wywołuje modelu AI bezpośrednio — wszystko przechodzi przez **Summit AI Gateway**, który centralizuje: autoryzację, limity kosztowe (budżet per funkcja), logowanie do audytu, filtrowanie danych osobowych z promptów oraz wykrywanie prompt injection. To pozwala wymieniać dostawcę modelu (Claude, model open-source self-hosted) bez zmian w kodzie aplikacji.
 
@@ -63,16 +76,25 @@ Wirtualny doradca dostępny na stronie, w aplikacji mobilnej (Faza 3) i w kanał
 
 ### Architektura RAG asystenta
 
-```mermaid
-flowchart LR
-    Q["Zapytanie klienta"] --> EMB2["Embedding zapytania"]
-    EMB2 --> VDB2["Wyszukiwanie w bazie wektorowej\n(katalog, FAQ, artykuły, polityki)"]
-    VDB2 --> CTX["Zbiór kontekstu (top-k dokumentów)"]
-    CTX --> PROMPT["Prompt: system + kontekst + historia rozmowy + profil klienta (CDP)"]
-    PROMPT --> LLM2["LLM (Claude)"]
-    LLM2 --> GUARD["Guardrails wyjścia: sprawdzenie cen/dostępności live, filtr treści"]
-    GUARD --> RESP["Odpowiedź do klienta"]
-```
+<div class="flow-wrap">
+<div class="flow-row">
+  <span class="flow-step">Zapytanie klienta</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Embedding zapytania</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Wyszukiwanie w bazie wektorowej (katalog, FAQ, artykuły, polityki)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Zbiór kontekstu (top-k dokumentów)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Prompt: system + kontekst + historia + profil klienta (CDP)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step flow-chip-accent">LLM (Claude)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Guardrails wyjścia: ceny/dostępność live, filtr treści</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Odpowiedź do klienta</span>
+</div>
+</div>
 
 Przykładowy system prompt (szkielet, guardrails):
 

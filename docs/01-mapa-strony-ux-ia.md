@@ -6,46 +6,22 @@ Poniższa struktura odwzorowuje kompletny serwis klasy enterprise — nie tylko 
 
 ## 1.1 Diagram architektury informacji
 
-```mermaid
-flowchart TD
-    HOME["Strona główna"]
-
-    HOME --> CAT["Kategorie produktowe"]
-    HOME --> BLOG["Magazyn / Poradnik Odkrywcy"]
-    HOME --> ACC["Konto klienta"]
-    HOME --> B2B["Portal B2B"]
-    HOME --> HELP["Centrum Pomocy"]
-    HOME --> COMPANY["O firmie / ESG / Kariera"]
-    HOME --> STORES["Salony i punkty odbioru"]
-
-    CAT --> SUBCAT["Podkategorie + filtry fasetowe"]
-    SUBCAT --> PDP["Karta produktu (PDP)"]
-    PDP --> CONFIG["Konfigurator roweru"]
-    PDP --> COMPARE["Porównywarka produktów"]
-    PDP --> WISHLIST["Lista życzeń"]
-    PDP --> CART["Koszyk"]
-    CART --> CHECKOUT["Checkout (multi-step)"]
-    CHECKOUT --> PAY["Płatność"]
-    PAY --> CONF["Potwierdzenie zamówienia"]
-
-    ACC --> ORD["Historia zamówień / status"]
-    ACC --> RMA["Zwroty i reklamacje (RMA)"]
-    ACC --> LOY["Program lojalnościowy"]
-    ACC --> WALLET["Portfel / kupony / karty podarunkowe"]
-    ACC --> CONSENT["Zgody RODO / preferencje marketingowe"]
-
-    HELP --> FAQ["FAQ / Baza wiedzy"]
-    HELP --> CHAT["Live chat / Chatbot AI"]
-    HELP --> WARRANTY["Serwis i gwarancje"]
-    HELP --> TRACK["Śledzenie przesyłki"]
-
-    BLOG --> GUIDES["Poradniki i recenzje"]
-    BLOG --> COMMUNITY["Społeczność / UGC"]
-
-    COMPANY --> PRESS["Prasa / Media Kit"]
-    COMPANY --> CAREERS["Kariera"]
-    COMPANY --> AFFILIATE["Program partnerski"]
-```
+<div class="flow-wrap">
+<div class="flow-stack">
+  <div class="flow-chip flow-chip-accent">Strona główna</div>
+  <div class="flow-down">↓</div>
+  <div class="flow-chips" style="justify-content:center">
+    <span class="flow-chip">Kategorie produktowe</span>
+    <span class="flow-chip">Magazyn / Poradnik Odkrywcy</span>
+    <span class="flow-chip">Konto klienta</span>
+    <span class="flow-chip">Portal B2B</span>
+    <span class="flow-chip">Centrum Pomocy</span>
+    <span class="flow-chip">O firmie / ESG / Kariera</span>
+    <span class="flow-chip">Salony i punkty odbioru</span>
+  </div>
+</div>
+</div>
+<p class="flow-note">Każda z siedmiu gałęzi rozwija się w dalsze podstrony — pełna lista i priorytety w tabelach poniżej.</p>
 
 ## 1.2 Pełna lista podstron
 
