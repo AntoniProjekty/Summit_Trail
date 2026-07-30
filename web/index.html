@@ -54,6 +54,13 @@
   @keyframes pulse{ 0%{ transform:scale(1); } 35%{ transform:scale(1.4); } 100%{ transform:scale(1); } }
   @keyframes toDown{ from{ opacity:0; max-height:0; } to{ opacity:1; max-height:200px; } }
   @keyframes blobFloat{ 0%,100%{ transform:translate(-6%,-4%) scale(1); } 50%{ transform:translate(5%,6%) scale(1.18); } }
+  @keyframes bgFall{ from{ transform:translateY(-14vh) rotate(0deg); } to{ transform:translateY(114vh) rotate(24deg); } }
+
+  /* ---------- side-gutter decoration (wide screens only) ---------- */
+  .bg-decor{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  .bg-decor > div{ position:absolute; top:0; color:var(--ink-faint); opacity:.1; animation:bgFall linear infinite; }
+  .bg-decor svg{ display:block; width:100%; height:100%; }
+  @media (max-width:1300px){ .bg-decor{ display:none; } }
   #app.page-anim{ animation: pageIn .38s cubic-bezier(.16,.8,.3,1) both; }
   .cart-count.pulse{ animation: pulse .45s ease; }
   .btn, .filter-chip, .pill, .swatch, .tab-btn, .wish-btn, .option-card, .navlink, .cat-tile, .search-item {
@@ -160,8 +167,11 @@
   .p-card .thumb::before{
     content:""; position:absolute; top:16%; left:16%; width:68%; height:68%; border-radius:50%;
     background: radial-gradient(circle, var(--accent, var(--forest)) 0%, transparent 72%);
-    opacity:.22; animation: blobFloat 9s ease-in-out infinite;
+    opacity:.22;
   }
+  /* Animating the glow on all 73 cards forever (even off-screen) was the actual cause of the
+     responsiveness drop — cap it to the same first-screenful set as the entrance animation. */
+  .p-card.anim .thumb::before{ animation: blobFloat 9s ease-in-out infinite; }
   .p-card .thumb svg{ position:relative; z-index:1; width:78%; height:78%; }
   .p-badge{ position:absolute; top:12px; left:12px; background:var(--rust); color:#2A1207; font-size:.68rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:4px 9px; border-radius:6px; }
   .p-body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
@@ -418,6 +428,8 @@
   }
 </style>
 
+<div class="bg-decor" id="bgDecor" aria-hidden="true"></div>
+
 <header class="site">
   <div class="wrap site-bar">
     <a class="logo" href="#/" data-link>
@@ -589,6 +601,26 @@ const ICONS = {
     <circle cx="100" cy="60" r="4" fill="var(--ink)"/>
   </svg>`
 };
+
+// Decorative products slowly falling through the empty side gutters on wide screens.
+// A fixed handful of small, transform-only, low-opacity elements — set once, never
+// touched by render() again, so it costs nothing on navigation or scroll.
+function initBgDecor(){
+  const el = document.getElementById("bgDecor");
+  if (!el) return;
+  const icons = [ICONS.bike, ICONS.tent, ICONS.power, ICONS.roofrack, ICONS.compass, ICONS.sleepingbag];
+  const html = [];
+  for (let i = 0; i < 10; i++){
+    const side = i % 2 === 0 ? "left" : "right";
+    const offset = (1 + Math.random() * 6).toFixed(1);
+    const size = Math.round(24 + Math.random() * 20);
+    const duration = (24 + Math.random() * 16).toFixed(1);
+    const delay = (-Math.random() * duration).toFixed(1);
+    const icon = icons[Math.floor(Math.random() * icons.length)]("currentColor");
+    html.push(`<div style="${side}:${offset}vw;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:${delay}s;">${icon}</div>`);
+  }
+  el.innerHTML = html.join("");
+}
 
 const PRODUCTS = [
   {
@@ -1915,6 +1947,7 @@ document.addEventListener("click", (e)=>{
 window.addEventListener("hashchange", render);
 
 (async function bootstrap(){
+  initBgDecor();
   // Darmowa instancja backendu bywa uśpiona i budzi się nawet ~30-50s — bez tego #app byłby pusty przez ten czas.
   document.getElementById("app").innerHTML = '<div class="wrap" style="padding:60px 0;text-align:center;color:var(--ink-faint);">Wczytywanie…</div>';
   await initApi();
