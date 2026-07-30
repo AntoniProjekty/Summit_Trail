@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LernPfad — Online-Kurse für deine Karriere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+        colors: {
+          indigo: {
+            50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc',
+            400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
+            800: '#3730a3', 900: '#312e81'
+          }
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="font-sans text-slate-700 bg-white antialiased">
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-18 py-4">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold">L</div>
+        <span class="text-xl font-extrabold text-slate-900">LernPfad</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+        <a href="#kurse" class="hover:text-indigo-600 transition">Kurse</a>
+        <a href="#warum" class="hover:text-indigo-600 transition">Warum wir</a>
+        <a href="#stimmen" class="hover:text-indigo-600 transition">Stimmen</a>
+        <a href="#preise" class="hover:text-indigo-600 transition">Preise</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#" class="hidden sm:inline-block text-sm font-semibold text-slate-600 hover:text-indigo-600 transition">Anmelden</a>
+        <a href="#" class="inline-block text-sm font-bold px-5 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition">Kostenlos starten</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-indigo-50/50">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="inline-block text-xs font-bold text-indigo-700 bg-indigo-100 px-3 py-1.5 rounded-full">ÜBER 500 KURSE VERFÜGBAR</span>
+        <h1 class="mt-6 text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight">
+          Lerne Fähigkeiten, die deine <span class="text-indigo-600">Karriere</span> wirklich voranbringen.
+        </h1>
+        <p class="mt-6 text-lg text-slate-600">
+          Praxisnahe Online-Kurse von Branchenexperten — lerne in deinem eigenen Tempo, mit Zertifikat und lebenslangem Zugriff.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <a href="#kurse" class="text-center px-7 py-3.5 rounded-full bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">Kurse entdecken</a>
+          <a href="#" class="text-center px-7 py-3.5 rounded-full border-2 border-indigo-200 text-indigo-700 font-bold hover:bg-indigo-100 transition">Kostenlose Probestunde</a>
+        </div>
+        <div class="mt-10 flex items-center gap-6">
+          <div class="flex -space-x-3">
+            <div class="h-10 w-10 rounded-full bg-indigo-300 border-2 border-white"></div>
+            <div class="h-10 w-10 rounded-full bg-indigo-400 border-2 border-white"></div>
+            <div class="h-10 w-10 rounded-full bg-indigo-500 border-2 border-white"></div>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-slate-900">45.000+ Lernende</p>
+            <p class="text-xs text-slate-500">★★★★★ 4,9 von 5 Bewertungen</p>
+          </div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="rounded-3xl bg-white shadow-2xl shadow-indigo-200/60 p-6 rotate-2">
+          <div class="aspect-video rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-800 flex items-center justify-center">
+            <svg class="h-16 w-16 text-white/90" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="mt-4">
+            <p class="font-bold text-slate-900">UX/UI Design Masterclass</p>
+            <p class="text-sm text-slate-500 mt-1">32 Lektionen · 18 Stunden</p>
+            <div class="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden">
+              <div class="h-full w-2/3 bg-indigo-600 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3 -rotate-3">
+          <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
+            <svg class="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500">Zertifikat erhalten</p>
+            <p class="text-sm font-bold text-slate-900">Data Science Grundlagen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="kurse" class="max-w-7xl mx-auto px-6 py-24">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+      <div>
+        <span class="text-sm font-bold text-indigo-600">BELIEBTE KATEGORIEN</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Finde deinen Lernpfad</h2>
+      </div>
+      <a href="#" class="text-sm font-bold text-indigo-600 hover:text-indigo-800 transition">Alle Kurse ansehen →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="rounded-2xl border border-slate-100 p-6 hover:shadow-xl hover:shadow-indigo-100 hover:-translate-y-1 transition">
+        <div class="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-5">
+          <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <h3 class="font-bold text-slate-900">Programmierung</h3>
+        <p class="text-sm text-slate-500 mt-2">128 Kurse</p>
+      </div>
+      <div class="rounded-2xl border border-slate-100 p-6 hover:shadow-xl hover:shadow-indigo-100 hover:-translate-y-1 transition">
+        <div class="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-5">
+          <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </div>
+        <h3 class="font-bold text-slate-900">Design</h3>
+        <p class="text-sm text-slate-500 mt-2">94 Kurse</p>
+      </div>
+      <div class="rounded-2xl border border-slate-100 p-6 hover:shadow-xl hover:shadow-indigo-100 hover:-translate-y-1 transition">
+        <div class="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-5">
+          <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M9 17V9m4 8V5m4 12v-6"/></svg>
+        </div>
+        <h3 class="font-bold text-slate-900">Marketing</h3>
+        <p class="text-sm text-slate-500 mt-2">76 Kurse</p>
+      </div>
+      <div class="rounded-2xl border border-slate-100 p-6 hover:shadow-xl hover:shadow-indigo-100 hover:-translate-y-1 transition">
+        <div class="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-5">
+          <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .672-3 1.5S10.343 11 12 11s3 .672 3 1.5-1.343 1.5-3 1.5m0-6c1.11 0 2.08.402 2.599 1M12 8V7m0 1v6m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-slate-900">Business & Finanzen</h3>
+        <p class="text-sm text-slate-500 mt-2">61 Kurse</p>
+      </div>
+    </div>
+
+    <!-- Course cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
+      <div class="lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-indigo-100 transition flex flex-col sm:flex-row">
+        <div class="sm:w-2/5 h-44 sm:h-auto relative bg-gradient-to-br from-indigo-400 to-indigo-700">
+          <span class="absolute top-3 left-3 text-xs font-bold text-indigo-700 bg-white px-2.5 py-1 rounded-full">KURS DES MONATS</span>
+        </div>
+        <div class="p-6 flex-1">
+          <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">PROGRAMMIERUNG</span>
+          <h3 class="font-bold text-slate-900 text-lg mt-4">Python für Datenanalyse</h3>
+          <p class="text-sm text-slate-500 mt-2">Von Grund auf lernen und echte Datensätze analysieren — vom ersten Loop bis zum eigenen Analyseprojekt fürs Portfolio.</p>
+          <div class="flex items-center justify-between mt-5">
+            <span class="text-sm text-slate-500">★ 4,8 (2.310)</span>
+            <span class="font-bold text-slate-900">€79</span>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-indigo-100 transition">
+        <div class="h-32 bg-gradient-to-br from-indigo-500 to-fuchsia-600"></div>
+        <div class="p-6">
+          <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">DESIGN</span>
+          <h3 class="font-bold text-slate-900 mt-4">UX/UI Design Masterclass</h3>
+          <p class="text-sm text-slate-500 mt-2">Nutzerzentrierte Interfaces gestalten und testen.</p>
+          <div class="flex items-center justify-between mt-5">
+            <span class="text-sm text-slate-500">★ 4,9 (1.845)</span>
+            <span class="font-bold text-slate-900">€99</span>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-indigo-100 transition">
+        <div class="h-32 bg-gradient-to-br from-indigo-600 to-blue-500"></div>
+        <div class="p-6">
+          <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">MARKETING</span>
+          <h3 class="font-bold text-slate-900 mt-4">Performance Marketing Grundlagen</h3>
+          <p class="text-sm text-slate-500 mt-2">Kampagnen planen, messen und optimieren.</p>
+          <div class="flex items-center justify-between mt-5">
+            <span class="text-sm text-slate-500">★ 4,7 (987)</span>
+            <span class="font-bold text-slate-900">€69</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section id="warum" class="bg-indigo-900 py-24">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <span class="text-sm font-bold text-indigo-300">WARUM LERNPFAD</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Lernen, das sich in deiner Karriere auszahlt</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-8">
+          <p class="text-4xl font-extrabold text-white">92%</p>
+          <p class="text-indigo-200 mt-3">der Absolventen berichten von beruflichem Fortschritt innerhalb von 6 Monaten</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-8">
+          <p class="text-4xl font-extrabold text-white">500+</p>
+          <p class="text-indigo-200 mt-3">praxisnahe Kurse, entwickelt gemeinsam mit Branchenexperten</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-8">
+          <p class="text-4xl font-extrabold text-white">24/7</p>
+          <p class="text-indigo-200 mt-3">Zugriff auf alle Inhalte, Übungen und Community-Foren</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="stimmen" class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <span class="text-sm font-bold text-indigo-600">STIMMEN UNSERER LERNENDEN</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">Echte Erfolgsgeschichten</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="rounded-2xl bg-indigo-50/60 p-8">
+        <p class="text-slate-700">„Der Python-Kurs hat mir den Einstieg in die Datenanalyse enorm erleichtert. Klar strukturiert und praxisnah."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full bg-indigo-300"></div>
+          <div>
+            <p class="font-bold text-sm text-slate-900">Tobias Richter</p>
+            <p class="text-xs text-slate-500">Junior Data Analyst</p>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-indigo-50/60 p-8">
+        <p class="text-slate-700">„Ich habe innerhalb von drei Monaten meinen ersten Design-Job bekommen. Ohne LernPfad wäre das nicht möglich gewesen."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full bg-indigo-400"></div>
+          <div>
+            <p class="font-bold text-sm text-slate-900">Sophie Wagner</p>
+            <p class="text-xs text-slate-500">UX Designerin</p>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-indigo-50/60 p-8">
+        <p class="text-slate-700">„Hervorragende Dozenten und eine sehr aktive Community. Genau das richtige Tempo für Berufstätige."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full bg-indigo-500"></div>
+          <div>
+            <p class="font-bold text-sm text-slate-900">Markus Behrens</p>
+            <p class="text-xs text-slate-500">Marketing Manager</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="preise" class="max-w-5xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <span class="text-sm font-bold text-indigo-600">MITGLIEDSCHAFT</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">Ein Preis, alle Kurse</h2>
+    </div>
+    <div class="rounded-3xl bg-gradient-to-br from-indigo-600 to-indigo-800 p-10 sm:p-14 text-center text-white">
+      <p class="text-sm font-bold text-indigo-200 letter-spaced">UNBEGRENZTER ZUGANG</p>
+      <p class="text-5xl font-extrabold mt-4">€29<span class="text-lg font-medium text-indigo-200">/Monat</span></p>
+      <p class="mt-4 text-indigo-100 max-w-md mx-auto">Zugriff auf alle 500+ Kurse, Zertifikate und die exklusive Lern-Community.</p>
+      <a href="#" class="mt-8 inline-block px-9 py-3.5 rounded-full bg-white text-indigo-700 font-bold hover:bg-indigo-50 transition">Jetzt Mitglied werden</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-100 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="h-7 w-7 rounded-lg bg-indigo-600"></div>
+        <span class="font-extrabold text-slate-900">LernPfad</span>
+      </div>
+      <p class="text-sm text-slate-500">© 2026 LernPfad GmbH · Berlin</p>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="#" class="hover:text-indigo-600 transition">Datenschutz</a>
+        <a href="#" class="hover:text-indigo-600 transition">Impressum</a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 mt-6 pt-6 border-t border-slate-100 text-center text-xs text-slate-400">
+      kontakt@lernpfad.de · +49 30 200 300 40 (Mo–Fr, 9–17 Uhr)
+    </div>
+  </footer>
+
+</body>
+</html>

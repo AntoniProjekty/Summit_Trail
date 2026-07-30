@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora — Projektmanagement ohne Chaos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: {
+          brand: {
+            50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd',
+            400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9',
+            800: '#5b21b6', 900: '#4c1d95'
+          }
+        },
+        boxShadow: { glow: '0 0 60px -15px rgba(139, 92, 246, 0.5)' }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0a0a0f; }
+  .grid-glow {
+    background-image: radial-gradient(circle at 20% 0%, rgba(124,58,237,0.25), transparent 40%),
+                       radial-gradient(circle at 80% 10%, rgba(139,92,246,0.15), transparent 35%);
+  }
+  .card-hover { transition: transform .25s ease, border-color .25s ease; }
+  .card-hover:hover { transform: translateY(-4px); border-color: rgba(139,92,246,0.6); }
+</style>
+</head>
+<body class="font-sans text-slate-200 antialiased">
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0f]/80 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+      <div class="flex items-center gap-2">
+        <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center font-extrabold text-white">N</div>
+        <span class="text-lg font-bold text-white tracking-tight">Nexora</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#funktionen" class="hover:text-white transition">Funktionen</a>
+        <a href="#preise" class="hover:text-white transition">Preise</a>
+        <a href="#kunden" class="hover:text-white transition">Kunden</a>
+        <a href="#faq" class="hover:text-white transition">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#" class="hidden sm:inline-block text-sm font-medium text-slate-300 hover:text-white transition">Anmelden</a>
+        <a href="#" class="inline-block text-sm font-semibold px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-500 transition shadow-glow">Kostenlos testen</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="grid-glow relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 pt-20 pb-24 text-center">
+      <div class="inline-flex items-center gap-2 rounded-full border border-brand-700/50 bg-brand-500/10 px-4 py-1.5 text-xs font-medium text-brand-300 mb-6">
+        <span class="h-1.5 w-1.5 rounded-full bg-brand-400 animate-pulse"></span>
+        Neu: KI-gestützte Automatisierung ist jetzt verfügbar
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+        Schluss mit der Frage: <span class="bg-gradient-to-r from-brand-400 to-fuchsia-400 bg-clip-text text-transparent">„auf welchem Stand ist das eigentlich?"</span>
+      </h1>
+      <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+        Nexora bündelt Aufgaben, Absprachen und Automatisierungen an einem Ort — damit Ihr Team pünktlich liefert und Sie nicht ständig nachfragen müssen.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#" class="w-full sm:w-auto text-center px-7 py-3.5 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-500 transition shadow-glow">14 Tage kostenlos testen</a>
+        <a href="#" class="w-full sm:w-auto text-center px-7 py-3.5 rounded-lg border border-white/10 text-slate-200 font-semibold hover:bg-white/5 transition">Zeig mir, wie's funktioniert →</a>
+      </div>
+      <p class="mt-5 text-xs text-slate-500">Keine Kreditkarte nötig · Einrichtung in unter 5 Minuten</p>
+
+      <!-- Dashboard mockup -->
+      <div class="mt-16 mx-auto max-w-5xl rounded-2xl border border-white/10 bg-white/[0.03] p-2 shadow-2xl">
+        <div class="rounded-xl border border-white/10 bg-[#0d0d14] p-6">
+          <div class="flex items-center gap-1.5 mb-6">
+            <span class="h-3 w-3 rounded-full bg-red-500/70"></span>
+            <span class="h-3 w-3 rounded-full bg-yellow-500/70"></span>
+            <span class="h-3 w-3 rounded-full bg-green-500/70"></span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            <div class="rounded-lg bg-white/5 p-4 border border-white/5">
+              <p class="text-xs text-slate-500">Aktive Projekte</p>
+              <p class="text-2xl font-bold text-white mt-1">128</p>
+              <p class="text-xs text-emerald-400 mt-1">↑ 12% diese Woche</p>
+            </div>
+            <div class="rounded-lg bg-white/5 p-4 border border-white/5">
+              <p class="text-xs text-slate-500">Teamauslastung</p>
+              <p class="text-2xl font-bold text-white mt-1">87%</p>
+              <p class="text-xs text-slate-400 mt-1">Gleichmäßig verteilt</p>
+            </div>
+            <div class="rounded-lg bg-white/5 p-4 border border-white/5">
+              <p class="text-xs text-slate-500">Automatisierungen</p>
+              <p class="text-2xl font-bold text-white mt-1">42</p>
+              <p class="text-xs text-brand-400 mt-1">Laufen im Hintergrund</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos -->
+  <section class="border-y border-white/5 py-10 bg-white/[0.02]">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-center text-xs uppercase tracking-widest text-slate-500 mb-6">Vertrauen von u. a.</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-slate-500 font-bold text-xl">
+        <span>Vantor</span><span>Kreisel AG</span><span>Bergmann GmbH</span><span>Nordwind</span><span>Fluxwerk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="funktionen" class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-sm font-semibold text-brand-400">FUNKTIONEN</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">Alles, was Ihr Team braucht — an einem Ort</h2>
+      <p class="mt-4 text-slate-400">Von der Planung bis zur Auslieferung: Nexora passt sich Ihrem Workflow an, nicht umgekehrt.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="card-hover lg:col-span-2 rounded-2xl border border-white/10 bg-white/[0.03] p-6 flex flex-col sm:flex-row sm:items-center gap-6">
+        <div class="flex-1">
+          <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+            <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <h3 class="font-semibold text-white text-lg">Aufgabenverwaltung</h3>
+          <p class="mt-2 text-sm text-slate-400">Erstellen, priorisieren und verfolgen Sie Aufgaben in Kanban- oder Listenansicht — ganz ohne unnötiges Klicken.</p>
+        </div>
+        <div class="flex-1 grid grid-cols-3 gap-2 text-[10px]">
+          <div class="rounded-lg bg-white/5 border border-white/5 p-2 space-y-2">
+            <p class="text-slate-500 font-semibold px-1">OFFEN</p>
+            <div class="h-6 rounded bg-white/10"></div>
+            <div class="h-6 rounded bg-white/10"></div>
+          </div>
+          <div class="rounded-lg bg-white/5 border border-white/5 p-2 space-y-2">
+            <p class="text-brand-400 font-semibold px-1">IN ARBEIT</p>
+            <div class="h-6 rounded bg-brand-500/20 border border-brand-500/40"></div>
+          </div>
+          <div class="rounded-lg bg-white/5 border border-white/5 p-2 space-y-2">
+            <p class="text-emerald-400 font-semibold px-1">ERLEDIGT</p>
+            <div class="h-6 rounded bg-emerald-500/15"></div>
+            <div class="h-6 rounded bg-emerald-500/15"></div>
+            <div class="h-6 rounded bg-emerald-500/15"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-hover rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+        <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+          <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="font-semibold text-white text-lg">Automatisierungen</h3>
+        <p class="mt-2 text-sm text-slate-400">Regeln übernehmen wiederkehrende Aufgaben, bevor Sie überhaupt daran denken.</p>
+      </div>
+      <div class="card-hover rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+        <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+          <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        </div>
+        <h3 class="font-semibold text-white text-lg">Echtzeit-Analytics</h3>
+        <p class="mt-2 text-sm text-slate-400">Fortschritt, Auslastung und Fristen in Echtzeit sehen, ohne nach einem Report zu fragen.</p>
+      </div>
+      <div class="card-hover rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+        <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+          <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-8.13a4 4 0 110 5.29m-9 2.71a4 4 0 118 0"/></svg>
+        </div>
+        <h3 class="font-semibold text-white text-lg">Teamzusammenarbeit</h3>
+        <p class="mt-2 text-sm text-slate-400">Kommentare, Erwähnungen und Dateien direkt im Kontext jeder Aufgabe.</p>
+      </div>
+      <div class="card-hover rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+        <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+          <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <h3 class="font-semibold text-white text-lg">Enterprise-Sicherheit</h3>
+        <p class="mt-2 text-sm text-slate-400">SSO, Rollenverwaltung und Verschlüsselung auf dem Niveau, das Ihre Compliance-Abteilung erwartet.</p>
+      </div>
+      <div class="card-hover lg:col-span-3 rounded-2xl border border-white/10 bg-white/[0.03] p-6 flex flex-col sm:flex-row sm:items-center gap-6">
+        <div class="flex-1">
+          <div class="h-11 w-11 rounded-lg bg-brand-500/15 flex items-center justify-center mb-5">
+            <svg class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <h3 class="font-semibold text-white text-lg">Integrationen</h3>
+          <p class="mt-2 text-sm text-slate-400">Verbindet sich nahtlos mit über 80 Tools, die Ihr Team ohnehin schon nutzt.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Slack</span>
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Google Drive</span>
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">GitHub</span>
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Figma</span>
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Notion</span>
+          <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">Zoom</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section id="kunden" class="border-y border-white/5 bg-white/[0.02] py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">12.400+</p>
+        <p class="text-sm text-slate-400 mt-1">Teams weltweit</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">98%</p>
+        <p class="text-sm text-slate-400 mt-1">Kundenzufriedenheit</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">4,9 Mio.</p>
+        <p class="text-sm text-slate-400 mt-1">erledigte Aufgaben</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">99,98%</p>
+        <p class="text-sm text-slate-400 mt-1">Verfügbarkeit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="max-w-5xl mx-auto px-6 py-24 text-center">
+    <svg class="h-10 w-10 text-brand-600 mx-auto mb-6" fill="currentColor" viewBox="0 0 32 32"><path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z"/></svg>
+    <p class="text-xl sm:text-2xl text-slate-200 font-medium leading-relaxed">
+      „Seit wir auf Nexora umgestiegen sind, hat sich unsere Projektlaufzeit um ein Drittel verkürzt. Allein die Automatisierungen sparen uns mehrere Personentage pro Woche."
+    </p>
+    <div class="mt-8 flex items-center justify-center gap-3">
+      <div class="h-11 w-11 rounded-full bg-gradient-to-br from-brand-400 to-fuchsia-500"></div>
+      <div class="text-left">
+        <p class="font-semibold text-white text-sm">Julia Hoffmann</p>
+        <p class="text-xs text-slate-500">Head of Operations, Vantor</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="preise" class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-sm font-semibold text-brand-400">PREISE</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">Transparente Preise für jedes Team</h2>
+      <p class="mt-4 text-slate-400">Wachsen Sie ohne Überraschungen. Jederzeit kündbar.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+        <h3 class="font-semibold text-white">Starter</h3>
+        <p class="mt-4 text-4xl font-extrabold text-white">€19<span class="text-base font-medium text-slate-500">/Monat</span></p>
+        <p class="mt-2 text-sm text-slate-500">Für kleine Teams, die durchstarten wollen</p>
+        <ul class="mt-6 space-y-3 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Bis zu 10 Nutzer</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> 5 aktive Projekte</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Basis-Analytics</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center px-6 py-3 rounded-lg border border-white/10 text-white font-semibold hover:bg-white/5 transition">Auswählen</a>
+      </div>
+      <div class="rounded-2xl border-2 border-brand-500 bg-gradient-to-b from-brand-900/40 to-white/[0.03] p-8 relative shadow-glow">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold bg-brand-600 text-white px-3 py-1 rounded-full">BELIEBT</span>
+        <h3 class="font-semibold text-white">Professional</h3>
+        <p class="mt-4 text-4xl font-extrabold text-white">€49<span class="text-base font-medium text-slate-500">/Monat</span></p>
+        <p class="mt-2 text-sm text-slate-500">Für wachsende Teams mit hohem Anspruch</p>
+        <ul class="mt-6 space-y-3 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Unbegrenzte Nutzer</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Unbegrenzte Projekte</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Erweiterte Automatisierung</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Priorisierter Support</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center px-6 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-500 transition">Jetzt starten</a>
+      </div>
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+        <h3 class="font-semibold text-white">Enterprise</h3>
+        <p class="mt-4 text-4xl font-extrabold text-white">Individuell</p>
+        <p class="mt-2 text-sm text-slate-500">Für Organisationen mit besonderen Anforderungen</p>
+        <ul class="mt-6 space-y-3 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> SSO & SCIM</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Fester Ansprechpartner</li>
+          <li class="flex gap-2"><span class="text-brand-400">✓</span> Individuelle SLAs</li>
+        </ul>
+        <a href="#" class="mt-8 block text-center px-6 py-3 rounded-lg border border-white/10 text-white font-semibold hover:bg-white/5 transition">Vertrieb kontaktieren</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="rounded-3xl bg-gradient-to-br from-brand-700 to-fuchsia-800 px-8 py-16 text-center relative overflow-hidden">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white">Bereit, endlich aufzuhören zu raten, auf welchem Stand ein Projekt ist?</h2>
+      <p class="mt-4 text-brand-100 max-w-xl mx-auto">Starten Sie noch heute kostenlos — keine Einrichtungsgebühren, keine Verpflichtungen.</p>
+      <a href="#" class="mt-8 inline-block px-8 py-3.5 rounded-lg bg-white text-brand-700 font-bold hover:bg-slate-100 transition">Kostenlos starten</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="max-w-3xl mx-auto px-6 pb-24">
+    <h2 class="text-3xl font-bold text-white text-center mb-10">Häufig gestellte Fragen</h2>
+    <div class="space-y-4">
+      <details class="group rounded-xl border border-white/10 bg-white/[0.03] p-5">
+        <summary class="cursor-pointer font-semibold text-white flex justify-between items-center">Kann ich jederzeit kündigen?<span class="text-brand-400 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-sm text-slate-400">Ja — alle Pläne sind monatlich kündbar, ohne versteckte Kosten oder Vertragsbindung.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-white/[0.03] p-5">
+        <summary class="cursor-pointer font-semibold text-white flex justify-between items-center">Gibt es eine kostenlose Testphase?<span class="text-brand-400 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-sm text-slate-400">Sie erhalten 14 Tage vollen Zugriff auf den Professional-Plan, ganz ohne Kreditkarte.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-white/[0.03] p-5">
+        <summary class="cursor-pointer font-semibold text-white flex justify-between items-center">Wie sicher sind meine Daten?<span class="text-brand-400 group-open:rotate-45 transition">+</span></summary>
+        <p class="mt-3 text-sm text-slate-400">Wir setzen auf AES-256-Verschlüsselung, regelmäßige Sicherheitsaudits und Server innerhalb der EU.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="h-7 w-7 rounded-lg bg-gradient-to-br from-brand-400 to-brand-700"></div>
+        <span class="font-bold text-white">Nexora</span>
+      </div>
+      <p class="text-sm text-slate-500">© 2026 Nexora GmbH. Alle Rechte vorbehalten.</p>
+      <div class="flex gap-6 text-sm text-slate-400">
+        <a href="#" class="hover:text-white transition">Datenschutz</a>
+        <a href="#" class="hover:text-white transition">Impressum</a>
+        <a href="#" class="hover:text-white transition">Kontakt</a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 mt-6 pt-6 border-t border-white/5 text-center text-xs text-slate-500">
+      Nexora GmbH · Torstraße 12, 10119 Berlin · kontakt@nexora.de · +49 30 555 01 00
+    </div>
+  </footer>
+
+</body>
+</html>
