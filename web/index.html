@@ -58,7 +58,9 @@
 
   /* ---------- side-gutter decoration (wide screens only) ---------- */
   .bg-decor{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
-  .bg-decor > div{ position:absolute; top:0; color:var(--ink-faint); opacity:.1; animation:bgFall linear infinite; }
+  /* var(--forest) already adapts per theme (dark mode = a much brighter mint), so one
+     opacity value reads correctly against both a light and a near-black background. */
+  .bg-decor > div{ position:absolute; top:0; color:var(--forest); opacity:.35; animation:bgFall linear infinite; }
   .bg-decor svg{ display:block; width:100%; height:100%; }
   @media (max-width:1300px){ .bg-decor{ display:none; } }
   #app.page-anim{ animation: pageIn .38s cubic-bezier(.16,.8,.3,1) both; }
