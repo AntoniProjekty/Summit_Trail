@@ -70,6 +70,8 @@ Dodatkowe znaczniki: `BreadcrumbList` (nawigacja), `FAQPage` (centrum pomocy), `
 - **AI Chatbot / Asystent zakupowy:** wirtualny doradca (LLM z RAG na bazie katalogu i FAQ) — odpowiada na pytania typu „jaki rower wybrać do dojazdów 15 km dziennie po górzystym terenie”, eskaluje do konsultanta przy pytaniach poza zakresem (guardrails i limity odpowiedzi finansowych/medycznych).
 - **Wizualizacja i konfigurator 3D (Faza 2):** podgląd wybranego koloru/wariantu roweru w 3D przed zakupem.
 
+> Pełna architektura silnika rekomendacji (feature store, embeddingi, ranking multi-cel), asystenta AI (RAG, system prompt, guardrails), wyszukiwania wizualnego/AR, dynamic pricing oraz platformy MLOps stojącej za tymi funkcjami — patrz **[dokument 12: Summit AI](12-summit-ai-platforma-ai.md)**.
+
 ## 7.5 SEO lokalne
 
 - Strony `/salony/{miasto}` ze znacznikiem `LocalBusiness`, godzinami otwarcia, mapą i dostępnością lokalną — wsparcie zapytań „e-bike serwis Warszawa”.

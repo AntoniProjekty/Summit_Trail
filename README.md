@@ -21,9 +21,12 @@ Niniejsze repozytorium zawiera **kompletną specyfikację funkcjonalno-techniczn
 | 09 | [Analityka, BI i testy A/B](docs/09-analityka-bi-testy-ab-kpi.md) | GA4, data warehouse, dashboardy zarządcze, eksperymenty, KPI |
 | 10 | [B2B i ekspansja międzynarodowa](docs/10-b2b-ekspansja-miedzynarodowa.md) | Portal B2B, multi-currency, multi-language, podatki VAT-OSS |
 | 11 | [Domena, DNS, monitoring i disaster recovery](docs/11-domena-dns-monitoring-dr.md) | Konfiguracja DNS/SPF/DKIM/DMARC, status page, RTO/RPO, runbooki |
+| 12 | [Summit AI — własna platforma sztucznej inteligencji](docs/12-summit-ai-platforma-ai.md) | Asystent AI, visual search/AR, rekomendacje, generowanie treści, predictive maintenance, fraud detection, MLOps, zgodność z AI Act |
 
 ## Streszczenie wykonawcze
 
 Summit & Trail to platforma projektowana w modelu **composable commerce** (najlepsze-w-swojej-klasie komponenty połączone przez API, nie monolit), co pozwala na niezależne skalowanie katalogu, wyszukiwania, płatności i CMS-a — analogicznie do architektur stosowanych przez liderów rynku (Zalando, Decathlon, REI). Projekt obejmuje pełny cykl życia klienta: od odkrycia produktu (SEO/AI), przez zakup (checkout, płatności, logistyka gabarytowa), po utrzymanie relacji (CRM, program lojalnościowy, serwis pogwarancyjny) oraz warstwę zarządczą (BI, KPI, zgodność prawna, bezpieczeństwo klasy enterprise).
 
-*Wersja dokumentu: 2.0 — rozszerzona specyfikacja enterprise. Data: 2026-07-30.*
+Centralnym elementem odróżniającym projekt od standardowego sklepu jest **Summit AI** — własna, zastrzeżona platforma AI/ML (dok. 12) obejmująca konwersacyjnego asystenta zakupowego, wyszukiwanie wizualne i AR, personalizację nowej generacji, generowanie treści, predictive maintenance dla e-bike, wykrywanie fraudów oraz pełną infrastrukturę MLOps — zbudowana z zachowaniem zgodności z unijnym AI Act i zasadą nadzoru człowieka nad decyzjami o istotnym znaczeniu dla klienta.
+
+*Wersja dokumentu: 3.0 — specyfikacja enterprise z rozbudowaną platformą AI. Data: 2026-07-30.*
