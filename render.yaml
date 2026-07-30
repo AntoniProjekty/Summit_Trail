@@ -11,4 +11,4 @@ services:
       - key: NODE_ENV
         value: production
       - key: ALLOWED_ORIGINS
-        value: https://antospuszczewicz-ai.github.io
+        value: https://antoniprojekty.github.io

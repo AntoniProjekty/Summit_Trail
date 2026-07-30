@@ -13,14 +13,15 @@ const PORT = process.env.PORT || 4000;
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || "http://localhost:5173,http://localhost:3000")
   .split(",")
-  .map((s) => s.trim())
+  .map((s) => s.trim().toLowerCase())
   .filter(Boolean);
 
 app.use(
   cors({
     origin(origin, callback) {
       // Allow same-origin/non-browser requests (no Origin header) and configured origins.
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      // Hostnames are case-insensitive, so compare lowercased (github.io links can vary in case).
+      if (!origin || allowedOrigins.includes(origin.toLowerCase())) return callback(null, true);
       callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
