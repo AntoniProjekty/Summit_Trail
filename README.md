@@ -23,6 +23,7 @@ Niniejsze repozytorium zawiera **kompletną specyfikację funkcjonalno-techniczn
 | 11 | [Domena, DNS, monitoring i disaster recovery](docs/11-domena-dns-monitoring-dr.md) | Konfiguracja DNS/SPF/DKIM/DMARC, status page, RTO/RPO, runbooki |
 | 12 | [Summit AI — własna platforma sztucznej inteligencji](docs/12-summit-ai-platforma-ai.md) | Asystent AI, visual search/AR, rekomendacje, generowanie treści, predictive maintenance, fraud detection, MLOps, zgodność z AI Act |
 | 13 | [Wielojęzyczność (PL/EN/UK) i kompatybilność wielourządzeniowa](docs/13-wielojezycznosc-i-kompatybilnosc.md) | Trójjęzyczny interfejs od startu, responsywność mobile/desktop, PWA, testy cross-browser i cross-device |
+| 14 | [Harmonogram wdrożenia i kosztorys](docs/14-harmonogram-i-kosztorys.md) | Fazowanie projektu, zespół, orientacyjny kosztorys, kamienie płatności, rejestr ryzyk |
 
 ## Streszczenie wykonawcze
 
@@ -32,4 +33,6 @@ Centralnym elementem odróżniającym projekt od standardowego sklepu jest **Sum
 
 Cały serwis — łącznie z asystentem AI — działa **trójjęzycznie od dnia startu (polski/angielski/ukraiński, dok. 13)** i jest w pełni responsywny: identyczna funkcjonalność na telefonie, tablecie i komputerze, zbudowana mobile-first z testami na realnych urządzeniach i przeglądarkach.
 
-*Wersja dokumentu: 4.0 — specyfikacja enterprise z platformą AI oraz pełną wielojęzycznością i kompatybilnością wielourządzeniową. Data: 2026-07-30.*
+Specyfikację zamyka konkretny **harmonogram wdrożenia i orientacyjny kosztorys (dok. 14)** — fazowanie projektu od Discovery przez MVP do skalowania z AI, struktura zespołu, kamienie płatności i rejestr ryzyk — tak, by dokument można było przedstawić Klientowi jako gotową podstawę do decyzji, nie tylko wizję produktu.
+
+*Wersja dokumentu: 5.0 — pełna specyfikacja enterprise z harmonogramem i kosztorysem. Data: 2026-07-30.*
