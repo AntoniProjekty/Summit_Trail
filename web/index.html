@@ -1950,10 +1950,12 @@ window.addEventListener("hashchange", render);
 
 (async function bootstrap(){
   initBgDecor();
-  // Darmowa instancja backendu bywa uśpiona i budzi się nawet ~30-50s — bez tego #app byłby pusty przez ten czas.
-  document.getElementById("app").innerHTML = '<div class="wrap" style="padding:60px 0;text-align:center;color:var(--ink-faint);">Wczytywanie…</div>';
-  await initApi();
+  // Render immediately in local/offline mode — never block first paint on a network call.
+  // A cold Render instance can take ~30-50s to wake; the API check runs in the background
+  // and the page silently upgrades to API mode if/when it responds.
   render();
+  await initApi();
+  if (apiAvailable) render();
 })();
 })();
 </script>
