@@ -5,8 +5,8 @@ const { requireAuth } = require("../middleware/session");
 const router = express.Router();
 router.use(requireAuth);
 
-// Kept in sync with the PROMOS map in the storefront frontend (docs/05, checkout logic).
-const PROMOS = { SZLAK10: 0.1, WITAMY5: 0.05 };
+// Kept in sync with the PROMOS maps in both storefronts (web/ Summit & Trail, web/loomhome/ Loomhome).
+const PROMOS = { SZLAK10: 0.1, WITAMY5: 0.05, DOM10: 0.1 };
 const MAX_SHIP_COST = 500;
 
 const listCart = db.prepare("SELECT * FROM cart_items WHERE user_id = ?");

@@ -1,0 +1,1948 @@
+<title>Loomhome — meble i dekoracje skandynawskie</title>
+<style>
+  :root {
+    --paper: #F5F0E8; --paper-raised: #FFFFFF; --paper-sunk: #EAE2D3;
+    --ink: #2B2420; --ink-soft: #5C5248; --ink-faint: #8A7F72;
+    --line: #E0D6C4; --line-strong: #CBBFA8;
+    --forest: #6B4A3A; --forest-ink: #55392C;
+    --rust: #C99A4B; --rust-ink: #A87F3A;
+    --shadow: 0 10px 28px rgba(50,40,25,0.10);
+    color-scheme: light dark;
+    --font: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17140F; --paper-raised: #201C15; --paper-sunk: #0F0D09;
+      --ink: #EDE7DC; --ink-soft: #B8AD9C; --ink-faint: #7A6F60;
+      --line: #2A241A; --line-strong: #3C3324;
+      --forest: #C99A6B; --forest-ink: #E0B98A;
+      --rust: #E0B15A; --rust-ink: #F0C878;
+      --shadow: 0 10px 28px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #17140F; --paper-raised: #201C15; --paper-sunk: #0F0D09;
+    --ink: #EDE7DC; --ink-soft: #B8AD9C; --ink-faint: #7A6F60;
+    --line: #2A241A; --line-strong: #3C3324;
+    --forest: #C99A6B; --forest-ink: #E0B98A; --rust: #E0B15A; --rust-ink: #F0C878;
+    --shadow: 0 10px 28px rgba(0,0,0,0.4);
+  }
+  :root[data-theme="light"] {
+    --paper: #F5F0E8; --paper-raised: #FFFFFF; --paper-sunk: #EAE2D3;
+    --ink: #2B2420; --ink-soft: #5C5248; --ink-faint: #8A7F72;
+    --line: #E0D6C4; --line-strong: #CBBFA8;
+    --forest: #6B4A3A; --forest-ink: #55392C; --rust: #C99A4B; --rust-ink: #A87F3A;
+    --shadow: 0 10px 28px rgba(50,40,25,0.10);
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { *{ animation-duration:.001ms!important; transition-duration:.001ms!important; } }
+  html,body{ margin:0; }
+  body{
+    background: var(--paper); color: var(--ink); font-family: var(--font);
+    font-size: 16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; }
+  ::selection{ background: color-mix(in srgb, var(--rust) 30%, transparent); }
+  a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; border-radius:3px; }
+
+  /* ---------- motion ---------- */
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes pageIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes pulse{ 0%{ transform:scale(1); } 35%{ transform:scale(1.4); } 100%{ transform:scale(1); } }
+  @keyframes toDown{ from{ opacity:0; max-height:0; } to{ opacity:1; max-height:200px; } }
+  @keyframes blobFloat{ 0%,100%{ transform:translate(-6%,-4%) scale(1); } 50%{ transform:translate(5%,6%) scale(1.18); } }
+  @keyframes bgFall{ from{ transform:translateY(-14vh) rotate(0deg); } to{ transform:translateY(114vh) rotate(24deg); } }
+
+  /* ---------- side-gutter decoration (wide screens only) ---------- */
+  .bg-decor{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  /* var(--forest) already adapts per theme (dark mode = a much brighter mint), so one
+     opacity value reads correctly against both a light and a near-black background. */
+  .bg-decor > div{ position:absolute; top:0; color:var(--forest); opacity:.35; animation:bgFall linear infinite; }
+  .bg-decor svg{ display:block; width:100%; height:100%; }
+  @media (max-width:1300px){ .bg-decor{ display:none; } }
+  #app.page-anim{ animation: pageIn .38s cubic-bezier(.16,.8,.3,1) both; }
+  .cart-count.pulse{ animation: pulse .45s ease; }
+  .btn, .filter-chip, .pill, .swatch, .tab-btn, .wish-btn, .option-card, .navlink, .cat-tile, .search-item {
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+  }
+  .btn:active{ transform:scale(.96); }
+  .wish-btn:active{ transform:scale(.82); }
+  .filter-chip:hover{ border-color:var(--line-strong); }
+  .ship-progress-fill{ transition: width .4s cubic-bezier(.16,.8,.3,1); }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 5vw; }
+
+  /* ---------- header ---------- */
+  header.site{
+    /* No backdrop-filter here on purpose: a blurred sticky header repaints on every
+       scroll frame and is the main cause of choppy scrolling. */
+    position:sticky; top:0; z-index:50; background: color-mix(in srgb, var(--paper) 97%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .site-bar{ display:flex; align-items:center; gap:26px; padding:16px 0; }
+  .logo{ display:flex; align-items:center; gap:9px; font-weight:800; font-size:1.05rem; letter-spacing:-0.01em; flex:none; }
+  .logo-mark{ width:26px; height:26px; flex:none; }
+  .site-nav{ display:flex; gap:22px; flex:1; }
+  .site-nav a{ font-weight:700; font-size:0.92rem; color: var(--ink-soft); padding:6px 2px; border-bottom:2px solid transparent; }
+  .site-nav a:hover, .site-nav a.active{ color: var(--ink); border-color: var(--rust); }
+  .bar-actions{ display:flex; align-items:center; gap:14px; flex:none; }
+  .icon-btn{ background:none; border:none; cursor:pointer; color:var(--ink); position:relative; padding:6px; display:flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:50%; }
+  .icon-btn:hover{ background:var(--paper-sunk); }
+  .avatar-badge{ width:22px; height:22px; border-radius:50%; background:var(--forest); color:#EAF3EC; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.75rem; }
+  .cart-count{
+    position:absolute; top:-3px; right:-3px; background:var(--rust); color:#2a1207; font-family:var(--font-mono);
+    font-size:0.62rem; font-weight:800; border-radius:999px; min-width:16px; height:16px; display:flex; align-items:center; justify-content:center; padding:0 3px;
+  }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--line-strong); border-radius:8px; padding:7px 10px; font-weight:700; font-size:.85rem; cursor:pointer; }
+
+  /* ---------- generic ---------- */
+  .eyebrow{ font-family:var(--font-mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--forest-ink); font-weight:700; margin:0 0 10px; }
+  .h-title{ font-weight:800; letter-spacing:-0.02em; text-wrap:balance; margin:0 0 14px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.94rem; padding:13px 24px; border-radius:10px; cursor:pointer; border:1px solid transparent; }
+  .btn-primary{ background: var(--forest); color:#EAF3EC; }
+  .btn-primary:hover{ background: var(--forest-ink); }
+  .btn-rust{ background: var(--rust); color:#2A1207; }
+  .btn-rust:hover{ background: var(--rust-ink); }
+  .btn-outline{ background:transparent; border-color:var(--line-strong); color:var(--ink); }
+  .btn-outline:hover{ border-color:var(--ink-faint); }
+  .btn-block{ width:100%; justify-content:center; }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .price{ font-family:var(--font-mono); font-weight:800; font-variant-numeric:tabular-nums; }
+
+  /* ---------- pages ---------- */
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; overflow:hidden; background: var(--forest); color:#EAF3EC;
+    padding:76px 0 64px;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0 1px, transparent 1px 34px),
+      repeating-radial-gradient(circle at 80% 75%, rgba(255,255,255,0.05) 0 1px, transparent 1px 46px);
+    opacity:.8;
+  }
+  .hero-inner{ position:relative; max-width:640px; }
+  .hero .eyebrow{ color:#BFE0CB; }
+  .hero h1{ font-size:clamp(2.1rem,4.6vw,3.2rem); line-height:1.08; margin:0 0 18px; }
+  .hero h1 .hl{ color: var(--rust-ink); }
+  .hero p{ font-size:1.08rem; color:#D7E7DC; max-width:48ch; margin:0 0 28px; }
+  .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+  .hero .btn-outline{ border-color:rgba(255,255,255,.35); color:#EAF3EC; }
+
+  /* ---------- category tiles ---------- */
+  .section{ padding:60px 0; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:26px; flex-wrap:wrap; }
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .cat-tile{
+    background: var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:22px;
+    display:flex; flex-direction:column; gap:10px; transition: border-color .15s ease, transform .15s ease;
+  }
+  .cat-tile:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .cat-tile .cat-icon{ width:52px; height:52px; }
+  .cat-tile b{ font-size:1.02rem; }
+  .cat-tile span.count{ font-size:.82rem; color:var(--ink-faint); }
+
+  /* ---------- product grid & card ---------- */
+  .filter-row{ display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap; }
+  .filter-chip{
+    border:1px solid var(--line-strong); background:transparent; color:var(--ink-soft); border-radius:999px;
+    padding:8px 16px; font-weight:700; font-size:.86rem; cursor:pointer;
+  }
+  .filter-chip.active{ background:var(--forest); color:#EAF3EC; border-color:var(--forest); }
+  .product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .p-card{
+    display:flex; flex-direction:column; background:var(--paper-raised); border:1px solid var(--line); border-radius:16px;
+    overflow:hidden; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  /* Only the first screenful of cards animates in; animating 70+ cards at once on every
+     grid re-render (filter/sort/category change) is what makes navigation feel choppy. */
+  .p-card.anim{ animation: cardIn .5s cubic-bezier(.16,.8,.3,1) both; }
+  .p-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  .p-card .thumb{ aspect-ratio:4/3; background:var(--paper-sunk); display:flex; align-items:center; justify-content:center; position:relative; padding:18px; overflow:hidden; }
+  .p-card .thumb::before{
+    content:""; position:absolute; top:16%; left:16%; width:68%; height:68%; border-radius:50%;
+    background: radial-gradient(circle, var(--accent, var(--forest)) 0%, transparent 72%);
+    opacity:.22;
+  }
+  /* Animating the glow on all 73 cards forever (even off-screen) was the actual cause of the
+     responsiveness drop — cap it to the same first-screenful set as the entrance animation. */
+  .p-card.anim .thumb::before{ animation: blobFloat 9s ease-in-out infinite; }
+  .p-card .thumb svg{ position:relative; z-index:1; width:78%; height:78%; }
+  .p-badge{ position:absolute; top:12px; left:12px; background:var(--rust); color:#2A1207; font-size:.68rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:4px 9px; border-radius:6px; }
+  .p-body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .p-cat{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:700; }
+  .p-name{ font-weight:800; font-size:1.02rem; letter-spacing:-0.01em; }
+  .p-teaser{ font-size:.86rem; color:var(--ink-soft); flex:1; }
+  .mini-swatches{ display:flex; gap:5px; margin:1px 0 2px; }
+  .mini-swatch{ width:13px; height:13px; border-radius:50%; border:1px solid var(--line-strong); }
+  .p-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+  .p-price{ font-size:1.08rem; }
+  .p-go{ font-size:.84rem; font-weight:800; color:var(--forest-ink); }
+
+  /* ---------- trust bar ---------- */
+  .trust-bar{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding:34px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .trust-item{ display:flex; gap:12px; align-items:flex-start; }
+  .trust-item svg{ width:26px; height:26px; flex:none; color:var(--forest-ink); }
+  .trust-item b{ display:block; font-size:.9rem; margin-bottom:2px; }
+  .trust-item span{ font-size:.8rem; color:var(--ink-faint); }
+
+  /* ---------- newsletter ---------- */
+  .newsletter{ background:var(--paper-sunk); border-radius:20px; padding:40px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .newsletter h3{ margin:0 0 6px; font-size:1.2rem; }
+  .newsletter p{ margin:0; color:var(--ink-soft); font-size:.9rem; }
+  .newsletter form{ display:flex; gap:8px; flex-wrap:wrap; }
+  .newsletter input{ border:1px solid var(--line-strong); background:var(--paper-raised); border-radius:9px; padding:11px 14px; font-size:.9rem; min-width:220px; color:var(--ink); }
+
+  /* ---------- breadcrumb ---------- */
+  .crumbs{ font-size:.82rem; color:var(--ink-faint); padding:22px 0 0; }
+  .crumbs a{ color:var(--ink-soft); font-weight:600; }
+  .crumbs a:hover{ color:var(--forest-ink); }
+
+  /* ---------- PDP ---------- */
+  .pdp{ display:grid; grid-template-columns:1fr 1fr; gap:44px; padding:26px 0 50px; align-items:start; }
+  .pdp-gallery{ position:sticky; top:90px; }
+  .pdp-frame{ background:var(--paper-sunk); border-radius:20px; padding:34px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
+  .pdp-frame svg{ width:85%; height:85%; }
+  .swatch-row{ display:flex; gap:10px; margin-top:14px; }
+  .swatch{ width:30px; height:30px; border-radius:8px; border:2px solid var(--line-strong); cursor:pointer; }
+  .swatch.active{ border-color:var(--forest-ink); box-shadow:0 0 0 2px var(--paper), 0 0 0 3px var(--forest-ink); }
+
+  .pdp-info .p-cat{ margin-bottom:6px; }
+  .pdp-info h1{ font-size:clamp(1.6rem,2.6vw,2.1rem); margin:0 0 8px; letter-spacing:-0.02em; }
+  .pdp-sku{ font-family:var(--font-mono); font-size:.78rem; color:var(--ink-faint); margin-bottom:16px; }
+  .pdp-price{ font-size:1.9rem; margin-bottom:20px; }
+  .pdp-price .was{ font-size:1rem; color:var(--ink-faint); text-decoration:line-through; font-weight:600; margin-right:8px; }
+
+  .variant-block{ margin-bottom:18px; }
+  .variant-label{ font-size:.82rem; font-weight:800; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .variant-label .sel{ color:var(--ink-faint); font-weight:600; }
+  .pill-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill{
+    border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px;
+    padding:9px 14px; font-size:.85rem; font-weight:700; cursor:pointer;
+  }
+  .pill.active{ border-color:var(--forest-ink); background: color-mix(in srgb, var(--forest) 12%, var(--paper-raised)); }
+
+  .qty-row{ display:flex; align-items:center; gap:14px; margin:22px 0; flex-wrap:wrap; }
+  .qty-stepper{ display:flex; align-items:center; border:1px solid var(--line-strong); border-radius:9px; }
+  .qty-stepper button{ background:none; border:none; width:36px; height:38px; font-size:1.1rem; cursor:pointer; color:var(--ink); }
+  .qty-stepper span{ width:34px; text-align:center; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  .ship-note{ display:flex; gap:10px; align-items:flex-start; font-size:.84rem; color:var(--ink-soft); background:var(--paper-sunk); border-radius:10px; padding:12px 14px; margin-top:20px; }
+  .ship-note svg{ width:18px; height:18px; flex:none; margin-top:1px; color:var(--forest-ink); }
+
+  .tabs{ display:flex; gap:4px; border-bottom:1px solid var(--line); margin:44px 0 0; }
+  .tab-btn{ background:none; border:none; padding:12px 18px; font-weight:700; font-size:.9rem; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab-btn.active{ color:var(--ink); border-color:var(--rust); }
+  .tab-panel{ display:none; padding:26px 0 10px; max-width:70ch; }
+  .tab-panel.active{ display:block; }
+  .tab-panel h3{ font-size:1.05rem; margin:1.4em 0 .5em; }
+  .tab-panel h3:first-child{ margin-top:0; }
+  .spec-table{ width:100%; border-collapse:collapse; font-size:.88rem; }
+  .spec-table td{ padding:9px 0; border-bottom:1px solid var(--line); }
+  .spec-table td:first-child{ color:var(--ink-faint); width:46%; }
+  .spec-table td:last-child{ font-weight:600; }
+
+  /* ---------- contact tables & form ---------- */
+  .info-table{ width:100%; border-collapse:collapse; font-size:.88rem; margin-bottom:10px; min-width:480px; }
+  .info-table th{ text-align:left; padding:10px 12px; background:var(--paper-sunk); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); font-weight:800; }
+  .info-table td{ padding:12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .info-table tr:last-child td{ border-bottom:none; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin-bottom:40px; }
+  .contact-form textarea, .contact-form select{
+    width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+    border-radius:9px; padding:11px 13px; font-size:.9rem; font-family:inherit;
+  }
+
+  .related-head{ font-weight:800; font-size:1.15rem; margin:0 0 18px; }
+
+  /* ---------- cart / checkout ---------- */
+  .page-head{ padding:34px 0 6px; }
+  .page-head h1{ font-size:clamp(1.6rem,2.6vw,2rem); margin:0; letter-spacing:-0.02em; }
+
+  .cart-layout{ display:grid; grid-template-columns:1fr 320px; gap:36px; padding:26px 0 70px; align-items:start; }
+  .cart-line{ display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line); align-items:center; }
+  .cart-line .thumb-sm{ width:70px; height:70px; background:var(--paper-sunk); border-radius:10px; flex:none; display:flex; align-items:center; justify-content:center; padding:8px; }
+  .cart-line .thumb-sm svg{ width:100%; height:100%; }
+  .cart-line .grow{ flex:1; min-width:0; }
+  .cart-line .name{ font-weight:700; font-size:.95rem; }
+  .cart-line .variant{ font-size:.8rem; color:var(--ink-faint); margin-top:2px; }
+  .cart-line .remove{ font-size:.78rem; color:var(--ink-faint); background:none; border:none; cursor:pointer; margin-top:6px; padding:0; text-decoration:underline; }
+  .cart-line .line-right{ text-align:right; flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+
+  .summary-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:22px; position:sticky; top:90px; }
+  .summary-row{ display:flex; justify-content:space-between; font-size:.9rem; padding:7px 0; color:var(--ink-soft); }
+  .summary-row.total{ border-top:1px solid var(--line); margin-top:8px; padding-top:14px; font-size:1.1rem; font-weight:800; color:var(--ink); }
+  .empty-state{ text-align:center; padding:70px 0; color:var(--ink-soft); }
+  .empty-state svg{ width:56px; height:56px; margin-bottom:16px; color:var(--ink-faint); }
+
+  .checkout-layout{ display:grid; grid-template-columns:1fr 320px; gap:36px; padding:26px 0 70px; align-items:start; }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px; }
+  .form-grid .full{ grid-column:1/-1; }
+  .form-grid input{ width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); border-radius:9px; padding:11px 13px; font-size:.9rem; color:var(--ink); }
+  .field-label{ font-size:.76rem; font-weight:700; color:var(--ink-faint); margin-bottom:5px; display:block; }
+  .option-card{ border:1px solid var(--line-strong); border-radius:11px; padding:13px 16px; display:flex; align-items:center; gap:12px; margin-bottom:8px; cursor:pointer; }
+  .option-card.active{ border-color:var(--forest-ink); background: color-mix(in srgb, var(--forest) 10%, var(--paper-raised)); }
+  .option-card input{ accent-color:var(--forest-ink); }
+  .option-card .grow{ flex:1; }
+  .option-card b{ display:block; font-size:.9rem; }
+  .option-card span{ font-size:.78rem; color:var(--ink-faint); }
+  .option-card .op-price{ font-weight:700; font-size:.86rem; }
+  .block-label{ font-weight:800; font-size:.9rem; margin:26px 0 10px; }
+  .demo-note{ font-size:.78rem; color:var(--ink-faint); margin-top:14px; }
+
+  .confirm-wrap{ max-width:560px; margin:0 auto; padding:70px 0 90px; text-align:center; }
+  .confirm-icon{ width:64px; height:64px; margin:0 auto 20px; color:var(--forest-ink); }
+  .confirm-wrap h1{ font-size:1.8rem; margin:0 0 10px; }
+  .order-no{ font-family:var(--font-mono); font-weight:700; color:var(--rust-ink); }
+  .confirm-summary{ text-align:left; background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin:26px 0; }
+
+  /* ---------- account / membership ---------- */
+  .auth-tabs{ display:flex; gap:6px; margin-bottom:24px; background:var(--paper-sunk); border-radius:11px; padding:5px; max-width:340px; }
+  .auth-tab{ flex:1; text-align:center; padding:9px 0; border-radius:8px; font-weight:700; font-size:.88rem; cursor:pointer; color:var(--ink-soft); background:none; border:none; }
+  .auth-tab.active{ background:var(--paper-raised); color:var(--ink); box-shadow:var(--shadow); }
+  .auth-form{ max-width:380px; display:flex; flex-direction:column; gap:12px; }
+  .auth-form input{ width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px; padding:11px 13px; font-size:.9rem; }
+  .auth-error{ color:var(--rust-ink); font-size:.84rem; font-weight:600; }
+  .auth-panel{ display:none; }
+  .auth-panel.active{ display:block; }
+
+  .account-hero{ display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+  .account-avatar{ width:56px; height:56px; border-radius:50%; background:var(--forest); color:#EAF3EC; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.4rem; flex:none; }
+  .account-name{ font-weight:800; font-size:1.2rem; }
+  .account-email{ font-size:.85rem; color:var(--ink-faint); }
+
+  .tier-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:26px; }
+  .tier-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+  .tier-badge{ display:inline-flex; align-items:center; gap:6px; background:color-mix(in srgb, var(--rust) 15%, transparent); color:var(--rust-ink); font-weight:800; font-size:.82rem; padding:5px 12px; border-radius:999px; }
+  .tier-points{ font-family:var(--font-mono); font-weight:800; font-size:1.3rem; }
+  .tier-progress-track{ height:8px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .tier-progress-fill{ height:100%; background:var(--forest); border-radius:99px; transition:width .4s ease; }
+  .tier-note{ font-size:.82rem; color:var(--ink-faint); margin-top:10px; }
+  .tier-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+  .tier-mini{ border:1px solid var(--line); border-radius:12px; padding:14px; font-size:.82rem; }
+  .tier-mini.current{ border-color:var(--forest-ink); background:color-mix(in srgb, var(--forest) 8%, var(--paper-raised)); }
+  .tier-mini b{ display:block; font-size:.92rem; margin-bottom:4px; }
+
+  .order-item{ background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:10px; }
+  .order-item-head{ display:flex; justify-content:space-between; font-size:.85rem; margin-bottom:6px; }
+  .order-item-head b{ font-family:var(--font-mono); }
+  .guest-banner{ display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--paper-sunk); border-radius:12px; padding:14px 16px; margin-bottom:18px; font-size:.85rem; flex-wrap:wrap; }
+
+  footer.site{ border-top:1px solid var(--line); padding:40px 0 30px; margin-top:30px; }
+  .foot-grid{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:.85rem; color:var(--ink-faint); }
+  .foot-grid b{ color:var(--ink); }
+
+  .toast{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(12px); background:var(--forest);
+    color:#EAF3EC; padding:13px 20px; border-radius:11px; font-weight:700; font-size:.88rem; box-shadow:var(--shadow);
+    opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; z-index:80; display:flex; align-items:center; gap:8px;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---------- search ---------- */
+  .search-wrap{ position:relative; flex:1; max-width:280px; }
+  .search-input{
+    width:100%; border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+    border-radius:9px; padding:9px 12px; font-size:.86rem;
+  }
+  .search-results{
+    position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); overflow:hidden; z-index:60; max-height:360px; overflow-y:auto;
+  }
+  .search-item{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-bottom:1px solid var(--line); }
+  .search-item:last-child{ border-bottom:none; }
+  .search-item:hover{ background:var(--paper-sunk); }
+  .search-thumb{ width:34px; height:34px; background:var(--paper-sunk); border-radius:7px; flex:none; display:flex; align-items:center; justify-content:center; padding:5px; }
+  .search-name{ flex:1; font-size:.85rem; font-weight:600; }
+  .search-empty{ padding:14px; font-size:.85rem; color:var(--ink-faint); }
+
+  /* ---------- ratings ---------- */
+  .rating-row{ display:flex; align-items:center; gap:5px; font-size:.78rem; }
+  .stars{ color:var(--rust); letter-spacing:1px; font-size:.82rem; }
+  .star-off{ opacity:.28; }
+  .rating-num{ font-weight:700; color:var(--ink); }
+  .rating-count{ color:var(--ink-faint); }
+
+  /* ---------- wishlist heart ---------- */
+  .wish-btn{
+    position:absolute; top:10px; right:10px; width:30px; height:30px; border-radius:50%; border:1px solid var(--line-strong);
+    background:var(--paper-raised); color:var(--ink-faint); font-size:15px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2; line-height:1;
+  }
+  .wish-btn.active{ color:var(--rust); border-color:var(--rust); }
+  .wish-btn-pdp{ flex:none; }
+
+  /* ---------- sale price ---------- */
+  .p-was{ font-size:.82rem; color:var(--ink-faint); text-decoration:line-through; font-weight:600; margin-right:6px; }
+  .omnibus-note{ font-size:.78rem; color:var(--ink-faint); margin:-12px 0 18px; }
+
+  /* ---------- shop toolbar ---------- */
+  .shop-toolbar{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+  .sort-select{ border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink); border-radius:9px; padding:9px 12px; font-size:.85rem; font-weight:600; }
+  .result-count{ font-size:.82rem; color:var(--ink-faint); }
+
+  /* ---------- shipping progress ---------- */
+  .ship-progress{ background:var(--paper-sunk); border-radius:12px; padding:14px 16px; margin-bottom:18px; font-size:.85rem; }
+  .ship-progress.done{ display:flex; align-items:center; gap:8px; color:var(--forest-ink); font-weight:700; }
+  .ship-progress.done svg{ width:18px; height:18px; flex:none; }
+  .ship-progress.muted{ color:var(--ink-faint); }
+  .ship-progress-text{ margin-bottom:9px; color:var(--ink-soft); }
+  .ship-progress-track{ height:6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .ship-progress-fill{ height:100%; background:var(--rust); border-radius:99px; transition:width .3s ease; }
+
+  /* ---------- promo code ---------- */
+  .promo-row{ display:flex; gap:8px; margin-top:14px; }
+  .promo-row input{ flex:1; border:1px solid var(--line-strong); border-radius:8px; padding:9px 11px; font-size:.85rem; background:var(--paper-raised); color:var(--ink); }
+  .promo-applied{ color:var(--rust-ink); }
+  .promo-applied button{ background:none; border:none; color:var(--ink-faint); text-decoration:underline; cursor:pointer; font-size:.78rem; margin-left:6px; }
+
+  /* ---------- reviews ---------- */
+  .review-item{ padding:16px 0; border-bottom:1px solid var(--line); }
+  .review-item:last-child{ border-bottom:none; }
+  .review-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; gap:10px; }
+  .review-author{ font-weight:700; font-size:.88rem; }
+  .review-date{ font-size:.76rem; color:var(--ink-faint); flex:none; }
+  .review-text{ font-size:.87rem; color:var(--ink-soft); margin:0; }
+
+  @media (max-width: 980px){
+    .search-wrap{ display:none; }
+    .site-nav{ display:none; }
+    .nav-toggle{ display:block; }
+    .cat-grid, .product-grid{ grid-template-columns:1fr 1fr; }
+    .pdp, .cart-layout, .checkout-layout{ grid-template-columns:1fr; }
+    .pdp-gallery{ position:static; }
+    .summary-card{ position:static; }
+    .trust-bar{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 620px){
+    .cat-grid, .product-grid{ grid-template-columns:1fr; }
+    .form-grid{ grid-template-columns:1fr; }
+    .trust-bar{ grid-template-columns:1fr; }
+    .cart-line{ flex-wrap:wrap; }
+  }
+</style>
+
+<div class="bg-decor" id="bgDecor" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap site-bar">
+    <a class="logo" href="#/" data-link>
+      <svg class="logo-mark" viewBox="0 0 26 26"><path d="M3 13 L13 4 L23 13" stroke="var(--forest)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="7" y="13" width="12" height="9" rx="1.2" fill="var(--rust)"/></svg>
+      Loomhome
+    </a>
+    <nav class="site-nav" id="siteNav">
+      <a href="#/sklep" data-link>Sklep</a>
+      <a href="#/sklep?cat=seating" data-link>Fotele &amp; Sofy</a>
+      <a href="#/sklep?cat=lighting" data-link>Oświetlenie</a>
+      <a href="#/sklep?cat=textile" data-link>Tekstylia</a>
+      <a href="#/sklep?cat=decor" data-link>Dekoracje</a>
+      <a href="#/kontakt" data-link>Kontakt</a>
+    </nav>
+    <div class="search-wrap">
+      <input type="search" id="searchInput" class="search-input" placeholder="Szukaj produktów…" autocomplete="off" aria-label="Szukaj produktów">
+      <div class="search-results" id="searchResults" hidden></div>
+    </div>
+    <div class="bar-actions">
+      <button class="icon-btn account-btn" id="accountBtn" data-link data-href="#/logowanie" aria-label="Zaloguj się">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <button class="icon-btn" id="wishBtn" data-link data-href="#/lista-zyczen" aria-label="Lista życzeń">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.6C12 5.2 13.5 4 15.5 4c4 0 5.5 4 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        <span class="cart-count" id="wishCount" hidden>0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" data-link data-href="#/koszyk" aria-label="Koszyk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="21" r="1.4" fill="currentColor" stroke="none"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+      <button class="nav-toggle" id="navToggle">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div><b>Loomhome</b><br>Meble i dekoracje skandynawskie.</div>
+    <div><b>Dostawa</b><br>InPost, DPD, Raben (meble gabarytowe)<br>Darmowo od 300 zł</div>
+    <div><b>Zwroty</b><br>14 dni na odstąpienie od umowy</div>
+    <div><b>Kontakt</b><br>kontakt@loomhome.pl</div>
+  </div>
+  <div class="wrap demo-note" style="margin-top:22px;">Prototyp sklepu — płatność jest symulowana (brak integracji z operatorem płatności), konto, koszyk i zamówienia są zapisywane na serwerze.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Adres wdrożonego backendu (server/, patrz server/README.md) — ten sam backend obsługuje
+  // też sklep Summit & Trail; konta/koszyk/zamówienia są per-użytkownik, nie per-sklep.
+  window.STT_API_BASE = window.STT_API_BASE || "https://summit-trail-api.onrender.com";
+</script>
+<script>
+(function(){
+"use strict";
+
+/* ============== BACKEND API ==============
+   Set window.STT_API_BASE (e.g. in a <script> tag before this one, or by editing
+   the constant below) to the deployed backend URL — see server/README.md.
+   Left empty, the store runs fully offline on localStorage, exactly as before. */
+const STT_API_BASE = window.STT_API_BASE || "";
+let apiAvailable = false;
+
+async function apiFetch(path, opts){
+  opts = opts || {};
+  const res = await fetch(STT_API_BASE + path, {
+    method: opts.method || "GET",
+    credentials: "include",
+    headers: opts.body ? { "Content-Type": "application/json" } : undefined,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  let data = null;
+  try { data = await res.json(); } catch(e){ /* empty body */ }
+  if (!res.ok) throw new Error((data && data.error) || ("Błąd serwera (" + res.status + ")"));
+  return data || {};
+}
+
+async function initApi(){
+  if (!STT_API_BASE) { apiAvailable = false; return; }
+  try {
+    const ctrl = new AbortController();
+    // Darmowy plan Render usypia instancję po bezczynności — pierwsze wybudzenie może trwać nawet ~30-50s.
+    const timer = setTimeout(()=>ctrl.abort(), 20000);
+    const res = await fetch(STT_API_BASE + "/api/health", { credentials: "include", signal: ctrl.signal });
+    clearTimeout(timer);
+    apiAvailable = res.ok;
+    if (apiAvailable){
+      const me = await apiFetch("/api/auth/me");
+      if (me.user){ apiUser = me.user; await loadCartFromApi(); await loadWishlistFromApi(); }
+    }
+  } catch(e){ apiAvailable = false; }
+}
+
+/* ============== DATA ============== */
+const ICONS = {
+  sofa: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 70 v20 a8 8 0 0 0 8 8 h134 a8 8 0 0 0 8 -8 v-20" stroke="var(--ink)" stroke-width="4"/>
+    <path d="M30 70 v-18 a12 12 0 0 1 12 -12 h4 v30 M170 70 v-18 a12 12 0 0 1 -12 -12 h-4 v30" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="48" y="42" width="104" height="30" rx="10" stroke="${color}" stroke-width="5"/>
+    <line x1="25" y1="70" x2="175" y2="70" stroke="${color}" stroke-width="5"/>
+    <circle cx="35" cy="100" r="5" fill="var(--ink)"/><circle cx="165" cy="100" r="5" fill="var(--ink)"/>
+    <circle cx="150" cy="32" r="6" fill="var(--rust)"/>
+  </svg>`,
+  pendantLamp: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="6" x2="100" y2="38" stroke="var(--ink-faint)" stroke-width="3"/>
+    <path d="M62 38 h76 l16 40 h-108 z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="100" cy="94" r="8" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  floorLamp: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="112" x2="100" y2="46" stroke="var(--ink)" stroke-width="4"/>
+    <line x1="70" y1="112" x2="130" y2="112" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M66 46 h68 l10 34 h-88 z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="100" cy="30" r="4" fill="var(--rust)"/>
+  </svg>`,
+  rug: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="30" width="160" height="70" rx="6" stroke="${color}" stroke-width="5"/>
+    <rect x="34" y="44" width="132" height="42" rx="3" stroke="var(--ink-faint)" stroke-width="3"/>
+    <line x1="20" y1="34" x2="20" y2="96" stroke="${color}" stroke-width="4" stroke-dasharray="1 7" stroke-linecap="round"/>
+    <line x1="180" y1="34" x2="180" y2="96" stroke="${color}" stroke-width="4" stroke-dasharray="1 7" stroke-linecap="round"/>
+    <circle cx="150" cy="22" r="6" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  cushion: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 30 h120 a20 20 0 0 1 20 20 v20 a20 20 0 0 1 -20 20 h-120 a20 20 0 0 1 -20 -20 v-20 a20 20 0 0 1 20 -20 z" stroke="${color}" stroke-width="5"/>
+    <path d="M60 45 q40 20 80 0" stroke="var(--ink-faint)" stroke-width="3" fill="none"/>
+    <circle cx="150" cy="26" r="6" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  blanket: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 88 q90 -48 160 0 l-14 10 q-66 -36 -132 0 z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="38" y1="84" x2="38" y2="96" stroke="var(--ink-faint)" stroke-width="3"/>
+    <line x1="72" y1="70" x2="72" y2="86" stroke="var(--ink-faint)" stroke-width="3"/>
+    <line x1="130" y1="70" x2="130" y2="86" stroke="var(--ink-faint)" stroke-width="3"/>
+    <circle cx="160" cy="44" r="7" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  vase: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M85 20 h30 l6 20 a30 30 0 0 1 9 22 c0 24 -18 40 -30 40 s-30 -16 -30 -40 a30 30 0 0 1 9 -22 z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="80" y1="102" x2="120" y2="102" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="128" cy="30" r="6" fill="var(--rust)" opacity=".85"/>
+  </svg>`,
+  candleholder: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="18" x2="100" y2="50" stroke="var(--rust)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M96 18 q4 -10 8 0" stroke="var(--rust-ink)" stroke-width="3" fill="none" opacity=".8"/>
+    <path d="M70 50 h60 l10 20 h-80 z" stroke="${color}" stroke-width="5" stroke-linejoin="round"/>
+    <line x1="55" y1="94" x2="145" y2="94" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+  </svg>`,
+  mirror: (color) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="55" r="38" stroke="${color}" stroke-width="6"/>
+    <line x1="100" y1="93" x2="100" y2="108" stroke="var(--ink)" stroke-width="4"/>
+    <circle cx="118" cy="42" r="6" fill="var(--rust)" opacity=".75"/>
+  </svg>`
+};
+
+// Decorative products slowly falling through the empty side gutters on wide screens.
+// A fixed handful of small, transform-only, low-opacity elements — set once, never
+// touched by render() again, so it costs nothing on navigation or scroll.
+function initBgDecor(){
+  const el = document.getElementById("bgDecor");
+  if (!el) return;
+  const icons = [ICONS.sofa, ICONS.pendantLamp, ICONS.floorLamp, ICONS.rug, ICONS.vase, ICONS.mirror];
+  const html = [];
+  for (let i = 0; i < 10; i++){
+    const side = i % 2 === 0 ? "left" : "right";
+    const offset = (1 + Math.random() * 6).toFixed(1);
+    const size = Math.round(24 + Math.random() * 20);
+    const duration = (24 + Math.random() * 16).toFixed(1);
+    const delay = (-Math.random() * duration).toFixed(1);
+    const icon = icons[Math.floor(Math.random() * icons.length)]("currentColor");
+    html.push(`<div style="${side}:${offset}vw;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:${delay}s;">${icon}</div>`);
+  }
+  el.innerHTML = html.join("");
+}
+
+const PRODUCTS = [
+  {
+    id: "wave-lounge", cat: "seating", catLabel: "Sofa Modułowa", sku: "LMH-SEA-WAVL",
+    name: "Loomhome Wave Lounge", badge: "Bestseller",
+    teaser: "Modułowa sofa boucle z otomaną — dopasowujesz konfigurację do salonu.",
+    basePrice: 6400, compareAtPrice: 7200, shipping: "paletowa", rating: 4.8, reviewCount: 134,
+    colors: [{name:"Piaskowy Len", hex:"#c9b89a"},{name:"Grafitowy Boucle", hex:"#4a4844"}],
+    sizes: ["2,5-osobowa (220 cm)","3-osobowa (260 cm)","Narożna (300 cm)"],
+    capacities: [{label:"Bez otomany", delta:0},{label:"Z otomaną (prawa)", delta:600},{label:"Z otomaną (lewa)", delta:600}],
+    bundles: [{label:"Sofa sama", delta:0},{label:"+ 2 poduszki dekoracyjne Cloudknit", delta:180},{label:"+ pled Linen Haze", delta:220}],
+    icon: ICONS.sofa,
+    description: [
+      ["Wave Lounge — modułowa sofa, która rośnie z Twoim salonem","Loomhome Wave Lounge to system modułowy tapicerowany boucle, który można skonfigurować jako klasyczną trzyosobową sofę lub rozbudować o otomanę i dodatkowe siedziska. Stelaż z drewna bukowego i pianka o wysokiej gęstości zapewniają wygodę na lata."],
+      ["Tapicerka, która żyje z domownikami","Odpinane, pralnicze pokrycia boucle ułatwiają czyszczenie — idealne rozwiązanie dla domów z dzieckiem lub zwierzakiem."],
+      ["Modułowość bez kompromisów","Otomanę można zamontować z lewej lub prawej strony, a dodatkowe siedziska dokupić w każdej chwili — sofa dopasowuje się do wnętrza, nie odwrotnie."]
+    ],
+    specs: [["Tapicerka","Boucle, 100% poliester, odpinana"],["Stelaż","Drewno bukowe + sklejka"],["Wypełnienie siedzisk","Pianka HR wysokiej gęstości"],["Szerokość","220–300 cm (zależnie od wariantu)"],["Wysokość","82 cm"],["Nogi","Drewno bukowe, lakierowane"]],
+    reviews: [
+      {author:"Marta K.", stars:5, date:"2026-05-14", text:"Otomana z prawej strony idealnie wypełniła kąt salonu. Tapicerka miła w dotyku i łatwa do odkurzenia."},
+      {author:"Tomasz W.", stars:5, date:"2026-04-03", text:"Po pół roku użytkowania z dwoma kotami — zero rozciągnięcia tkaniny, pokrowce zdejmowane do pralki."},
+      {author:"Ola S.", stars:4, date:"2026-03-22", text:"Montaż modułów trochę czasu zajął, ale efekt wart zachodu."}
+    ]
+  },
+  {
+    id: "halo-pendant", cat: "lighting", catLabel: "Lampa Wisząca", sku: "LMH-LIG-HALO",
+    name: "Loomhome Halo", badge: "Nowość",
+    teaser: "Lampa wisząca z mosiądzu szczotkowanego, klosz Ø 30/45 cm.",
+    basePrice: 780, compareAtPrice: 890, shipping: "standardowa", rating: 4.7, reviewCount: 68,
+    colors: [{name:"Mosiądz Szczotkowany", hex:"#a67c3d"},{name:"Czarny Mat", hex:"#232323"}],
+    capacities: [{label:"Ø 30 cm", delta:0},{label:"Ø 45 cm", delta:220}],
+    icon: ICONS.pendantLamp,
+    description: [
+      ["Halo — ciepłe światło w formie, która nie starzeje się","Klosz Halo z mosiądzu szczotkowanego rozprasza światło w ciepłym, kierunkowym snopie — idealny nad stołem jadalnym lub kuchennym wyspą."],
+      ["Regulowana wysokość zawiesu","Kabel można przyciąć do dowolnej wysokości podczas montażu, bez dodatkowych akcesoriów."]
+    ],
+    specs: [["Materiał klosza","Mosiądz szczotkowany / stal malowana"],["Oprawka","E27, LED do 12 W (nie w zestawie)"],["Średnica","30 cm / 45 cm"],["Długość zawiesu","do 150 cm, regulowana"]],
+    reviews: [
+      {author:"Paulina G.", stars:5, date:"2026-06-01", text:"Nad stołem w jadalni wygląda dokładnie jak na zdjęciach — ciepłe, przyjemne światło."},
+      {author:"Sebastian K.", stars:4, date:"2026-04-25", text:"Montaż prosty, jedyny minus — żarówkę trzeba dokupić osobno."}
+    ]
+  },
+  {
+    id: "wool-drift-rug", cat: "textile", catLabel: "Dywan Wełniany", sku: "LMH-TEX-WOOL",
+    name: "Loomhome Wooldrift", badge: "Bestseller",
+    teaser: "Dywan z 100% wełny, ręcznie tkany, 160×230 / 200×300 cm.",
+    basePrice: 1400, compareAtPrice: 1600, shipping: "standardowa", rating: 4.8, reviewCount: 88,
+    colors: [{name:"Piaskowy Len", hex:"#c9b89a"},{name:"Grafitowy Boucle", hex:"#4a4844"},{name:"Kremowy Boucle", hex:"#e8ddc9"}],
+    sizes: ["160×230 cm","200×300 cm","240×340 cm"],
+    icon: ICONS.rug,
+    description: [
+      ["Wooldrift — ręcznie tkany dywan, który ociepla wnętrze","Wooldrift powstaje z 100% wełny owczej, ręcznie tkanej na tradycyjnych krosnach — każdy egzemplarz ma delikatnie inny układ włosia, co czyni go unikatowym."],
+      ["Trwałość na pokolenia","Wełna naturalnie odpycha zabrudzenia i nie elektryzuje się — przy regularnym odkurzaniu dywan zachowuje wygląd na długie lata."],
+      ["Trzy rozmiary do każdego salonu","Od kompaktowego 160×230 cm pod stolik kawowy do dużego 240×340 cm pod całą strefę wypoczynkową."]
+    ],
+    specs: [["Materiał","100% wełna owcza"],["Technika","Ręcznie tkany"],["Rozmiary","160×230 / 200×300 / 240×340 cm"],["Pranie","Czyszczenie profesjonalne, odkurzanie regularne"]],
+    reviews: [
+      {author:"Beata Sz.", stars:5, date:"2026-05-24", text:"Wełna faktycznie nie elektryzuje się jak poprzedni syntetyczny dywan. Bardzo przyjemna w dotyku."},
+      {author:"Jacek R.", stars:5, date:"2026-04-14", text:"Rozmiar 200×300 idealnie wypełnił salon, kolor Grafitowy głębszy niż na zdjęciu, ale w dobrym sensie."},
+      {author:"Monika T.", stars:4, date:"2026-03-02", text:"Piękny dywan, na start trochę się kruszy, po kilku odkurzeniach przestało."}
+    ]
+  },
+  {
+    id: "hearth-recliner", cat: "seating", catLabel: "Fotel Relax", sku: "LMH-SEA-HRTH",
+    name: "Loomhome Hearth", badge: null,
+    teaser: "Fotel relax z funkcją leżącą, sterowanie ręczne lub elektryczne.",
+    basePrice: 3200, compareAtPrice: 3600, shipping: "paletowa", rating: 4.6, reviewCount: 41,
+    colors: [{name:"Grafitowy Boucle", hex:"#4a4844"},{name:"Piaskowy Len", hex:"#c9b89a"}],
+    capacities: [{label:"Sterowanie ręczne", delta:0},{label:"Sterowanie elektryczne", delta:900}],
+    icon: ICONS.sofa,
+    description: [
+      ["Hearth — wieczorny relaks bez wstawania z fotela","Fotel Hearth rozkłada się do pozycji leżącej z podnóżkiem, oferując pełne wsparcie dla pleców i karku. Wersja elektryczna pozwala dopasować kąt jednym przyciskiem."],
+      ["Solidna konstrukcja na lata","Mechanizm rozkładania oparty na wzmocnionej stalowej ramie, testowany na ponad 20 000 cykli otwarcia."]
+    ],
+    specs: [["Mechanizm","Rozkładany, stal wzmocniona"],["Tapicerka","Boucle / Len (do wyboru)"],["Pozycje","Siedząca, relax, leżąca"],["Waga","32 kg"]],
+    reviews: [
+      {author:"Zbigniew M.", stars:5, date:"2026-05-06", text:"Wersja elektryczna to zupełnie inny poziom komfortu wieczorem po pracy."},
+      {author:"Halina D.", stars:4, date:"2026-03-11", text:"Solidny, mechanizm działa gładko, jedyny minus — dość duży, warto zmierzyć miejsce przed zakupem."}
+    ]
+  },
+  {
+    id: "cloudknit-cushion", cat: "textile", catLabel: "Poduszka Dekoracyjna", sku: "LMH-TEX-CLDK",
+    name: "Loomhome Cloudknit", badge: "Nowość",
+    teaser: "Poduszka dekoracyjna z grubym splotem, 45×45 / 50×50 cm.",
+    basePrice: 150, shipping: "standardowa", rating: 4.5, reviewCount: 34,
+    colors: [{name:"Piaskowy Len", hex:"#c9b89a"},{name:"Grafitowy Boucle", hex:"#4a4844"}],
+    capacities: [{label:"45×45 cm", delta:0},{label:"50×50 cm", delta:25}],
+    icon: ICONS.cushion,
+    description: [
+      ["Cloudknit — tekstura, która dodaje przytulności","Gruby, widoczny splot Cloudknit wprowadza fakturę do minimalistycznych wnętrz — świetnie łączy się z gładką tapicerką sof z rodziny Loomhome."],
+      ["Wypełnienie, które nie traci kształtu","Wypełnienie z włókna silikonowego wraca do formy po każdym ugnieceniu."]
+    ],
+    specs: [["Materiał pokrycia","Akryl, splot warkoczowy"],["Wypełnienie","Włókno silikonowe"],["Rozmiary","45×45 cm / 50×50 cm"],["Zamek","Skryty, z tyłu"]],
+    reviews: [
+      {author:"Ewelina K.", stars:5, date:"2026-05-27", text:"Faktura robi różnicę na jednokolorowej sofie, wygląda bardzo dobrze na zdjęciach i na żywo."},
+      {author:"Bartłomiej S.", stars:4, date:"2026-04-02", text:"Solidne wypełnienie, po tygodniu ugniatania wraca do kształtu."}
+    ]
+  },
+  {
+    id: "solstice-mirror", cat: "decor", catLabel: "Zwierciadło Dekoracyjne", sku: "LMH-DEC-SLST",
+    name: "Loomhome Solstice", badge: "Nowość",
+    teaser: "Okrągłe zwierciadło w metalowej ramie, Ø 50 / 70 cm.",
+    basePrice: 380, compareAtPrice: 450, shipping: "standardowa", rating: 4.7, reviewCount: 46,
+    colors: [{name:"Czarny Mat", hex:"#232323"},{name:"Mosiądz Szczotkowany", hex:"#a67c3d"}],
+    capacities: [{label:"Ø 50 cm", delta:0},{label:"Ø 70 cm", delta:280}],
+    icon: ICONS.mirror,
+    description: [
+      ["Solstice — okrągła forma, która optycznie powiększa wnętrze","Zwierciadło Solstice w cienkiej metalowej ramie odbija światło i dodaje głębi nawet niewielkim przedpokojom czy sypialniom."],
+      ["Bezpieczny montaż","Zestaw montażowy z regulacją poziomu w zestawie — zawieszenie zajmuje kilka minut."]
+    ],
+    specs: [["Rama","Metal malowany proszkowo"],["Średnica","50 cm / 70 cm"],["Montaż","Zestaw w komplecie, regulacja poziomu"],["Waga","3,2 kg / 5,8 kg"]],
+    reviews: [
+      {author:"Wiktoria C.", stars:5, date:"2026-05-21", text:"Wersja Ø 70 cm w przedpokoju robi ogromną różnicę — optycznie znacznie więcej światła."},
+      {author:"Dominik A.", stars:4, date:"2026-04-05", text:"Ładne wykończenie ramy, montaż prosty z załączonym zestawem."}
+    ]
+  },
+  {
+    id: "birch-armchair", cat: "seating", catLabel: "Fotel Skandynawski", sku: "LMH-SEA-BIRC",
+    name: "Loomhome Birch", badge: "Nowość",
+    teaser: "Fotel skandynawski na drewnianych nogach, tapicerka welurowa.",
+    basePrice: 1890, shipping: "paletowa", rating: 4.7, reviewCount: 52,
+    colors: [{name:"Zieleń Szałwiowa", hex:"#5b6b52"},{name:"Rdzawy Terakota", hex:"#a0563a"},{name:"Kremowy Boucle", hex:"#e8ddc9"}],
+    capacities: [{label:"Bez podnóżka", delta:0},{label:"Z pufą podnóżkiem", delta:320}],
+    icon: ICONS.sofa,
+    description: [
+      ["Birch — minimalizm, który się wygodnie czuje","Fotel Birch łączy lekką, skandynawską formę z głębokim, wygodnym siedziskiem. Nogi z litego drewna bukowego i welurowa tapicerka tworzą punkt, który przyciąga wzrok w każdym wnętrzu."],
+      ["Dopasowana puf podnóżek","Opcjonalna puf w tej samej tapicerce zamienia fotel w miejsce do czytania z podniesionymi nogami."]
+    ],
+    specs: [["Tapicerka","Welur, 100% poliester"],["Nogi","Drewno bukowe, olejowane"],["Szerokość","78 cm"],["Głębokość siedziska","54 cm"],["Waga","14,5 kg"]],
+    reviews: [
+      {author:"Kinga R.", stars:5, date:"2026-05-30", text:"Kolor Zieleń Szałwiowa wygląda jeszcze lepiej na żywo niż na zdjęciach."},
+      {author:"Adam P.", stars:4, date:"2026-04-18", text:"Wygodny, choć siedzisko trochę niżej niż się spodziewałem — dla wysokich osób może być nisko."}
+    ]
+  },
+  {
+    id: "ember-floor", cat: "lighting", catLabel: "Lampa Podłogowa", sku: "LMH-LIG-EMBR",
+    name: "Loomhome Ember", badge: "Bestseller",
+    teaser: "Lampa podłogowa z regulacją wysokości, klosz lniany.",
+    basePrice: 650, shipping: "standardowa", rating: 4.8, reviewCount: 97,
+    colors: [{name:"Czarny Mat", hex:"#232323"},{name:"Biały Kremowy", hex:"#efe9dd"}],
+    capacities: [{label:"Wysokość 150 cm", delta:0},{label:"Wysokość 170 cm", delta:120}],
+    bundles: [{label:"Lampa sama", delta:0},{label:"+ żarówka LED Filament 2700K", delta:35}],
+    icon: ICONS.floorLamp,
+    description: [
+      ["Ember — ciepłe światło do kąta czytelniczego","Lampa podłogowa Ember z lnianym kloszem daje rozproszone, przyjemne dla oczu światło — stworzona z myślą o wieczornym czytaniu i długich rozmowach przy kawie."],
+      ["Stabilna podstawa, dyskretny przełącznik","Metalowa podstawa z gumowymi nóżkami zapobiega przewracaniu, a przełącznik nożny jest w zasięgu stopy bez schylania się."]
+    ],
+    specs: [["Klosz","Len naturalny na stelażu metalowym"],["Oprawka","E27, LED do 15 W"],["Wysokość","150 cm / 170 cm"],["Podstawa","Metal malowany proszkowo, Ø 32 cm"]],
+    reviews: [
+      {author:"Renata J.", stars:5, date:"2026-05-19", text:"Stabilna, nie przewraca się nawet gdy kot się o nią oprze. Światło bardzo przyjemne wieczorem."},
+      {author:"Mateusz O.", stars:5, date:"2026-04-09", text:"Przełącznik nożny to drobny, ale bardzo wygodny detal."}
+    ]
+  },
+  {
+    id: "linen-throw", cat: "textile", catLabel: "Koc Bawełniany", sku: "LMH-TEX-LNTH",
+    name: "Loomhome Linen Haze", badge: null,
+    teaser: "Koc z czesankowej bawełny, 130×170 / 150×200 cm.",
+    basePrice: 220, shipping: "standardowa", rating: 4.6, reviewCount: 53,
+    colors: [{name:"Zieleń Szałwiowa", hex:"#5b6b52"},{name:"Rdzawy Terakota", hex:"#a0563a"},{name:"Kremowy Boucle", hex:"#e8ddc9"}],
+    capacities: [{label:"130×170 cm", delta:0},{label:"150×200 cm", delta:60}],
+    icon: ICONS.blanket,
+    description: [
+      ["Linen Haze — lekki koc na chłodniejsze wieczory","Wykonany z czesankowej bawełny koc Linen Haze jest przyjemnie chropowaty w dotyku i dobrze się drapuje na sofie czy oparciu fotela."],
+      ["Łatwy w pielęgnacji","Można prać w pralce w 30°C — nie mechaci się i nie traci koloru po wielu praniach."]
+    ],
+    specs: [["Materiał","100% bawełna czesankowa"],["Rozmiary","130×170 cm / 150×200 cm"],["Pranie","30°C, pranie maszynowe"],["Waga","0,9 kg"]],
+    reviews: [
+      {author:"Justyna W.", stars:5, date:"2026-05-11", text:"Kolor Terakota pięknie ożywia szary narożnik. Po trzech praniach wygląda jak nowy."},
+      {author:"Grzegorz L.", stars:4, date:"2026-03-27", text:"Przyjemna tkanina, trochę cięższy niż się spodziewałem, ale to plus na chłodne wieczory."}
+    ]
+  },
+  {
+    id: "terra-vase", cat: "decor", catLabel: "Wazon Ceramiczny", sku: "LMH-DEC-TERR",
+    name: "Loomhome Terra", badge: null,
+    teaser: "Wazon ceramiczny ręcznie formowany, wys. 24 / 34 cm.",
+    basePrice: 220, shipping: "standardowa", rating: 4.6, reviewCount: 37,
+    colors: [{name:"Terakota", hex:"#b06a45"},{name:"Kremowy", hex:"#e8ddc9"},{name:"Grafitowy", hex:"#3a3936"}],
+    capacities: [{label:"Wysokość 24 cm", delta:0},{label:"Wysokość 34 cm", delta:70}],
+    icon: ICONS.vase,
+    description: [
+      ["Terra — organiczna forma na suche i żywe kwiaty","Wazon Terra jest ręcznie formowany z gliny, więc każdy egzemplarz ma nieco inną, organiczną linię — żaden nie jest identyczny."],
+      ["Stabilna podstawa","Szeroka podstawa i matowa glazura sprawiają, że wazon dobrze wygląda samodzielnie, bez kwiatów, jako obiekt dekoracyjny."]
+    ],
+    specs: [["Materiał","Ceramika, glazura matowa"],["Wysokość","24 cm / 34 cm"],["Zastosowanie","Kwiaty żywe i suszone, dekoracja"]],
+    reviews: [
+      {author:"Natalia B.", stars:5, date:"2026-05-16", text:"Kolor Terakota idealnie wpisał się w jesienną aranżację salonu."},
+      {author:"Krzysztof M.", stars:4, date:"2026-03-19", text:"Ładna forma, glazura odporna na zarysowania, polecam."}
+    ]
+  },
+  {
+    id: "glow-table", cat: "lighting", catLabel: "Lampa Stołowa", sku: "LMH-LIG-GLOW",
+    name: "Loomhome Glow", badge: null,
+    teaser: "Lampa stołowa z ceramiczną podstawą i lnianym kloszem.",
+    basePrice: 320, shipping: "standardowa", rating: 4.5, reviewCount: 44,
+    colors: [{name:"Kremowy", hex:"#e8ddc9"},{name:"Terakota", hex:"#b06a45"}],
+    icon: ICONS.pendantLamp,
+    description: [
+      ["Glow — ciepły akcent na komodę lub nocny stolik","Ceramiczna podstawa Glow w matowym wykończeniu i lniany klosz tworzą delikatne, rozproszone światło idealne do sypialni lub czytelni."],
+      ["Kompaktowe wymiary","Niewielka podstawa (Ø 18 cm) sprawia, że Glow zmieści się nawet na wąskim nocnym stoliku."]
+    ],
+    specs: [["Podstawa","Ceramika, wykończenie matowe"],["Klosz","Len naturalny"],["Oprawka","E14, LED do 8 W"],["Wysokość","38 cm"]],
+    reviews: [
+      {author:"Agata L.", stars:5, date:"2026-05-02", text:"Idealny rozmiar na nocny stolik, światło nie razi wieczorem."},
+      {author:"Karol B.", stars:4, date:"2026-03-15", text:"Podstawa solidna, ceramika przyjemna w dotyku."}
+    ]
+  },
+  {
+    id: "amber-candle", cat: "decor", catLabel: "Świecznik Ceramiczny", sku: "LMH-DEC-AMBR",
+    name: "Loomhome Amber", badge: null,
+    teaser: "Świecznik ceramiczny na świece sznurowe, zestaw 3 szt.",
+    basePrice: 140, shipping: "standardowa", rating: 4.4, reviewCount: 21,
+    colors: [{name:"Kremowy", hex:"#e8ddc9"},{name:"Terakota", hex:"#b06a45"}],
+    icon: ICONS.candleholder,
+    description: [
+      ["Amber — ciepłe światło świec na stole i komodzie","Zestaw trzech świeczników w różnych wysokościach tworzy elegancką kompozycję na stole jadalnym lub kominku."],
+      ["Stabilne i bezpieczne","Szeroka podstawa i wgłębienie na kapinos zapobiegają zabrudzeniu blatu stopionym woskiem."]
+    ],
+    specs: [["Materiał","Ceramika, glazura matowa"],["Zestaw","3 świeczniki, różne wysokości"],["Świece","Sznurowe Ø 2,2 cm (nie w zestawie)"]],
+    reviews: [
+      {author:"Aleksandra P.", stars:5, date:"2026-05-04", text:"Świetnie wyglądają na stole podczas kolacji, różne wysokości robią efekt."},
+      {author:"Marcin Ż.", stars:4, date:"2026-03-24", text:"Solidna ceramika, wgłębienie na wosk faktycznie chroni blat."}
+    ]
+  },
+  {
+    id: "arcline-wall", cat: "lighting", catLabel: "Kinkiet Ścienny", sku: "LMH-LIG-ARCL",
+    name: "Loomhome Arcline", badge: null,
+    teaser: "Kinkiet ścienny z ruchomym ramieniem, metal malowany.",
+    basePrice: 280, shipping: "standardowa", rating: 4.4, reviewCount: 29,
+    colors: [{name:"Czarny Mat", hex:"#232323"},{name:"Mosiądz Szczotkowany", hex:"#a67c3d"}],
+    icon: ICONS.pendantLamp,
+    description: [
+      ["Arcline — punktowe światło dokładnie tam, gdzie potrzebujesz","Ruchome ramię Arcline pozwala skierować światło na książkę, obraz lub blat kuchenny, bez konieczności przewiercania kolejnych otworów."],
+      ["Montaż na jednym punkcie","Wystarczy jeden punkt montażowy — ramię obraca się w promieniu 180°."]
+    ],
+    specs: [["Materiał","Metal malowany proszkowo"],["Oprawka","E14, LED do 8 W"],["Zasięg ramienia","40 cm"],["Montaż","Naścienny, 1 punkt"]],
+    reviews: [
+      {author:"Iwona F.", stars:4, date:"2026-04-21", text:"Świetne do czytania w łóżku, ramię trzyma pozycję bez zsuwania się."},
+      {author:"Przemysław N.", stars:5, date:"2026-03-08", text:"Montaż zajął 10 minut, wygląda elegancko nad biurkiem."}
+    ]
+  }
+];
+
+/* ============== CATALOG EXPANSION (generated variants) ============== */
+function slugify(s){
+  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+}
+function rnd(min,max){ return Math.floor(min + Math.random()*(max-min+1)); }
+function pick(arr){ return arr[rnd(0, arr.length-1)]; }
+
+const FIRST_NAMES = ["Marek","Ola","Tomek","Kasia","Piotr","Nina","Bartek","Ada","Michał","Zofia","Robert","Ewa","Julia","Kamil","Damian","Sylwia","Filip","Marta","Rafał","Ania","Wojtek","Hania","Igor","Weronika","Dawid","Klaudia","Łukasz","Natalia","Grzegorz","Magda"];
+
+const CAT_TEMPLATES = {
+  seating: {
+    catLabel: "Fotele & Sofy",
+    materials: ["Boucle, drewno bukowe","Welur, stal czarna","Len, drewno dębowe","Rattan naturalny, poduchy bawełniane"],
+    prefixes: ["Nordly","Loom","Haven","Wren","Birch","Linden","Maren","Kobo","Fjord","Amaro","Alcove","Meridian","Solace","Novak","Aster","Cove","Willow","Hearth"],
+    suffixes: ["S1","S2","GT","SE","Lounge","Comfort","Duo","Wide","Mini","Classic"],
+    colors: [["Piaskowy Len","#c9b89a"],["Grafitowy Boucle","#4a4844"],["Zieleń Szałwiowa","#5b6b52"],["Rdzawy Terakota","#a0563a"],["Kremowy Boucle","#e8ddc9"]],
+    icon: () => ICONS.sofa,
+    reviewBank: ["Bardzo wygodna, materiał przyjemny w dotyku.","Solidny stelaż, po kilku miesiącach żadnych odkształceń.","Kolor dokładnie taki jak na zdjęciach.","Montaż prosty, instrukcja czytelna.","Świetnie wygląda w salonie, częste komplementy od gości.","Tapicerka łatwa do czyszczenia, polecam."]
+  },
+  lighting: {
+    catLabel: "Oświetlenie",
+    prefixes: ["Glow","Halo","Lumen","Arcline","Ember","Nordlys","Moonlit","Beacon","Driftlight","Hearthglow","Solace","Amber"],
+    suffixes: ["I","II","Mini","Duo","XL","Pro","Soft","Ambient"],
+    colors: [["Mosiądz Szczotkowany","#a67c3d"],["Czarny Mat","#232323"],["Biały Kremowy","#efe9dd"],["Miedziany","#a2522f"]],
+    icon: (i) => i%2===0 ? ICONS.pendantLamp : ICONS.floorLamp,
+    reviewBank: ["Ciepłe światło, dokładnie takie jak chciałam.","Montaż zajął kilka minut, wygląda elegancko.","Jakość wykonania bardzo dobra jak na tę cenę.","Świetnie komponuje się z resztą wnętrza.","Rozprasza światło równomiernie, bez ostrych cieni."]
+  },
+  textile: {
+    catLabel: "Tekstylia",
+    prefixes: ["Wooldrift","Linum","Cotone","Merino","Kilim","Dune","Heather","Loomweave"],
+    suffixes: ["160","200","240","Mini","Maxi","Duo"],
+    colors: null,
+    icon: (i) => [ICONS.rug, ICONS.cushion, ICONS.blanket][i%3],
+    reviewBank: ["Bardzo przyjemna faktura, nie gubi włókien.","Kolor zgodny z opisem, nie blaknie po praniu.","Świetnie ociepla wnętrze, wysoka jakość materiału.","Nie elektryzuje się, miła w dotyku.","Solidne wykonanie, warte swojej ceny."]
+  },
+  decor: {
+    catLabel: "Dekoracje",
+    prefixes: ["Terra","Kobo","Amara","Alba","Nordvik","Loomform","Argill","Solvei"],
+    suffixes: ["Mini","Duo","XL","Set","Pro","Line"],
+    colors: [["Terakota","#b06a45"],["Kremowy","#e8ddc9"],["Grafitowy","#3a3936"]],
+    icon: (i) => [ICONS.vase, ICONS.candleholder, ICONS.mirror][i%3],
+    reviewBank: ["Piękny detal, robi różnicę w aranżacji.","Wykonanie solidne, ceramika bez skaz.","Dokładnie taki kolor jak na zdjęciu.","Świetny prezent, bardzo eleganckie wykończenie.","Dobrze zapakowane, dotarło bez uszkodzeń."]
+  }
+};
+
+const RESERVED_NAMES = new Set(PRODUCTS.map(p => p.name));
+
+function generateCatalog(perCategory){
+  const out = [];
+  const usedNames = new Set(RESERVED_NAMES);
+  Object.keys(CAT_TEMPLATES).forEach(cat=>{
+    const t = CAT_TEMPLATES[cat];
+    for (let i=0;i<perCategory;i++){
+      // mixed-radix indexing (not a shared modulus) so prefix/suffix pairs stay unique across the run;
+      // retry with the next index if a combo happens to match a hand-written hero product name
+      let ni = i + 5, prefix, suffix, name;
+      for (let tries=0; tries<40; tries++){
+        suffix = t.suffixes[ni % t.suffixes.length];
+        prefix = t.prefixes[Math.floor(ni / t.suffixes.length) % t.prefixes.length];
+        name = `Loomhome ${prefix} ${suffix}`;
+        if (!usedNames.has(name)) break;
+        ni++;
+      }
+      usedNames.add(name);
+      const id = slugify(`${prefix}-${suffix}-${cat}-${i}`);
+      const icon = typeof t.icon === "function" ? t.icon(i) : t.icon;
+      const color = t.colors ? t.colors[i % t.colors.length] : null;
+      const color2 = t.colors ? t.colors[(i+2) % t.colors.length] : null;
+      let basePrice, specs, teaser;
+      if (cat === "seating"){
+        const material = t.materials[i % t.materials.length];
+        const width = rnd(160,300);
+        const weight = (rnd(280,450)/10).toFixed(1);
+        basePrice = rnd(28,72)*100;
+        teaser = `Sofa/fotel tapicerowany (${material.split(",")[0]}), szerokość ${width} cm.`;
+        specs = [["Materiał", material],["Szerokość", `${width} cm`],["Wysokość", `${rnd(70,95)} cm`],["Nogi","Drewno bukowe, lakierowane"]];
+      } else if (cat === "lighting"){
+        const socket = pick(["E27","E14","LED wbudowane, nie do wymiany"]);
+        const height = rnd(28,180);
+        const weight = (rnd(8,35)/10).toFixed(1);
+        basePrice = rnd(9,42)*100;
+        teaser = `Lampa, wysokość ${height} cm, oprawka ${socket}.`;
+        specs = [["Wysokość", `${height} cm`],["Oprawka", socket],["Materiał","Metal malowany proszkowo"],["Waga", `${weight} kg`]];
+      } else if (cat === "textile"){
+        const dims = pick(["160×230 cm","200×300 cm","140×200 cm","170×240 cm","70×140 cm","45×45 cm"]);
+        const material = pick(["100% wełna","Bawełna czesankowa","Wełna + poliester recykl.","Len"]);
+        basePrice = rnd(6,38)*100;
+        teaser = `${dims}, ${material}.`;
+        specs = [["Wymiary", dims],["Materiał", material],["Pranie","Pranie w 30°C / czyszczenie profesjonalne"]];
+      } else {
+        basePrice = rnd(5,22)*100;
+        teaser = `Dekoracja wnętrzarska z serii ${suffix} do salonu i sypialni.`;
+        specs = [["Materiał","Ceramika / szkło (zależnie od modelu)"],["Waga", `${(rnd(3,18)/10).toFixed(1)} kg`]];
+      }
+      const description = [[`${prefix} ${suffix} — sprawdzony wybór do wnętrza`, `${teaser} Zaprojektowany z materiałów wybranych pod kątem trwałości i estetyki, gotowy na codzienne użytkowanie.`]];
+      const reviews = [
+        {author: pick(FIRST_NAMES)+" "+String.fromCharCode(65+rnd(0,25))+".", stars: rnd(4,5), date: `2026-0${rnd(1,6)}-${String(rnd(1,28)).padStart(2,"0")}`, text: pick(t.reviewBank)},
+        {author: pick(FIRST_NAMES)+" "+String.fromCharCode(65+rnd(0,25))+".", stars: rnd(4,5), date: `2026-0${rnd(1,6)}-${String(rnd(1,28)).padStart(2,"0")}`, text: pick(t.reviewBank)}
+      ];
+      out.push({
+        id, cat, catLabel: t.catLabel, sku: `LMH-${cat.slice(0,3).toUpperCase()}-${1000+i}`,
+        name, badge: i % 6 === 0 ? "Nowość" : null,
+        teaser, basePrice, shipping: cat === "seating" ? "paletowa" : "standardowa",
+        rating: rnd(40,49)/10, reviewCount: rnd(5,180),
+        colors: color ? [{name:color[0], hex:color[1]}, ...(color2 && color2[0]!==color[0] ? [{name:color2[0], hex:color2[1]}] : [])] : undefined,
+        icon, description, specs, reviews
+      });
+    }
+  });
+  return out;
+}
+
+PRODUCTS.push(...generateCatalog(15));
+
+const byId = (id) => PRODUCTS.find(p => p.id === id);
+const money = (n) => n.toLocaleString("pl-PL", {minimumFractionDigits:0}) + " zł";
+const catNames = {seating:"Fotele & Sofy", lighting:"Oświetlenie", textile:"Tekstylia", decor:"Dekoracje"};
+const FEATURED_IDS = ["wave-lounge","halo-pendant","wool-drift-rug","hearth-recliner","cloudknit-cushion","solstice-mirror"];
+const PROMOS = { "DOM10": 0.10, "WITAMY5": 0.05 };
+
+function starsHTML(rating, count){
+  const full = Math.round(rating);
+  const stars = Array.from({length:5}, (_,i)=> `<span class="${i<full?"star-on":"star-off"}">★</span>`).join("");
+  return `<span class="rating-row"><span class="stars">${stars}</span><span class="rating-num">${rating.toFixed(1)}</span>${count!=null?`<span class="rating-count">(${count})</span>`:""}</span>`;
+}
+function matchesQuery(p, q){
+  const t = (p.name + " " + p.catLabel + " " + p.teaser).toLowerCase();
+  return t.includes(q.toLowerCase());
+}
+function sortItems(items, sort){
+  const arr = items.slice();
+  if (sort === "cena-asc") arr.sort((a,b)=>a.basePrice-b.basePrice);
+  else if (sort === "cena-desc") arr.sort((a,b)=>b.basePrice-a.basePrice);
+  else if (sort === "ocena") arr.sort((a,b)=>b.rating-a.rating);
+  else arr.sort((a,b)=>(b.reviewCount||0)-(a.reviewCount||0));
+  return arr;
+}
+
+/* ============== ACCOUNT / MEMBERSHIP STATE ==============
+   Two modes, same UI code above: with a live backend (apiAvailable), the account is
+   the server's session user (apiUser). Without one, everything falls back to a
+   localStorage-only "offline demo" account store — see server/README.md to go live. */
+let users = {};
+try { users = JSON.parse(localStorage.getItem("stt_users") || "{}"); } catch(e){ users = {}; }
+let sessionEmail = localStorage.getItem("stt_session") || null;
+let apiUser = null;
+let apiOrders = [];
+
+function currentUser(){ return apiAvailable ? apiUser : (sessionEmail ? users[sessionEmail] : null); }
+function saveUsers(){ localStorage.setItem("stt_users", JSON.stringify(users)); }
+function accountMode(){ return apiAvailable ? "api" : "local"; }
+
+const TIERS = [
+  { name: "Nest", threshold: 0, perk: "1 pkt za każde 10 zł, urodzinowy kupon" },
+  { name: "Haven", threshold: 3000, perk: "Darmowa dostawa standardowa, wcześniejszy dostęp do nowości" },
+  { name: "Atelier", threshold: 10000, perk: "Dedykowany doradca wnętrz, darmowy pomiar i wycena aranżacji" }
+];
+function tierFor(spent){
+  let current = TIERS[0], next = TIERS[1];
+  for (let i=0;i<TIERS.length;i++){
+    if (spent >= TIERS[i].threshold){ current = TIERS[i]; next = TIERS[i+1] || null; }
+  }
+  return { current, next };
+}
+
+async function syncGuestDataToAccount(){
+  if (!apiAvailable) return;
+  const guestCart = cart.slice();
+  const guestWish = wishlist.slice();
+  for (const line of guestCart){
+    try { await apiFetch("/api/cart", { method:"POST", body:{ productId:line.productId, name:line.name, variantLabel:line.variantLabel, unitPrice:line.unitPrice, qty:line.qty } }); } catch(e){}
+  }
+  for (const pid of guestWish){
+    try { await apiFetch("/api/wishlist/" + encodeURIComponent(pid), { method:"POST" }); } catch(e){}
+  }
+  localStorage.removeItem("stt_cart");
+  localStorage.removeItem("stt_wishlist");
+  await loadCartFromApi();
+  await loadWishlistFromApi();
+}
+
+async function registerUser(name, email, password){
+  if (apiAvailable){
+    try {
+      const data = await apiFetch("/api/auth/register", { method:"POST", body:{ name, email, password } });
+      apiUser = data.user;
+      await syncGuestDataToAccount();
+      return { ok: true };
+    } catch(e){ return { error: e.message }; }
+  }
+  email = email.trim().toLowerCase();
+  if (!name.trim() || !email || !password) return { error: "Wypełnij wszystkie pola." };
+  if (users[email]) return { error: "Konto z tym adresem e-mail już istnieje." };
+  users[email] = { name: name.trim(), email, password, points: 0, totalSpent: 0, joinedAt: new Date().toISOString().slice(0,10), orders: [] };
+  saveUsers();
+  sessionEmail = email; localStorage.setItem("stt_session", email);
+  return { ok: true };
+}
+async function loginUser(email, password){
+  if (apiAvailable){
+    try {
+      const data = await apiFetch("/api/auth/login", { method:"POST", body:{ email, password } });
+      apiUser = data.user;
+      await syncGuestDataToAccount();
+      return { ok: true };
+    } catch(e){ return { error: e.message }; }
+  }
+  email = email.trim().toLowerCase();
+  const u = users[email];
+  if (!u || u.password !== password) return { error: "Nieprawidłowy e-mail lub hasło." };
+  sessionEmail = email; localStorage.setItem("stt_session", email);
+  return { ok: true };
+}
+async function logoutUser(){
+  if (apiAvailable){
+    try { await apiFetch("/api/auth/logout", { method:"POST" }); } catch(e){}
+    apiUser = null; cart = []; wishlist = []; apiOrders = [];
+  } else {
+    sessionEmail = null; localStorage.removeItem("stt_session");
+  }
+  showToast("Wylogowano");
+  location.hash = "/";
+}
+function updateAccountUI(){
+  const btn = document.getElementById("accountBtn");
+  const u = currentUser();
+  if (u){
+    btn.dataset.href = "#/konto";
+    btn.setAttribute("aria-label", "Moje konto — " + u.name);
+    btn.innerHTML = `<span class="avatar-badge">${u.name.trim()[0].toUpperCase()}</span>`;
+  } else {
+    btn.dataset.href = "#/logowanie";
+    btn.setAttribute("aria-label", "Zaloguj się");
+    btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/></svg>`;
+  }
+}
+
+/* ============== WISHLIST STATE ============== */
+let wishlist = [];
+try { wishlist = JSON.parse(localStorage.getItem("stt_wishlist") || "[]"); } catch(e){ wishlist = []; }
+function saveWishlist(){ localStorage.setItem("stt_wishlist", JSON.stringify(wishlist)); updateWishCount(); }
+function updateWishCount(){
+  const el = document.getElementById("wishCount");
+  el.textContent = wishlist.length; el.hidden = wishlist.length === 0;
+}
+async function loadWishlistFromApi(){
+  try { const data = await apiFetch("/api/wishlist"); wishlist = data.productIds; updateWishCount(); }
+  catch(e){ /* keep previous state */ }
+}
+async function toggleWishlist(id){
+  if (apiAvailable && currentUser()){
+    const isIn = wishlist.includes(id);
+    try {
+      const data = isIn
+        ? await apiFetch("/api/wishlist/" + encodeURIComponent(id), { method:"DELETE" })
+        : await apiFetch("/api/wishlist/" + encodeURIComponent(id), { method:"POST" });
+      wishlist = data.productIds;
+      showToast(isIn ? "Usunięto z listy życzeń" : "Dodano do listy życzeń");
+    } catch(e){ showToast("Błąd: " + e.message); }
+    updateWishCount();
+    return;
+  }
+  const i = wishlist.indexOf(id);
+  if (i > -1){ wishlist.splice(i,1); showToast("Usunięto z listy życzeń"); }
+  else { wishlist.push(id); showToast("Dodano do listy życzeń"); }
+  saveWishlist();
+}
+async function handleWishClick(id){
+  await toggleWishlist(id);
+  const isIn = wishlist.includes(id);
+  document.querySelectorAll(`[data-wish="${id}"]`).forEach(btn=>{
+    btn.classList.toggle("active", isIn);
+    if (btn.classList.contains("wish-btn")) btn.textContent = isIn ? "♥" : "♡";
+    if (btn.classList.contains("wish-btn-pdp")) btn.innerHTML = isIn ? "♥ Na liście życzeń" : "♡ Dodaj do listy życzeń";
+  });
+  if (location.hash.replace("#","").split("?")[0] === "/lista-zyczen"){
+    document.getElementById("app").innerHTML = pageWishlist();
+  }
+}
+
+/* ============== PROMO STATE ============== */
+let promo = null;
+try { promo = JSON.parse(localStorage.getItem("stt_promo") || "null"); } catch(e){ promo = null; }
+function discountAmount(){ return promo ? Math.round(cartSubtotal() * PROMOS[promo]) : 0; }
+function applyPromo(code){
+  code = (code || "").trim().toUpperCase();
+  if (PROMOS[code]){
+    promo = code; localStorage.setItem("stt_promo", JSON.stringify(promo));
+    showToast("Kod zastosowany: -" + Math.round(PROMOS[code]*100) + "%");
+  } else {
+    showToast("Nieprawidłowy kod rabatowy");
+  }
+  render();
+}
+function removePromo(){ promo = null; localStorage.removeItem("stt_promo"); render(); }
+function loyaltyPoints(total){ return Math.floor(total/10); }
+
+/* ============== CART STATE ==============
+   cartMode() decides per-action whether a mutation goes to the API (logged-in user,
+   live backend) or stays in localStorage (guest, or no backend configured). Both
+   paths keep `cart` in the same shape so every render function above is unaware
+   of which mode is active. */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("stt_cart") || "[]"); } catch(e){ cart = []; }
+let lastOrder = null;
+try { lastOrder = JSON.parse(localStorage.getItem("stt_last_order") || "null"); } catch(e){}
+
+function cartMode(){ return apiAvailable && currentUser() ? "api" : "local"; }
+function apiLineToLocal(row){
+  return { key: String(row.id), productId: row.productId, name: row.name, variantLabel: row.variantLabel, unitPrice: row.unitPrice, qty: row.qty };
+}
+async function loadCartFromApi(){
+  try { const data = await apiFetch("/api/cart"); cart = data.items.map(apiLineToLocal); updateCartCount(); }
+  catch(e){ /* keep previous state */ }
+}
+
+function saveCart(){ localStorage.setItem("stt_cart", JSON.stringify(cart)); updateCartCount(); }
+let lastCartCount = cart.reduce((s,l)=>s+l.qty,0);
+function updateCartCount(){
+  const n = cart.reduce((s,l)=>s+l.qty,0);
+  const el = document.getElementById("cartCount");
+  el.textContent = n; el.hidden = n === 0;
+  if (n > lastCartCount){ el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); }
+  lastCartCount = n;
+}
+function cartSubtotal(){ return cart.reduce((s,l)=>s + l.unitPrice*l.qty, 0); }
+function cartHasPaletowa(){ return cart.some(l => byId(l.productId).shipping === "paletowa"); }
+
+async function addToCart(product, variantLabel, unitPrice, qty){
+  if (cartMode() === "api"){
+    try {
+      const data = await apiFetch("/api/cart", { method:"POST", body:{ productId:product.id, name:product.name, variantLabel, unitPrice, qty } });
+      cart = data.items.map(apiLineToLocal);
+      updateCartCount();
+      showToast("Dodano do koszyka: " + product.name);
+    } catch(e){ showToast("Błąd: " + e.message); }
+    return;
+  }
+  const key = product.id + "::" + variantLabel;
+  const existing = cart.find(l => l.key === key);
+  if (existing) existing.qty += qty;
+  else cart.push({ key, productId: product.id, name: product.name, variantLabel, unitPrice, qty });
+  saveCart();
+  showToast("Dodano do koszyka: " + product.name);
+}
+async function removeLine(key){
+  if (cartMode() === "api"){
+    try { const data = await apiFetch("/api/cart/" + key, { method:"DELETE" }); cart = data.items.map(apiLineToLocal); }
+    catch(e){ showToast("Błąd: " + e.message); }
+  } else {
+    cart = cart.filter(l => l.key !== key); saveCart();
+  }
+  render();
+}
+async function changeLineQty(key, delta){
+  const l = cart.find(x => x.key === key); if(!l) return;
+  const newQty = Math.max(1, l.qty + delta);
+  if (cartMode() === "api"){
+    try { const data = await apiFetch("/api/cart/" + key, { method:"PATCH", body:{ qty:newQty } }); cart = data.items.map(apiLineToLocal); }
+    catch(e){ showToast("Błąd: " + e.message); }
+  } else {
+    l.qty = newQty; saveCart();
+  }
+  render();
+}
+
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* ============== ICONS (misc) ============== */
+const SVG_TRUCK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>`;
+const SVG_RETURN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>`;
+const SVG_CARD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>`;
+const SVG_SHIELD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6z"/></svg>`;
+const SVG_EMPTY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/><circle cx="9" cy="21" r="1.2"/><circle cx="18" cy="21" r="1.2"/></svg>`;
+const SVG_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l3 3 5-6"/></svg>`;
+
+/* ============== RENDER: shared bits ============== */
+function productCard(p, i){
+  const iconColor = p.colors ? p.colors[0].hex : "var(--forest)";
+  const inWish = wishlist.includes(p.id);
+  const pct = p.compareAtPrice ? Math.round((1 - p.basePrice/p.compareAtPrice)*100) : 0;
+  const badgeHtml = p.compareAtPrice ? `<span class="p-badge">-${pct}%</span>` : (p.badge ? `<span class="p-badge">${p.badge}</span>` : "");
+  const animate = i != null && i < 16;
+  const delay = animate ? i*35 : 0;
+  return `<a class="p-card${animate?" anim":""}" href="#/produkt/${p.id}" data-link${animate?` style="animation-delay:${delay}ms"`:""}>
+    <div class="thumb" style="--accent:${iconColor}">${badgeHtml}<button class="wish-btn ${inWish?"active":""}" data-wish="${p.id}" aria-label="Lista życzeń">${inWish?"♥":"♡"}</button>${p.icon(iconColor)}</div>
+    <div class="p-body">
+      <span class="p-cat">${p.catLabel}</span>
+      <span class="p-name">${p.name}</span>
+      ${starsHTML(p.rating, p.reviewCount)}
+      ${p.colors && p.colors.length > 1 ? `<div class="mini-swatches">${p.colors.map(c=>`<span class="mini-swatch" style="background:${c.hex}" title="${c.name}"></span>`).join("")}</div>` : ""}
+      <span class="p-teaser">${p.teaser}</span>
+      <div class="p-foot"><span class="p-price">${p.compareAtPrice?`<span class="p-was price">${money(p.compareAtPrice)}</span>`:""}<span class="price">${money(p.basePrice)}</span></span><span class="p-go">Zobacz →</span></div>
+    </div>
+  </a>`;
+}
+
+/* ============== PAGES ============== */
+function pageHome(){
+  return `
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Meble · Oświetlenie · Tekstylia · Dekoracje</div>
+      <h1>Wnętrze, które wytrzyma <span class="hl">więcej niż sezon.</span></h1>
+      <p>Loomhome — sofy, oświetlenie i tekstylia skandynawskie zaprojektowane, by dobrze się starzały razem z Twoim domem.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-rust" href="#/sklep" data-link>Zobacz sklep</a>
+        <a class="btn btn-outline" href="#/produkt/wave-lounge" data-link>Wave Lounge →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section">
+      <div class="section-head"><h2 class="h-title" style="font-size:1.4rem;margin:0;">Kategorie</h2></div>
+      <div class="cat-grid">
+        <a class="cat-tile" href="#/sklep?cat=seating" data-link>${ICONS.sofa("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Fotele &amp; Sofy</b><span class="count">${PRODUCTS.filter(p=>p.cat==="seating").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=lighting" data-link>${ICONS.pendantLamp("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Oświetlenie</b><span class="count">${PRODUCTS.filter(p=>p.cat==="lighting").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=textile" data-link>${ICONS.rug("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Tekstylia</b><span class="count">${PRODUCTS.filter(p=>p.cat==="textile").length} oferty</span></a>
+        <a class="cat-tile" href="#/sklep?cat=decor" data-link>${ICONS.vase("var(--forest)").replace('viewBox="0 0 200 120"','viewBox="0 0 200 120" class="cat-icon"')}<b>Dekoracje</b><span class="count">${PRODUCTS.filter(p=>p.cat==="decor").length} oferty</span></a>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="section-head"><h2 class="h-title" style="font-size:1.4rem;margin:0;">Polecane produkty</h2><a href="#/sklep" data-link style="font-weight:700;font-size:.88rem;">Zobacz wszystkie ${PRODUCTS.length} ofert →</a></div>
+      <div class="product-grid">${FEATURED_IDS.map(byId).map((p,i)=>productCard(p,i)).join("")}</div>
+    </section>
+
+    <section class="trust-bar">
+      <div class="trust-item">${SVG_TRUCK}<div><b>Darmowa dostawa od 300 zł</b><span>Paczkomat, kurier DPD</span></div></div>
+      <div class="trust-item">${SVG_RETURN}<div><b>14 dni na zwrot</b><span>Bez podania przyczyny</span></div></div>
+      <div class="trust-item">${SVG_CARD}<div><b>BLIK, karta, raty 0%</b><span>PayU / Przelewy24</span></div></div>
+      <div class="trust-item">${SVG_SHIELD}<div><b>Serwis stacjonarny</b><span>Salony w całej Polsce</span></div></div>
+    </section>
+
+    <section class="section">
+      <div class="newsletter">
+        <div><h3>Bądź pierwszy przy nowościach</h3><p>Inspiracje wnętrzarskie, premiery i kody rabatowe raz w tygodniu.</p></div>
+        <form id="newsForm"><input type="email" required placeholder="twoj@email.pl"><button class="btn btn-primary" type="submit">Zapisz się</button></form>
+      </div>
+    </section>
+  </div>`;
+}
+
+let shopFilter = "all";
+let shopSearch = "";
+let shopSort = "popularnosc";
+function shopItems(){
+  let items = PRODUCTS.filter(p => shopFilter === "all" || p.cat === shopFilter);
+  if (shopSearch) items = items.filter(p => matchesQuery(p, shopSearch));
+  return sortItems(items, shopSort);
+}
+function renderShopGrid(){
+  const items = shopItems();
+  document.getElementById("shopGrid").innerHTML = items.map((p,i)=>productCard(p,i)).join("") || "<p>Brak produktów spełniających kryteria.</p>";
+  const countEl = document.getElementById("shopCount");
+  if (countEl) countEl.textContent = items.length + (items.length===1?" oferta":" ofert");
+}
+function pageShop(query){
+  const initialCat = (query.get("cat")) || "all";
+  shopFilter = ["seating","lighting","textile","decor"].includes(initialCat) ? initialCat : "all";
+  shopSearch = query.get("q") || "";
+  shopSort = "popularnosc";
+  const items = shopItems();
+  return `
+  <div class="wrap">
+    <div class="page-head"><div class="eyebrow">Sklep</div><h1>Cały katalog · ${PRODUCTS.length} ofert</h1></div>
+    <section class="section" style="padding-top:20px;">
+      <div class="filter-row">
+        ${["all","seating","lighting","textile","decor"].map(c => `<button class="filter-chip ${c===shopFilter?"active":""}" data-cat="${c}">${c==="all"?"Wszystkie":catNames[c]}</button>`).join("")}
+      </div>
+      <div class="shop-toolbar">
+        <span class="result-count" id="shopCount">${items.length}${items.length===1?" oferta":" ofert"}</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="popularnosc" ${shopSort==="popularnosc"?"selected":""}>Sortuj: Popularność</option>
+          <option value="cena-asc" ${shopSort==="cena-asc"?"selected":""}>Cena: od najniższej</option>
+          <option value="cena-desc" ${shopSort==="cena-desc"?"selected":""}>Cena: od najwyższej</option>
+          <option value="ocena" ${shopSort==="ocena"?"selected":""}>Ocena klientów</option>
+        </select>
+      </div>
+      <div class="product-grid" id="shopGrid">${items.map((p,i)=>productCard(p,i)).join("") || "<p>Brak produktów spełniających kryteria.</p>"}</div>
+    </section>
+  </div>`;
+}
+
+function pageWishlist(){
+  const items = wishlist.map(byId).filter(Boolean);
+  if (!items.length){
+    return `<div class="wrap"><div class="page-head"><h1>Lista życzeń</h1></div>
+      <div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:56px;height:56px;margin-bottom:16px;color:var(--ink-faint)"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.6C12 5.2 13.5 4 15.5 4c4 0 5.5 4 4 8-2.5 4.5-9.5 9-9.5 9z"/></svg><p>Twoja lista życzeń jest pusta.</p><a class="btn btn-primary" href="#/sklep" data-link>Przejdź do sklepu</a></div></div>`;
+  }
+  return `<div class="wrap">
+    <div class="page-head"><h1>Lista życzeń (${items.length})</h1></div>
+    <section class="section" style="padding-top:20px;"><div class="product-grid" id="wishGrid">${items.map((p,i)=>productCard(p,i)).join("")}</div></section>
+  </div>`;
+}
+
+function pageContact(){
+  return `<div class="wrap">
+    <div class="page-head"><div class="eyebrow">Kontakt</div><h1>Jesteśmy w zasięgu</h1></div>
+    <section class="section" style="padding-top:20px;">
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Dane kontaktowe</h3>
+      <div class="table-scroll">
+        <table class="info-table">
+          <thead><tr><th>Dział</th><th>Kontakt</th><th>Godziny</th></tr></thead>
+          <tbody>
+            <tr><td><b>Obsługa klienta</b></td><td>kontakt@loomhome.pl<br>+48 22 000 00 00</td><td>Pon–Pt 8:00–18:00</td></tr>
+            <tr><td><b>Serwis i reklamacje</b></td><td>serwis@loomhome.pl<br>+48 22 000 00 01</td><td>Pon–Pt 9:00–17:00</td></tr>
+            <tr><td><b>Sprzedaż B2B</b></td><td>b2b@loomhome.pl<br>+48 22 000 00 02</td><td>Pon–Pt 9:00–17:00</td></tr>
+            <tr><td><b>Prasa i media</b></td><td>prasa@loomhome.pl</td><td>Odpowiadamy w 48h</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Salony stacjonarne</h3>
+      <div class="table-scroll">
+        <table class="info-table">
+          <thead><tr><th>Miasto</th><th>Adres</th><th>Godziny</th></tr></thead>
+          <tbody>
+            <tr><td><b>Warszawa</b></td><td>ul. Górska 12</td><td>Pon–Sob 10:00–20:00</td></tr>
+            <tr><td><b>Kraków</b></td><td>ul. Rzemieślnicza 4</td><td>Pon–Sob 10:00–19:00</td></tr>
+            <tr><td><b>Wrocław</b></td><td>ul. Leśna 8</td><td>Pon–Sob 10:00–19:00</td></tr>
+            <tr><td><b>Gdańsk</b></td><td>ul. Nadmorska 21</td><td>Pon–Sob 10:00–19:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Napisz do nas</h3>
+      <form id="contactForm" class="contact-form form-grid" style="max-width:640px;">
+        <div><label class="field-label">Imię i nazwisko</label><input type="text" required placeholder="Jan Kowalski"></div>
+        <div><label class="field-label">E-mail</label><input type="email" required placeholder="jan@przyklad.pl"></div>
+        <div class="full"><label class="field-label">Temat</label>
+          <select>
+            <option>Zamówienie</option><option>Reklamacja / zwrot</option><option>Współpraca B2B</option><option>Inne</option>
+          </select>
+        </div>
+        <div class="full"><label class="field-label">Wiadomość</label><textarea required rows="4" placeholder="W czym możemy pomóc?"></textarea></div>
+        <div class="full"><button class="btn btn-rust" type="submit">Wyślij wiadomość</button></div>
+      </form>
+      <p class="demo-note">Formularz demonstracyjny — wiadomość nie jest faktycznie wysyłana.</p>
+    </section>
+  </div>`;
+}
+
+let authTab = "login";
+function pageLogin(){
+  if (currentUser()){ location.hash = "/konto"; return ""; }
+  return `<div class="wrap">
+    <div class="page-head"><div class="eyebrow">Konto</div><h1>Zaloguj się lub dołącz do Klubu Loomhome</h1></div>
+    <section class="section" style="padding-top:20px;max-width:420px;">
+      <div class="auth-tabs">
+        <button class="auth-tab ${authTab==="login"?"active":""}" data-authtab="login">Zaloguj się</button>
+        <button class="auth-tab ${authTab==="register"?"active":""}" data-authtab="register">Zarejestruj się</button>
+      </div>
+
+      <div class="auth-panel ${authTab==="login"?"active":""}" data-authpanel="login">
+        <form id="loginForm" class="auth-form">
+          <div><label class="field-label">E-mail</label><input type="email" id="loginEmail" required placeholder="jan@przyklad.pl"></div>
+          <div><label class="field-label">Hasło</label><input type="password" id="loginPassword" required placeholder="••••••••"></div>
+          <p class="auth-error" id="loginError" hidden></p>
+          <button class="btn btn-rust btn-block" type="submit">Zaloguj się</button>
+        </form>
+        <p class="demo-note">Konto demonstracyjne: zarejestruj się jednym kliknięciem w zakładce "Zarejestruj się" — dane trzymane są tylko lokalnie w Twojej przeglądarce.</p>
+      </div>
+
+      <div class="auth-panel ${authTab==="register"?"active":""}" data-authpanel="register">
+        <form id="registerForm" class="auth-form">
+          <div><label class="field-label">Imię i nazwisko</label><input type="text" id="regName" required placeholder="Jan Kowalski"></div>
+          <div><label class="field-label">E-mail</label><input type="email" id="regEmail" required placeholder="jan@przyklad.pl"></div>
+          <div><label class="field-label">Hasło</label><input type="password" id="regPassword" required placeholder="min. 4 znaki"></div>
+          <p class="auth-error" id="registerError" hidden></p>
+          <button class="btn btn-rust btn-block" type="submit">Utwórz konto</button>
+        </form>
+      </div>
+    </section>
+  </div>`;
+}
+
+function pageAccount(){
+  const u = currentUser();
+  if (!u){ location.hash = "/logowanie"; return ""; }
+  const orders = apiAvailable ? apiOrders : u.orders;
+  const { current, next } = tierFor(u.totalSpent);
+  const pct = next ? Math.min(100, Math.round((u.totalSpent - current.threshold) / (next.threshold - current.threshold) * 100)) : 100;
+  return `<div class="wrap">
+    <div class="page-head"><h1>Moje konto</h1></div>
+    <section class="section" style="padding-top:20px;max-width:640px;">
+      <div class="account-hero">
+        <div class="account-avatar">${u.name.trim()[0].toUpperCase()}</div>
+        <div><div class="account-name">${u.name}</div><div class="account-email">${u.email} · w Klubie Loomhome od ${u.joinedAt}</div></div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-row"><span class="tier-badge">★ ${current.name}</span><span class="tier-points">${u.points} pkt</span></div>
+        ${next ? `<div class="tier-progress-track"><div class="tier-progress-fill" style="width:${pct}%"></div></div><div class="tier-note">Wydano ${money(u.totalSpent)} — jeszcze ${money(next.threshold - u.totalSpent)} do poziomu ${next.name}.</div>` : `<div class="tier-note">Najwyższy poziom członkostwa — dziękujemy za zaufanie!</div>`}
+        <div class="tier-grid">
+          ${TIERS.map(t=>`<div class="tier-mini ${t.name===current.name?"current":""}"><b>${t.name}</b>${t.perk}</div>`).join("")}
+        </div>
+      </div>
+
+      <h3 style="margin:0 0 14px;font-size:1.05rem;">Historia zamówień</h3>
+      ${orders.length ? orders.map(o=>`<div class="order-item"><div class="order-item-head"><b>${o.number}</b><span>${o.date}</span></div><div style="font-size:.85rem;color:var(--ink-soft);">${o.items.length} pozycji · ${money(o.total)} · +${o.points} pkt</div></div>`).join("") : `<p style="color:var(--ink-faint);font-size:.88rem;">Brak zamówień na koncie. <a href="#/sklep" data-link style="text-decoration:underline;">Zobacz sklep →</a></p>`}
+
+      <button class="btn btn-outline" id="logoutBtn" style="margin-top:24px;">Wyloguj się</button>
+    </section>
+  </div>`;
+}
+
+let pdpState = null;
+function pageProduct(id){
+  const p = byId(id);
+  if (!p){ location.hash = "#/sklep"; return ""; }
+  pdpState = {
+    productId: p.id,
+    color: p.colors ? 0 : null,
+    size: p.sizes ? 0 : null,
+    capacity: p.capacities ? 0 : null,
+    bundle: p.bundles ? 0 : null,
+    qty: 1,
+    tab: "opis"
+  };
+  return renderPDP();
+}
+function pdpPrice(p, s){
+  let price = p.basePrice;
+  if (p.capacities && s.capacity != null) price += p.capacities[s.capacity].delta;
+  if (p.bundles && s.bundle != null) price += p.bundles[s.bundle].delta;
+  return price;
+}
+function renderPDP(){
+  const p = byId(pdpState.productId); const s = pdpState;
+  const color = p.colors ? p.colors[s.color].hex : "var(--forest)";
+  const price = pdpPrice(p, s);
+  const shipText = p.shipping === "paletowa"
+    ? "Przesyłka gabarytowa (paletowa) — dostawa 2–4 dni robocze, koszt wyliczany w kasie."
+    : "Przesyłka standardowa (paczkomat/kurier) — darmowa od 300 zł.";
+  return `
+  <div class="wrap">
+    <div class="crumbs"><a href="#/sklep" data-link>Sklep</a> / <a href="#/sklep?cat=${p.cat}" data-link>${p.catLabel}</a> / ${p.name}</div>
+    <div class="pdp">
+      <div class="pdp-gallery">
+        <div class="pdp-frame" id="pdpFrame">${p.icon(color)}</div>
+        ${p.colors ? `<div class="swatch-row">${p.colors.map((c,i)=>`<button class="swatch ${i===s.color?"active":""}" data-role="color" data-i="${i}" style="background:${c.hex}" title="${c.name}"></button>`).join("")}</div>` : ""}
+      </div>
+      <div class="pdp-info">
+        <span class="p-cat">${p.catLabel}</span>
+        <h1>${p.name}</h1>
+        <div style="margin-bottom:10px;">${starsHTML(p.rating, p.reviewCount)}</div>
+        <div class="pdp-sku">SKU: ${p.sku}${p.colors ? " · " + p.colors[s.color].name : ""}</div>
+        <div class="price pdp-price" id="pdpPrice">${p.compareAtPrice?`<span class="was">${money(p.compareAtPrice)}</span>`:""}${money(price)}</div>
+        ${p.compareAtPrice ? `<p class="omnibus-note">Najniższa cena z 30 dni przed obniżką: ${money(p.compareAtPrice)}</p>` : ""}
+
+        ${p.sizes ? `<div class="variant-block"><div class="variant-label"><span>Rozmiar</span><span class="sel">${p.sizes[s.size]}</span></div><div class="pill-row">${p.sizes.map((sz,i)=>`<button class="pill ${i===s.size?"active":""}" data-role="size" data-i="${i}">${sz.split(" ")[0]}</button>`).join("")}</div></div>` : ""}
+
+        ${p.capacities ? `<div class="variant-block"><div class="variant-label"><span>Wariant</span></div><div class="pill-row">${p.capacities.map((c,i)=>`<button class="pill ${i===s.capacity?"active":""}" data-role="capacity" data-i="${i}">${c.label.split(" — ")[0]}</button>`).join("")}</div></div>` : ""}
+
+        ${p.bundles ? `<div class="variant-block"><div class="variant-label"><span>Zestaw</span></div><div class="pill-row">${p.bundles.map((b,i)=>`<button class="pill ${i===s.bundle?"active":""}" data-role="bundle" data-i="${i}">${b.label}</button>`).join("")}</div></div>` : ""}
+
+        <div class="qty-row">
+          <div class="qty-stepper"><button data-role="qty" data-d="-1">−</button><span id="qtyVal">${s.qty}</span><button data-role="qty" data-d="1">+</button></div>
+          <button class="btn btn-rust" id="addToCartBtn">Dodaj do koszyka</button>
+          <button class="btn btn-outline wish-btn-pdp ${wishlist.includes(p.id)?"active":""}" data-wish="${p.id}">${wishlist.includes(p.id)?"♥ Na liście życzeń":"♡ Dodaj do listy życzeń"}</button>
+        </div>
+
+        <div class="ship-note">${SVG_TRUCK}<span>${shipText}</span></div>
+
+        <div class="tabs">
+          <button class="tab-btn ${s.tab==="opis"?"active":""}" data-tab="opis">Opis</button>
+          <button class="tab-btn ${s.tab==="spec"?"active":""}" data-tab="spec">Specyfikacja</button>
+          <button class="tab-btn ${s.tab==="opinie"?"active":""}" data-tab="opinie">Opinie (${p.reviewCount})</button>
+          <button class="tab-btn ${s.tab==="dostawa"?"active":""}" data-tab="dostawa">Dostawa i zwroty</button>
+        </div>
+        <div class="tab-panel ${s.tab==="opis"?"active":""}" data-panel="opis">
+          ${p.description.map(([h,t])=>`<h3>${h}</h3><p>${t}</p>`).join("")}
+        </div>
+        <div class="tab-panel ${s.tab==="spec"?"active":""}" data-panel="spec">
+          <table class="spec-table">${p.specs.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>
+        </div>
+        <div class="tab-panel ${s.tab==="opinie"?"active":""}" data-panel="opinie">
+          ${p.reviews.map(r=>`<div class="review-item"><div class="review-head"><span class="review-author">${r.author}</span><span class="review-date">${r.date}</span></div><div class="stars" style="margin-bottom:6px;">${Array.from({length:5},(_,i)=>`<span class="${i<r.stars?"star-on":"star-off"}">★</span>`).join("")}</div><p class="review-text">${r.text}</p></div>`).join("")}
+        </div>
+        <div class="tab-panel ${s.tab==="dostawa"?"active":""}" data-panel="dostawa">
+          <p>${shipText}</p>
+          <p>Prawo do odstąpienia od umowy w ciągu 14 dni bez podania przyczyny. Dla produktów gabarytowych odbiór przez przewoźnika paletowego organizuje sklep na koszt konsumenta, zgodnie z Ustawą o prawach konsumenta.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" style="padding-top:10px;">
+      <h3 class="related-head">Może Cię zainteresować</h3>
+      <div class="product-grid">${PRODUCTS.filter(x=>x.id!==p.id).map((p,i)=>productCard(p,i)).join("")}</div>
+    </section>
+  </div>`;
+}
+
+function pageCart(){
+  if (cart.length === 0){
+    return `<div class="wrap"><div class="page-head"><h1>Koszyk</h1></div>
+      <div class="empty-state">${SVG_EMPTY}<p>Twój koszyk jest pusty.</p><a class="btn btn-primary" href="#/sklep" data-link>Przejdź do sklepu</a></div></div>`;
+  }
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const hasPaleta = cartHasPaletowa();
+  let shipBar = "";
+  if (hasPaleta){
+    shipBar = `<div class="ship-progress muted">Zamówienie zawiera towar gabarytowy — koszt przesyłki paletowej wyliczymy w kasie.</div>`;
+  } else if (subtotal >= 300){
+    shipBar = `<div class="ship-progress done">${SVG_CHECK}<span>Masz darmową dostawę!</span></div>`;
+  } else {
+    const pct = Math.min(100, Math.round(subtotal/300*100));
+    shipBar = `<div class="ship-progress"><div class="ship-progress-text">Dodaj produkty za <strong>${money(300-subtotal)}</strong>, aby uzyskać darmową dostawę</div><div class="ship-progress-track"><div class="ship-progress-fill" style="width:${pct}%"></div></div></div>`;
+  }
+  return `<div class="wrap">
+    <div class="page-head"><h1>Koszyk (${cart.reduce((s,l)=>s+l.qty,0)})</h1></div>
+    <div class="cart-layout">
+      <div>
+        ${shipBar}
+        ${cart.map(l => {
+          const p = byId(l.productId); const color = p.colors ? p.colors[0].hex : "var(--forest)";
+          return `<div class="cart-line">
+            <div class="thumb-sm">${p.icon(color)}</div>
+            <div class="grow"><div class="name">${l.name}</div><div class="variant">${l.variantLabel}</div>
+              <button class="remove" data-remove="${l.key}">Usuń</button></div>
+            <div class="line-right">
+              <div class="qty-stepper"><button data-qty="-1" data-key="${l.key}">−</button><span>${l.qty}</span><button data-qty="1" data-key="${l.key}">+</button></div>
+              <span class="price">${money(l.unitPrice*l.qty)}</span>
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="summary-card">
+        <div class="summary-row"><span>Suma produktów</span><span class="price">${money(subtotal)}</span></div>
+        ${promo ? `<div class="summary-row promo-applied"><span>Kod ${promo}<button id="removePromoBtn">usuń</button></span><span class="price">−${money(discount)}</span></div>` : ""}
+        <div class="summary-row"><span>Dostawa</span><span>obliczona w kasie</span></div>
+        <div class="summary-row total"><span>Razem</span><span class="price">${money(subtotal - discount)}</span></div>
+        ${!promo ? `<div class="promo-row"><input id="promoInput" placeholder="Kod rabatowy"><button class="btn btn-outline" id="applyPromoBtn">Zastosuj</button></div>` : ""}
+        <a class="btn btn-rust btn-block" href="#/checkout" data-link style="margin-top:16px;">Przejdź do zamówienia</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+let checkoutState = { delivery: null, payment: "blik" };
+function shippingOptions(){
+  const subtotal = cartSubtotal();
+  if (cartHasPaletowa()){
+    return [
+      {id:"paleta", label:"Przesyłka paletowa (Raben)", desc:"2–4 dni robocze, awizacja telefoniczna", price:149},
+      {id:"odbior", label:"Odbiór osobisty w salonie", desc:"Gotowe w 5 dni roboczych", price:0}
+    ];
+  }
+  const free = subtotal >= 300;
+  return [
+    {id:"paczkomat", label:"Paczkomat InPost", desc:"1–2 dni robocze", price: free?0:14.99},
+    {id:"kurier", label:"Kurier DPD", desc:"1 dzień roboczy", price: free?0:16.99},
+    {id:"odbior", label:"Odbiór osobisty w salonie", desc:"Gotowe w 5 dni roboczych", price:0}
+  ];
+}
+function pageCheckout(){
+  if (cart.length === 0){ location.hash = "#/koszyk"; return ""; }
+  const opts = shippingOptions();
+  if (!checkoutState.delivery || !opts.find(o=>o.id===checkoutState.delivery)) checkoutState.delivery = opts[0].id;
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const shipCost = opts.find(o=>o.id===checkoutState.delivery).price;
+  const total = subtotal - discount + shipCost;
+  const u = currentUser();
+  const payments = [
+    {id:"blik", label:"BLIK", desc:"Płatność natychmiastowa"},
+    {id:"karta", label:"Karta płatnicza", desc:"Visa / Mastercard, 3D-Secure"},
+    {id:"przelew", label:"Przelew tradycyjny", desc:"Realizacja po zaksięgowaniu wpłaty"}
+  ];
+  return `<div class="wrap">
+    <div class="page-head"><h1>Zamówienie</h1></div>
+    <div class="checkout-layout">
+      <div>
+        ${!u ? `<div class="guest-banner"><span>Zaloguj się, aby zbierać punkty Klubu Loomhome i zapisać historię zamówienia.</span><a class="btn btn-outline" href="#/logowanie" data-link>Zaloguj się</a></div>` : `<div class="guest-banner"><span>Zamawiasz jako <b>${u.name}</b> — punkty trafią na Twoje konto Klubu Loomhome.</span></div>`}
+        <div class="block-label">Adres dostawy</div>
+        <div class="form-grid">
+          <div><label class="field-label">Imię i nazwisko</label><input type="text" placeholder="Jan Kowalski" ${u?`value="${u.name}"`:""}></div>
+          <div><label class="field-label">Telefon</label><input type="tel" placeholder="+48 600 000 000"></div>
+          <div class="full"><label class="field-label">Adres</label><input type="text" placeholder="ul. Górska 12"></div>
+          <div><label class="field-label">Miasto</label><input type="text" placeholder="Kraków"></div>
+          <div><label class="field-label">Kod pocztowy</label><input type="text" placeholder="30-001"></div>
+        </div>
+
+        <div class="block-label">Metoda dostawy</div>
+        ${opts.map(o => `<label class="option-card ${checkoutState.delivery===o.id?"active":""}">
+          <input type="radio" name="ship" value="${o.id}" ${checkoutState.delivery===o.id?"checked":""} data-role="ship">
+          <div class="grow"><b>${o.label}</b><span>${o.desc}</span></div>
+          <span class="op-price price">${o.price===0?"Darmowo":money(o.price)}</span>
+        </label>`).join("")}
+
+        <div class="block-label">Metoda płatności</div>
+        ${payments.map(pm => `<label class="option-card ${checkoutState.payment===pm.id?"active":""}">
+          <input type="radio" name="pay" value="${pm.id}" ${checkoutState.payment===pm.id?"checked":""} data-role="pay">
+          <div class="grow"><b>${pm.label}</b><span>${pm.desc}</span></div>
+        </label>`).join("")}
+        <p class="demo-note">To środowisko demonstracyjne — żadna płatność nie zostanie faktycznie obciążona.</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-row"><span>Suma produktów</span><span class="price">${money(subtotal)}</span></div>
+        ${promo ? `<div class="summary-row promo-applied"><span>Kod ${promo}<button id="removePromoBtn">usuń</button></span><span class="price">−${money(discount)}</span></div>` : `<div class="promo-row"><input id="promoInput" placeholder="Kod rabatowy"><button class="btn btn-outline" id="applyPromoBtn">Zastosuj</button></div>`}
+        <div class="summary-row"><span>Dostawa</span><span class="price">${shipCost===0?"Darmowo":money(shipCost)}</span></div>
+        <div class="summary-row total"><span>Razem</span><span class="price">${money(total)}</span></div>
+        <div class="summary-row" style="color:var(--forest-ink);font-weight:700;"><span>Punkty Klubu Loomhome</span><span>+${loyaltyPoints(total)} pkt</span></div>
+        <button class="btn btn-rust btn-block" id="placeOrderBtn" style="margin-top:16px;">Zamów i zapłać</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function placeOrder(){
+  const opts = shippingOptions();
+  const shipCost = opts.find(o=>o.id===checkoutState.delivery).price;
+  const delivery = opts.find(o=>o.id===checkoutState.delivery).label;
+
+  if (cartMode() === "api"){
+    const btn = document.getElementById("placeOrderBtn");
+    if (btn){ btn.disabled = true; btn.textContent = "Przetwarzanie…"; }
+    try {
+      const data = await apiFetch("/api/orders/checkout", {
+        method:"POST",
+        body:{ promoCode: promo, shipCost, delivery, payment: checkoutState.payment },
+      });
+      const o = data.order;
+      lastOrder = {
+        number: o.number, subtotal: o.subtotal, discount: o.discount, promo: o.promo,
+        shipCost: o.shipCost, total: o.total, points: o.points, delivery: o.delivery, payment: o.payment,
+        items: cart.map(l => ({ name:l.name, variant:l.variantLabel, qty:l.qty, unitPrice:l.unitPrice })),
+      };
+      cart = []; updateCartCount();
+      promo = null; localStorage.removeItem("stt_promo");
+      location.hash = "#/potwierdzenie";
+    } catch(e){
+      showToast("Błąd: " + e.message);
+      if (btn){ btn.disabled = false; btn.textContent = "Zamów i zapłać"; }
+    }
+    return;
+  }
+
+  const subtotal = cartSubtotal();
+  const discount = discountAmount();
+  const total = subtotal - discount + shipCost;
+  lastOrder = {
+    number: "LMH-" + Math.floor(100000 + Math.random()*899999),
+    items: cart.map(l => ({name:l.name, variant:l.variantLabel, qty:l.qty, unitPrice:l.unitPrice})),
+    subtotal, discount, promo, shipCost, total,
+    points: loyaltyPoints(total),
+    delivery, payment: checkoutState.payment
+  };
+  localStorage.setItem("stt_last_order", JSON.stringify(lastOrder));
+  const u = currentUser();
+  if (u){
+    u.points += lastOrder.points;
+    u.totalSpent += (subtotal - discount);
+    u.orders.unshift({ number: lastOrder.number, date: new Date().toISOString().slice(0,10), items: lastOrder.items, total: lastOrder.total, points: lastOrder.points });
+    saveUsers();
+  }
+  cart = []; saveCart();
+  promo = null; localStorage.removeItem("stt_promo");
+  location.hash = "#/potwierdzenie";
+}
+
+function pageConfirm(){
+  if (!lastOrder) return `<div class="wrap"><div class="empty-state"><p>Brak ostatniego zamówienia.</p><a class="btn btn-primary" href="#/sklep" data-link>Wróć do sklepu</a></div></div>`;
+  return `<div class="wrap"><div class="confirm-wrap">
+    <div class="confirm-icon">${SVG_CHECK}</div>
+    <h1>Dziękujemy za zamówienie!</h1>
+    <p>Numer zamówienia: <span class="order-no">${lastOrder.number}</span>. Potwierdzenie wysłaliśmy na podany adres e-mail.</p>
+    <div class="confirm-summary">
+      ${lastOrder.items.map(i=>`<div class="summary-row"><span>${i.qty}× ${i.name} <span style="color:var(--ink-faint)">(${i.variant})</span></span><span class="price">${money(i.unitPrice*i.qty)}</span></div>`).join("")}
+      ${lastOrder.discount ? `<div class="summary-row promo-applied"><span>Kod ${lastOrder.promo}</span><span class="price">−${money(lastOrder.discount)}</span></div>` : ""}
+      <div class="summary-row"><span>Dostawa — ${lastOrder.delivery}</span><span class="price">${lastOrder.shipCost===0?"Darmowo":money(lastOrder.shipCost)}</span></div>
+      <div class="summary-row total"><span>Razem</span><span class="price">${money(lastOrder.total)}</span></div>
+      <div class="summary-row" style="color:var(--forest-ink);font-weight:700;"><span>Punkty Klubu Loomhome</span><span>+${lastOrder.points} pkt</span></div>
+    </div>
+    <a class="btn btn-primary" href="#/sklep" data-link>Wróć do sklepu</a>
+  </div></div>`;
+}
+
+/* ============== ROUTER ============== */
+function parseHash(){
+  const raw = location.hash.slice(1) || "/";
+  const [path, qs] = raw.split("?");
+  return { path, query: new URLSearchParams(qs || "") };
+}
+
+async function render(){
+  const { path, query } = parseHash();
+  const app = document.getElementById("app");
+  let html = "";
+  if (path === "/" ) html = pageHome();
+  else if (path === "/sklep") html = pageShop(query);
+  else if (path.startsWith("/produkt/")) html = pageProduct(path.split("/produkt/")[1]);
+  else if (path === "/koszyk") html = pageCart();
+  else if (path === "/checkout") html = pageCheckout();
+  else if (path === "/potwierdzenie") html = pageConfirm();
+  else if (path === "/lista-zyczen") html = pageWishlist();
+  else if (path === "/kontakt") html = pageContact();
+  else if (path === "/logowanie") html = pageLogin();
+  else if (path === "/konto"){
+    if (apiAvailable && currentUser()){
+      try {
+        const [me, orders] = await Promise.all([apiFetch("/api/auth/me"), apiFetch("/api/orders")]);
+        if (me.user) apiUser = me.user;
+        apiOrders = orders.orders;
+      } catch(e){ apiOrders = []; }
+    }
+    html = pageAccount();
+  }
+  else html = pageHome();
+  app.classList.remove("page-anim");
+  app.innerHTML = html;
+  void app.offsetWidth;
+  app.classList.add("page-anim");
+  updateCartCount();
+  updateWishCount();
+  updateAccountUI();
+  window.scrollTo(0,0);
+  bindPageEvents(path);
+  highlightNav(path);
+}
+
+function highlightNav(path){
+  document.querySelectorAll("#siteNav a").forEach(a=>{
+    const href = a.getAttribute("href").replace("#","");
+    a.classList.toggle("active", path === href.split("?")[0] && (href.indexOf("?")===-1 || location.hash.indexOf(href)>-1));
+  });
+}
+
+function bindPageEvents(path){
+  if (path === "/sklep"){
+    document.querySelectorAll(".filter-chip").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        shopFilter = btn.dataset.cat;
+        document.querySelectorAll(".filter-chip").forEach(b=>b.classList.toggle("active", b===btn));
+        renderShopGrid();
+      });
+    });
+    const sortSelect = document.getElementById("sortSelect");
+    if (sortSelect) sortSelect.addEventListener("change", ()=>{ shopSort = sortSelect.value; renderShopGrid(); });
+  }
+  if (path.startsWith("/produkt/")){
+    const p = byId(pdpState.productId);
+    document.querySelectorAll('[data-role="color"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.color = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="size"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.size = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="capacity"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.capacity = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="bundle"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.bundle = +b.dataset.i; rerenderPDP(); }));
+    document.querySelectorAll('[data-role="qty"]').forEach(b=>b.addEventListener("click", ()=>{ pdpState.qty = Math.max(1, pdpState.qty + (+b.dataset.d)); rerenderPDP(); }));
+    document.querySelectorAll(".tab-btn").forEach(b=>b.addEventListener("click", ()=>{ pdpState.tab = b.dataset.tab; rerenderPDP(); }));
+    const addBtn = document.getElementById("addToCartBtn");
+    if (addBtn) addBtn.addEventListener("click", ()=>{
+      const s = pdpState; const price = pdpPrice(p, s);
+      let variantLabel = [];
+      if (p.sizes) variantLabel.push(p.sizes[s.size]);
+      if (p.colors) variantLabel.push(p.colors[s.color].name);
+      if (p.capacities) variantLabel.push(p.capacities[s.capacity].label.split(" — ")[0]);
+      if (p.bundles) variantLabel.push(p.bundles[s.bundle].label);
+      addToCart(p, variantLabel.length ? variantLabel.join(" · ") : "Wariant standardowy", price, s.qty);
+    });
+  }
+  if (path === "/koszyk"){
+    document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click", ()=>removeLine(b.dataset.remove)));
+    document.querySelectorAll("[data-qty]").forEach(b=>b.addEventListener("click", ()=>changeLineQty(b.dataset.key, +b.dataset.qty)));
+    bindPromoEvents();
+  }
+  if (path === "/checkout"){
+    document.querySelectorAll('[data-role="ship"]').forEach(r=>r.addEventListener("change", ()=>{ checkoutState.delivery = r.value; rerenderCheckout(); }));
+    document.querySelectorAll('[data-role="pay"]').forEach(r=>r.addEventListener("change", ()=>{ checkoutState.payment = r.value; rerenderCheckout(); }));
+    const place = document.getElementById("placeOrderBtn");
+    if (place) place.addEventListener("click", placeOrder);
+    bindPromoEvents();
+  }
+  const newsForm = document.getElementById("newsForm");
+  if (newsForm) newsForm.addEventListener("submit", (e)=>{ e.preventDefault(); showToast("Zapisano do newslettera ✓"); newsForm.reset(); });
+  if (path === "/kontakt"){
+    const cf = document.getElementById("contactForm");
+    if (cf) cf.addEventListener("submit", (e)=>{ e.preventDefault(); showToast("Wiadomość wysłana — odpowiemy w ciągu 24h"); cf.reset(); });
+  }
+  if (path === "/logowanie"){
+    document.querySelectorAll("[data-authtab]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{ authTab = btn.dataset.authtab; rerenderLogin(); });
+    });
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) loginForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const submitBtn = loginForm.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
+      const res = await loginUser(document.getElementById("loginEmail").value, document.getElementById("loginPassword").value);
+      if (submitBtn) submitBtn.disabled = false;
+      const err = document.getElementById("loginError");
+      if (res.error){ err.textContent = res.error; err.hidden = false; return; }
+      showToast("Zalogowano jako " + currentUser().name);
+      location.hash = "/konto";
+    });
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) registerForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const submitBtn = registerForm.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
+      const res = await registerUser(document.getElementById("regName").value, document.getElementById("regEmail").value, document.getElementById("regPassword").value);
+      if (submitBtn) submitBtn.disabled = false;
+      const err = document.getElementById("registerError");
+      if (res.error){ err.textContent = res.error; err.hidden = false; return; }
+      showToast("Witamy w Klubie Loomhome, " + currentUser().name + "!");
+      location.hash = "/konto";
+    });
+  }
+  if (path === "/konto"){
+    const out = document.getElementById("logoutBtn");
+    if (out) out.addEventListener("click", logoutUser);
+  }
+}
+
+function rerenderLogin(){ document.getElementById("app").innerHTML = pageLogin(); bindPageEvents("/logowanie"); }
+
+function rerenderPDP(){ document.getElementById("app").innerHTML = renderPDP(); bindPageEvents(location.hash.slice(1).split("?")[0]); }
+function rerenderCheckout(){ document.getElementById("app").innerHTML = pageCheckout(); bindPageEvents("/checkout"); }
+
+function bindPromoEvents(){
+  const applyBtn = document.getElementById("applyPromoBtn");
+  const input = document.getElementById("promoInput");
+  if (applyBtn && input) applyBtn.addEventListener("click", ()=> applyPromo(input.value));
+  if (input) input.addEventListener("keydown", (e)=>{ if (e.key === "Enter"){ e.preventDefault(); applyPromo(input.value); } });
+  const removeBtn = document.getElementById("removePromoBtn");
+  if (removeBtn) removeBtn.addEventListener("click", removePromo);
+}
+
+/* ============== nav toggle (mobile) ============== */
+document.getElementById("navToggle").addEventListener("click", ()=>{
+  const nav = document.getElementById("siteNav");
+  const open = nav.style.display === "flex";
+  nav.style.display = open ? "none" : "flex";
+  nav.style.flexDirection = "column";
+  nav.style.position = "absolute"; nav.style.top = "64px"; nav.style.left = "0"; nav.style.right = "0";
+  nav.style.background = "var(--paper-raised)"; nav.style.padding = "16px 5vw"; nav.style.borderBottom = "1px solid var(--line)";
+});
+
+document.addEventListener("click", (e)=>{
+  const wishBtn = e.target.closest("[data-wish]");
+  if (wishBtn){
+    e.preventDefault();
+    handleWishClick(wishBtn.dataset.wish);
+    return;
+  }
+  const link = e.target.closest("[data-link]");
+  if (!link) return;
+  e.preventDefault();
+  const href = link.dataset.href || link.getAttribute("href");
+  location.hash = href.replace("#","");
+  document.getElementById("siteNav").style.display = "";
+  document.getElementById("searchResults").hidden = true;
+});
+
+/* ============== search (header, persists across pages) ============== */
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+searchInput.addEventListener("input", ()=>{
+  const q = searchInput.value.trim();
+  if (location.hash.replace("#","").split("?")[0] === "/sklep"){
+    shopSearch = q; renderShopGrid();
+  }
+  if (!q){ searchResults.hidden = true; return; }
+  const matches = PRODUCTS.filter(p => matchesQuery(p, q)).slice(0,6);
+  searchResults.innerHTML = matches.length
+    ? matches.map(p => `<a class="search-item" href="#/produkt/${p.id}" data-link><span class="search-thumb">${p.icon(p.colors?p.colors[0].hex:"var(--forest)")}</span><span class="search-name">${p.name}</span><span class="price">${money(p.basePrice)}</span></a>`).join("")
+    : `<div class="search-empty">Brak wyników dla „${q}”.</div>`;
+  searchResults.hidden = false;
+});
+searchInput.addEventListener("keydown", (e)=>{
+  if (e.key === "Enter"){
+    e.preventDefault();
+    location.hash = "/sklep?q=" + encodeURIComponent(searchInput.value.trim());
+    searchResults.hidden = true;
+  }
+});
+document.addEventListener("click", (e)=>{
+  if (!e.target.closest(".search-wrap")) searchResults.hidden = true;
+});
+
+window.addEventListener("hashchange", render);
+
+(async function bootstrap(){
+  initBgDecor();
+  // Render immediately in local/offline mode — never block first paint on a network call.
+  // A cold Render instance can take ~30-50s to wake; the API check runs in the background
+  // and the page silently upgrades to API mode if/when it responds.
+  render();
+  await initApi();
+  if (apiAvailable) render();
+})();
+})();
+</script>

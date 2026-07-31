@@ -55,7 +55,7 @@ W repozytorium jest plik [`render.yaml`](../render.yaml), który opisuje usług�
 2. **New +** → **Blueprint** → wybierz to repozytorium (branch `claude/summit-trail-ecommerce-spec-pdgh6e` lub `main`) → Render sam wykryje `render.yaml` i zaproponuje usługę `summit-trail-api` (root `server/`, plan Free).
 3. Zatwierdź (**Apply**) — po zbudowaniu Render przypisze adres typu `https://summit-trail-api.onrender.com` (jeśli nazwa wolna; jeśli zajęta, dostaniesz wariant z losowym sufiksem).
 4. Sprawdź zmienną `ALLOWED_ORIGINS` w ustawieniach usługi — musi wskazywać na realny adres frontendu (domyślnie w `render.yaml` wpisany jest adres GitHub Pages tego repo).
-5. Skopiuj przypisany adres API i wpisz go w `web/index.html` w linii `window.STT_API_BASE = window.STT_API_BASE || "..."` (na początku sekcji `<script>` przed głównym kodem), commit i push — frontend na GitHub Pages przełączy się z `localStorage` na realne konta.
+5. Skopiuj przypisany adres API i wpisz go w linii `window.STT_API_BASE = window.STT_API_BASE || "..."` (na początku sekcji `<script>` przed głównym kodem) — **w obu frontendach**, `web/index.html` (Summit & Trail) i `web/loomhome/index.html` (Loomhome), bo współdzielą ten sam backend. Commit i push — oba sklepy na GitHub Pages przełączą się z `localStorage` na realne konta.
 
 Alternatywy bez Blueprintu — **Railway / Fly.io**: połącz z repozytorium GitHub, wskaż katalog `server/`, komenda startowa `npm start`, ustaw zmienne `NODE_ENV=production` i `ALLOWED_ORIGINS=<adres Twojego frontendu>`.
 

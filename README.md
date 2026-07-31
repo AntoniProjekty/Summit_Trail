@@ -29,7 +29,9 @@ Niniejsze repozytorium zawiera **kompletną specyfikację funkcjonalno-techniczn
 
 Poza dokumentacją repozytorium zawiera **działający prototyp sklepu z prawdziwym kontem użytkownika**, nie tylko demo w `localStorage`:
 
-- [`web/`](web/index.html) — frontend sklepu (katalog 73 produktów, koszyk, checkout, konto, program lojalnościowy Summit Club). Domyślnie działa w trybie offline (localStorage); po ustawieniu `window.STT_API_BASE` na adres wdrożonego backendu przełącza się automatycznie na prawdziwe konta i zamówienia trwałe między urządzeniami.
+- [`web/`](web/index.html) — **Summit & Trail**, sklep outdoorowy (katalog 73 produktów: e-rowery, namioty dachowe, zasilanie przenośne, akcesoria; koszyk, checkout, konto, program lojalnościowy Summit Club).
+- [`web/loomhome/`](web/loomhome/index.html) — **Loomhome**, drugi, niezależny sklep (katalog 73 produktów: fotele i sofy, oświetlenie, tekstylia, dekoracje; program lojalnościowy Klub Loomhome) — ta sama architektura frontendu, inna branża i identyfikacja wizualna, na dowód, że szablon nie jest przywiązany do jednej niszy.
+- Oba sklepy domyślnie działają w trybie offline (localStorage); po ustawieniu `window.STT_API_BASE` na adres wdrożonego backendu przełączają się automatycznie na prawdziwe konta i zamówienia trwałe między urządzeniami — **korzystają z tego samego backendu** (konta/koszyk/zamówienia są per-użytkownik, nie per-sklep; katalogi produktów nie mają kolidujących identyfikatorów).
 - [`server/`](server/README.md) — backend API (Node.js + Express + SQLite): rejestracja/logowanie, koszyk, lista życzeń, checkout z naliczaniem punktów, historia zamówień. Zweryfikowany end-to-end (rejestracja → zakup → ponowne logowanie z innego „urządzenia" i odzyskanie tych samych danych z bazy).
 - Instrukcja uruchomienia lokalnego i wdrożenia produkcyjnego: patrz [`server/README.md`](server/README.md).
 
